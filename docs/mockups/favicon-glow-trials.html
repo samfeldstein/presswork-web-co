@@ -1,0 +1,96 @@
+<!doctype html>
+<!--
+  Favicon glow trials. Same italic "p" mark as public/favicon.svg (scaled 112%);
+  only the maroon glow changes. A is the current favicon. Each row shows the
+  mark at 128, 64, 32 and 16 px and in a browser-tab mock.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Favicon glow trials</title>
+<style>
+:root{--night:#0f0d12;--cream:#f6efe4;--gold:#f5c451;--stone:#b9aea3}
+*{box-sizing:border-box}
+body{margin:0;padding:40px 24px;background:#1b1820;color:var(--cream);font:15px/1.5 system-ui,sans-serif}
+h1{margin:0 0 6px;font-size:22px;font-weight:500}
+.intro{margin:0 0 32px;color:var(--stone)}
+.sprite{position:absolute;width:0;height:0}
+.row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px;padding:24px 0;border-top:1px solid #2f2a35}
+.spec{flex:0 0 220px;margin:0;color:var(--stone)}
+.spec b{display:block;color:var(--gold);font-weight:600}
+figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--stone);font-size:12px}
+.tabs{display:flex;flex-direction:column;gap:8px}
+.tab{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 10px;border-radius:8px 8px 0 0;font-size:12px}
+.tab.dark{background:#2a2530;color:var(--stone)}
+.tab.light{background:#e8e6e3;color:#333}
+</style>
+</head>
+<body>
+<h1>Favicon glow trials</h1>
+<p class="intro">Same mark in every row; only the maroon glow changes. Check the 16 px size and the tab mocks, which are what visitors see.</p>
+
+<svg class="sprite" aria-hidden="true">
+  <defs>
+    <!-- A: current -->
+    <radialGradient id="g-a" cx="0.634" cy="0.336" r="0.78">
+      <stop offset="0" stop-color="#8a1b3d"/>
+      <stop offset="1" stop-color="#0f0d12" stop-opacity="0"/>
+    </radialGradient>
+    <!-- B: centred, wide fade -->
+    <radialGradient id="g-b" cx="0.55" cy="0.45" r="0.9">
+      <stop offset="0" stop-color="#8a1b3d"/>
+      <stop offset="1" stop-color="#0f0d12" stop-opacity="0"/>
+    </radialGradient>
+    <!-- C: solid core, fades only near the edges -->
+    <radialGradient id="g-c" cx="0.55" cy="0.45" r="0.8">
+      <stop offset="0" stop-color="#8a1b3d"/>
+      <stop offset="0.45" stop-color="#8a1b3d"/>
+      <stop offset="1" stop-color="#0f0d12" stop-opacity="0"/>
+    </radialGradient>
+    <!-- D: almost flat maroon, darker corners -->
+    <radialGradient id="g-d" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0" stop-color="#8a1b3d"/>
+      <stop offset="0.65" stop-color="#7a1836"/>
+      <stop offset="1" stop-color="#2a0d18"/>
+    </radialGradient>
+
+    <g id="mark">
+      <g transform="translate(16 18) scale(1.12) translate(-16 -18)">
+        <g fill="#f6efe4" transform="translate(4.78 0) skewX(-12)">
+          <path d="M6.5 8.5h5.4v19H6.5v-1.9h2V10.4h-2z"/>
+          <path fill-rule="evenodd" d="M15.5 8.5a7 7 0 1 1 0 14a7 7 0 1 1 0-14z M15.5 11.3a4.2 4.2 0 1 0 0 8.4a4.2 4.2 0 1 0 0-8.4z"/>
+          <path d="M6.5 25.6h7.4v1.9H6.5z"/>
+        </g>
+        <circle cx="25.6" cy="20.4" r="2.6" fill="#f5c451"/>
+      </g>
+    </g>
+  </defs>
+  <symbol id="m-a" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0f0d12"/><rect width="32" height="32" rx="7" fill="url(#g-a)"/><use href="#mark"/></symbol>
+  <symbol id="m-b" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0f0d12"/><rect width="32" height="32" rx="7" fill="url(#g-b)"/><use href="#mark"/></symbol>
+  <symbol id="m-c" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0f0d12"/><rect width="32" height="32" rx="7" fill="url(#g-c)"/><use href="#mark"/></symbol>
+  <symbol id="m-d" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0f0d12"/><rect width="32" height="32" rx="7" fill="url(#g-d)"/><use href="#mark"/></symbol>
+</svg>
+
+<div id="rows"></div>
+
+<script>
+  const variants = [
+    ["a", "A · Current", "Glow off to the upper right, fading to black well before the edges."],
+    ["b", "B · Centred, wide fade", "Glow moved to the middle and stretched so it reaches the edges before it fades out."],
+    ["c", "C · Solid core", "Full maroon across the middle half, fading only near the edges. Black just shows in the corners."],
+    ["d", "D · Almost all maroon", "Maroon edge to edge, darkening slightly toward the corners. No black left."],
+  ];
+  const svg = (id, s) => `<svg width="${s}" height="${s}"><use href="#m-${id}"/></svg>`;
+  document.getElementById("rows").innerHTML = variants.map(([id, name, note]) => `
+    <div class="row">
+      <p class="spec"><b>${name}</b>${note}</p>
+      ${[128, 64, 32, 16].map(s => `<figure>${svg(id, s)}${s}</figure>`).join("")}
+      <div class="tabs">
+        <span class="tab dark">${svg(id, 16)}Presswork Web Co.</span>
+        <span class="tab light">${svg(id, 16)}Presswork Web Co.</span>
+      </div>
+    </div>`).join("");
+</script>
+</body>
+</html>

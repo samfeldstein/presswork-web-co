@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <radialGradient id="glow" cx="0.55" cy="0.45" r="0.9">
+      <stop offset="0" stop-color="#8a1b3d"/>
+      <stop offset="1" stop-color="#0f0d12" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="#0f0d12"/>
+  <rect width="32" height="32" rx="7" fill="url(#glow)"/>
+  <!-- Mark scaled 112% around (16, 18). Glow is option B in docs/mockups/favicon-glow-trials.html -->
+  <g transform="translate(16 18) scale(1.12) translate(-16 -18)">
+    <!-- Italic: slanted 12° around the bowl's baseline (y 22.5) -->
+    <g fill="#f6efe4" transform="translate(4.78 0) skewX(-12)">
+      <path d="M6.5 8.5h5.4v19H6.5v-1.9h2V10.4h-2z"/>
+      <path fill-rule="evenodd" d="M15.5 8.5a7 7 0 1 1 0 14a7 7 0 1 1 0-14z M15.5 11.3a4.2 4.2 0 1 0 0 8.4a4.2 4.2 0 1 0 0-8.4z"/>
+      <path d="M6.5 25.6h7.4v1.9H6.5z"/>
+    </g>
+    <circle cx="25.6" cy="20.4" r="2.6" fill="#f5c451"/>
+  </g>
+</svg>

@@ -1,0 +1,65 @@
+{
+  "site": {
+    "url": "https://presswork.dev",
+    "title": "Presswork Web Co.",
+    "description": "Websites for small businesses, built to be found in search and fully managed for you. $0 down, plans from $150 a month.",
+    "themeColor": "#0f0d12"
+  },
+  "me": {
+    "name": "Sam Feldstein",
+    "email": "hello@presswork.dev"
+  },
+  "nav": [
+    {
+      "href": "/",
+      "label": "Home"
+    },
+    {
+      "href": "/pricing/",
+      "label": "Pricing"
+    },
+    {
+      "href": "/about/",
+      "label": "About"
+    },
+    {
+      "href": "/contact/",
+      "label": "Contact"
+    }
+  ],
+  "amounts": [
+    "$0",
+    "$0.00",
+    "$10",
+    "$100",
+    "$150",
+    "$150.00",
+    "$1,500"
+  ],
+  "contrast": [
+    { "fg": "--color-ink", "bg": "--color-paper" },
+    { "fg": "--color-ink", "bg": "--color-paper-raised" },
+    { "fg": "--color-ink-soft", "bg": "--color-paper" },
+    { "fg": "--color-ink-soft", "bg": "--color-paper-raised" },
+    { "fg": "--color-ink-dim", "bg": "--color-paper" },
+    { "fg": "--color-ink-dim", "bg": "--color-paper-raised" },
+    { "fg": "--color-accent", "bg": "--color-paper" },
+    { "fg": "--color-accent", "bg": "--color-paper-raised" },
+    { "fg": "--color-accent-contrast", "bg": "--color-accent" },
+    { "fg": "--color-stamp", "bg": "--color-paper" },
+    { "fg": "--ink-receipt-type", "bg": "--ink-receipt" }
+  ],
+  "allowedHosts": [
+    "presswork.dev",
+    "www.w3.org"
+  ],
+  "sizeBudgetKB": {
+    "default": 16,
+    "/": 24
+  },
+  "allowedChars": [
+    "★",
+    "✕",
+    "🚧"
+  ]
+}

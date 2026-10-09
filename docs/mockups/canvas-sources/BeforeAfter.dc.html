@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Presswork homepage, before and after direction</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&amp;family=Figtree:wght@400;500;600;700&amp;family=Comic+Neue:wght@700&amp;display=swap">
+<style>
+body{margin:0;background:#FBF8F2}
+a{color:#1F2A2E}a:hover{color:#B23A22}
+.pw-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#pw-cmp:focus-visible + .pw-handle .pw-knob{outline:3px solid #1F2A2E;outline-offset:4px}
+@keyframes pw-marq{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+@keyframes pw-wiggle{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(4deg)}}
+@keyframes pw-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.pw-marq{display:inline-block;animation:pw-marq 9s linear infinite}
+.pw-sticker{animation:pw-wiggle 3.5s ease-in-out infinite}
+.pw-under path{stroke-dasharray:1;animation:pw-draw 1s cubic-bezier(.6,0,.2,1) .6s both}
+@media (prefers-reduced-motion: reduce){.pw-marq,.pw-sticker,.pw-under path{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; background: #FBF8F2; color: #1F2A2E; font-family: 'Figtree', system-ui, sans-serif; display: flex; flex-direction: column; padding: clamp(16px, 3vw, 40px); gap: clamp(16px, 2.5vw, 32px)">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 28px">
+<span style="font-family: 'Young Serif', serif; font-size: 24px; padding: 8px 0">presswork</span>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 0 28px; font-size: 17px; font-weight: 500">
+<a href="#plans" style="text-decoration: none; padding: 12px 0">Plans</a>
+<a href="#work" style="text-decoration: none; padding: 12px 0">Work</a>
+<a href="#about" style="text-decoration: none; padding: 12px 0">About</a>
+<a href="#contact" style="text-decoration: none; padding: 12px 0">Contact</a>
+</nav>
+</header>
+
+<main style="flex-grow: 1; display: flex; flex-wrap: wrap; align-items: center; gap: clamp(28px, 4vw, 64px)">
+
+<section style="flex: 1 1 360px; max-width: 480px; display: flex; flex-direction: column; gap: 22px; position: relative">
+<h1 style="margin: 0; font-family: 'Young Serif', serif; font-weight: 400; font-size: clamp(48px, 5.4vw, 84px); line-height: 1.02; letter-spacing: -0.02em">Your website, <span style="position: relative; display: inline-block">fully managed.<svg class="pw-under" aria-hidden="true" viewBox="0 0 300 20" preserveAspectRatio="none" style="position: absolute; left: 0; bottom: -10px; width: 100%; height: 16px; overflow: visible"><path d="M4 14 C60 4 130 4 180 9 C220 12 260 10 296 5" pathLength="1" fill="none" stroke="{{accent}}" stroke-width="6" stroke-linecap="round"></path></svg></span></h1>
+<p style="margin: 0; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.5">Is your website stuck in 2004? I'll build you a new one, keep it running and make the changes for you. You never have to touch it.</p>
+<div id="plans" style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px">
+<a href="#contact" style="display: inline-flex; align-items: center; min-height: 54px; padding: 0 28px; background: #1F2A2E; color: #FBF8F2; border-radius: 12px; font-size: 18px; font-weight: 600; text-decoration: none">Book a free site audit</a>
+<span style="font-size: 17px; line-height: 1.35"><strong>$0 down</strong>, then $150 a month.<br>6-month minimum.</span>
+</div>
+<ul style="margin: 6px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 10px">
+<li style="padding: 8px 16px; border: 1.5px solid #1F2A2E; border-radius: 999px; font-size: 16px; font-weight: 600">Look good</li>
+<li style="padding: 8px 16px; border: 1.5px solid #1F2A2E; border-radius: 999px; font-size: 16px; font-weight: 600">Get found</li>
+<li style="padding: 8px 16px; border: 1.5px solid #1F2A2E; border-radius: 999px; font-size: 16px; font-weight: 600">Get to work</li>
+</ul>
+</section>
+
+<section aria-label="Before and after example" style="flex: 2 1 560px; position: relative; display: flex; flex-direction: column; gap: 12px">
+
+<div class="pw-sticker" aria-hidden="true" style="position: absolute; z-index: 5; top: -26px; right: -14px; width: 108px; height: 108px; border-radius: 50%; background: #F4C542; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: 0 6px 18px rgba(31,42,46,0.18); font-weight: 700; line-height: 1.05"><span style="font-size: 30px">$0</span><span style="font-size: 14px">down</span></div>
+
+<div style="border-radius: 14px; overflow: hidden; background: #FFFFFF; box-shadow: 0 24px 60px rgba(31,42,46,0.16), 0 0 0 1px rgba(31,42,46,0.08)">
+<div aria-hidden="true" style="display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #EFEAE0">
+<span style="width: 11px; height: 11px; border-radius: 50%; background: #E0674F"></span><span style="width: 11px; height: 11px; border-radius: 50%; background: #E9B949"></span><span style="width: 11px; height: 11px; border-radius: 50%; background: #71B36B"></span>
+<span style="margin-left: 12px; flex-grow: 1; max-width: 340px; padding: 5px 12px; border-radius: 6px; background: #FBF8F2; font-size: 13px; color: #5A6366">rosasbakery.com</span>
+</div>
+
+<div style="position: relative; height: clamp(360px, 44vh, 470px); overflow: hidden">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; background: #FBF4E8; font-family: 'Figtree', sans-serif; color: #3A2A1E; display: flex; flex-direction: column">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 18px 28px"><span style="font-family: 'Young Serif', serif; font-size: 24px">Rosa's</span><span style="display: flex; gap: 20px; font-size: 14px; font-weight: 500"><span>Menu</span><span>Order</span><span>Visit</span></span></div>
+<div style="flex-grow: 1; display: flex; align-items: center; gap: 28px; padding: 0 28px 24px">
+<div style="flex: 1 1 0; display: flex; flex-direction: column; gap: 14px">
+<div style="font-size: 12px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #9B5B2E">Neighborhood bakery</div>
+<div style="font-family: 'Young Serif', serif; font-size: clamp(30px, 3.2vw, 46px); line-height: 1.02">Fresh bread, every morning.</div>
+<div style="font-size: 15px; line-height: 1.45; max-width: 30ch">Sourdough, pastries and coffee, baked before sunrise.</div>
+<div style="display: flex; gap: 10px; flex-wrap: wrap"><span style="padding: 10px 18px; border-radius: 10px; background: #3A2A1E; color: #FBF4E8; font-size: 14px; font-weight: 600">Order ahead</span><span style="padding: 10px 18px; border-radius: 10px; border: 1.5px solid #3A2A1E; font-size: 14px; font-weight: 600">Today's menu</span></div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><span style="width: 9px; height: 9px; border-radius: 50%; background: #3F9A55"></span>Open today, 7am to 3pm</div>
+</div>
+<div style="flex: 0 1 40%; align-self: stretch; position: relative; border-radius: 16px; background: #F1D9B5; overflow: hidden">
+<div style="position: absolute; left: 12%; top: 22%; width: 62%; height: 34%; border-radius: 50%; background: #C98B4A; transform: rotate(-12deg)"></div>
+<div style="position: absolute; left: 22%; top: 28%; width: 4%; height: 20%; border-radius: 4px; background: #E8B878; transform: rotate(18deg)"></div>
+<div style="position: absolute; left: 38%; top: 24%; width: 4%; height: 22%; border-radius: 4px; background: #E8B878; transform: rotate(18deg)"></div>
+<div style="position: absolute; left: 54%; top: 22%; width: 4%; height: 20%; border-radius: 4px; background: #E8B878; transform: rotate(18deg)"></div>
+<div style="position: absolute; right: 10%; bottom: 12%; width: 34%; aspect-ratio: 1; border-radius: 50%; background: #B8743A"></div>
+<div style="position: absolute; right: 18%; bottom: 20%; width: 18%; aspect-ratio: 1; border-radius: 50%; background: #F1D9B5"></div>
+<div style="position: absolute; left: 14%; bottom: 14%; width: 30%; height: 16%; border-radius: 40% 40% 12px 12px; background: #D9A15E"></div>
+</div>
+</div>
+</div>
+
+<div aria-hidden="true" style="position: absolute; inset: 0; clip-path: inset(0 {{clipRight}} 0 0); background-color: #CCFF33; background-image: radial-gradient(#99CC00 2px, transparent 2px); background-size: 16px 16px; font-family: 'Comic Neue', 'Comic Sans MS', cursive; color: #CC0000; display: flex; flex-direction: column">
+<div style="overflow: hidden; white-space: nowrap; background: #FFFF00; border-bottom: 3px ridge #FF00FF; padding: 4px 0; font-size: 15px"><span class="pw-marq">*** WELCOME TO ROSAS BAKERY ONLINE!!! *** NOW WITH A GUESTBOOK!!! ***</span></div>
+<div style="padding: 14px 24px; display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center">
+<div style="font-size: clamp(30px, 3.4vw, 46px); color: #FF00CC; text-shadow: 3px 3px 0 #0000FF, -2px -2px 0 #FFFF00">Rosa's Bakery</div>
+<div style="font-size: 14px; color: #0000EE; text-decoration: underline">Home | Our Breads | Contact Us | Sign Our Guestbook!</div>
+<div style="display: flex; gap: 16px; align-items: stretch; flex-wrap: wrap; justify-content: center">
+<div style="width: 150px; height: 110px; border: 2px inset #999999; background: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-family: Arial, sans-serif; font-size: 12px; color: #666666"><span style="font-size: 26px; color: #FF0000; font-weight: 700">✕</span>bread.jpg</div>
+<div style="width: 210px; border: 3px double #0000FF; background: #FFFFCC; padding: 8px; font-size: 13px; color: #663399; text-align: left; line-height: 1.35">OUR HOURS:<br>Mon-Fri 7-3 (call to confirm!!)<br>Sat ???<br><span style="color: #0000EE; text-decoration: underline">email us</span> for orders</div>
+</div>
+<div style="width: 100%; max-width: 420px; padding: 6px 0; background: repeating-linear-gradient(45deg, #FFCC00 0 14px, #111111 14px 28px); color: #FFFFFF; font-family: Arial, sans-serif; font-weight: 700; font-size: 14px; text-shadow: 1px 1px 0 #000000">UNDER CONSTRUCTION</div>
+<div style="font-family: 'Courier New', monospace; font-size: 13px; color: #000000; background: #000000; padding: 2px 6px"><span style="color: #33FF33">You are visitor #000042</span></div>
+<div style="font-family: 'Times New Roman', serif; font-size: 11px; color: #999999">Best viewed in Internet Explorer 6.0 at 800x600</div>
+</div>
+</div>
+
+<input id="pw-cmp" type="range" min="0" max="100" value="{{pos}}" onChange="{{slide}}" style="position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize">
+<label for="pw-cmp" class="pw-sr">Compare the old website with the new one</label>
+<div class="pw-handle" aria-hidden="true" style="position: absolute; z-index: 2; top: 0; bottom: 0; left: {{posPct}}; width: 0; pointer-events: none">
+<div style="position: absolute; top: 0; bottom: 0; left: -2px; width: 4px; background: #FFFFFF; box-shadow: 0 0 0 1px rgba(31,42,46,0.25)"></div>
+<div class="pw-knob" style="position: absolute; top: 50%; left: -26px; width: 52px; height: 52px; margin-top: -26px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 6px 18px rgba(31,42,46,0.3); display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1F2A2E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6"></path><path d="M15 6l6 6-6 6"></path></svg></div>
+</div>
+<span aria-hidden="true" style="position: absolute; z-index: 2; left: 14px; bottom: 14px; padding: 6px 12px; border-radius: 999px; background: #1F2A2E; color: #FBF8F2; font-size: 13px; font-weight: 600; pointer-events: none">Before</span>
+<span aria-hidden="true" style="position: absolute; z-index: 2; right: 14px; bottom: 14px; padding: 6px 12px; border-radius: 999px; background: #1F2A2E; color: #FBF8F2; font-size: 13px; font-weight: 600; pointer-events: none">After</span>
+</div>
+</div>
+<p style="margin: 0; font-size: 15px; color: #4A5457; text-align: center">Drag the handle to see the difference. Example business for illustration.</p>
+</section>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#E8743B","options":["#E8743B","#F4C542","#6FB38A"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { pos: 50 };
+this.touched = false;
+this.frame = null;
+this.slide = (e) => {
+this.touched = true;
+this.setState({ pos: Number(e.target.value) });
+};
+this.sweep = (t0) => {
+const stops = [50, 84, 16, 50];
+const dur = 1100;
+const step = (now) => {
+if (this.touched) { return; }
+const t = (now - t0) / dur;
+const i = Math.floor(t);
+if (i >= stops.length - 1) { this.setState({ pos: 50 }); return; }
+const k = t - i;
+const e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+this.setState({ pos: Math.round(stops[i] + (stops[i + 1] - stops[i]) * e) });
+this.frame = requestAnimationFrame(step);
+};
+this.frame = requestAnimationFrame(step);
+};
+}
+componentDidMount() {
+const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduce) {
+setTimeout(() => { if (!this.touched) { this.sweep(performance.now()); } }, 900);
+}
+}
+componentWillUnmount() {
+this.touched = true;
+if (this.frame) { cancelAnimationFrame(this.frame); }
+}
+renderVals() {
+const pos = this.state.pos;
+return {
+accent: this.props.accent ?? '#E8743B',
+pos: pos,
+posPct: pos + '%',
+clipRight: (100 - pos) + '%',
+slide: this.slide
+};
+}
+}
+</script>
+</body>
+</html>

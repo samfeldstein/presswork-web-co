@@ -1,0 +1,53 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{fullTitle}}</title>
+<meta name="description" content="{{description}}">
+?noindex <meta name="robots" content="noindex">
+?indexed <link rel="canonical" href="{{url}}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{site.title}}">
+<meta property="og:title" content="{{fullTitle}}">
+<meta property="og:description" content="{{description}}">
+?indexed <meta property="og:url" content="{{url}}">
+<meta name="twitter:title" content="{{fullTitle}}">
+<meta name="twitter:description" content="{{description}}">
+<meta property="og:image" content="{{site.url}}/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{site.title}}: Your website, fully managed. Get started.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{{site.url}}/og-image.png">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="{{site.themeColor}}">
+<link rel="preload" href="/fonts/noto-serif-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/noto-serif-latin-wdth-italic.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="color-scheme" content="dark">
+<style>html{background:{{site.themeColor}};color-scheme:dark}</style>
+<link rel="stylesheet" href="/css/fonts.css">
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/global.css">
+<link rel="stylesheet" href="/css/components.css">
+<script type="speculationrules">
+{ "prefetch": [{ "where": { "and": [{ "href_matches": "/*" }, { "not": { "href_matches": "/contact/" } }] }, "eagerness": "eager" }] }
+</script>
+<script>
+  (function () {
+    if (window.HTMLScriptElement && HTMLScriptElement.supports && HTMLScriptElement.supports("speculationrules")) return;
+    addEventListener("load", function () {
+      var seen = {};
+      seen[location.pathname] = true;
+      document.querySelectorAll('a[href^="/"]').forEach(function (a) {
+        var path = a.pathname;
+        if (a.origin !== location.origin || seen[path] || !/\/$/.test(path) || path === "/contact/") return;
+        seen[path] = true;
+        var link = document.createElement("link");
+        link.rel = "prefetch";
+        link.href = path;
+        document.head.appendChild(link);
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,29 @@
+<footer class="site-footer">
+  <div class="inner">
+    <div class="menu">
+      <nav aria-label="Footer">
+        <ul role="list">
+{{nav}}
+        </ul>
+      </nav>
+
+      <div class="scores" role="group" aria-labelledby="scores-title">
+        <p class="visually-hidden" id="scores-title">Lighthouse scores, mobile</p>
+        <dl>
+          <div><dt><span aria-hidden="true">Perf</span><span class="visually-hidden">Performance</span></dt><dd style="--score: 98">98</dd></div>
+          <div><dt><span aria-hidden="true">A11y</span><span class="visually-hidden">Accessibility</span></dt><dd style="--score: 100">100</dd></div>
+          <div><dt><span aria-hidden="true">Practices</span><span class="visually-hidden">Best practices</span></dt><dd style="--score: 100">100</dd></div>
+          <div><dt>SEO</dt><dd style="--score: 100">100</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="who">
+      <a class="name" href="/" aria-label="{{site.title}} home"><span class="logo">presswork<span class="dot">.</span></span></a>
+      <a class="email" href="mailto:{{me.email}}">{{me.email}}</a>
+    </div>
+  </div>
+
+  <p class="legal">&copy; {{year}} {{site.title}}</p>
+  <p class="legal">Built with plain HTML, CSS and JavaScript, set in Noto Serif, hosted on Cloudflare. No cookies.</p>
+</footer>

@@ -1,0 +1,23 @@
+{
+  "name": "presswork",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "sync": "node sync.mjs",
+    "check": "node check.mjs",
+    "test": "node --test test/",
+    "dev": "wrangler dev",
+    "dev:phone": "wrangler dev --ip 0.0.0.0"
+  },
+  "dependencies": {
+    "wrangler": "^4.144.0"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true,
+    "workerd@1.20260926.1": true,
+    "esbuild@0.28.1": true,
+    "esbuild@0.28.2": true
+  }
+}

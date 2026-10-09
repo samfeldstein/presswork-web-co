@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Presswork homepage, receipt direction</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;700;800&amp;family=Courier+Prime:wght@400;700&amp;display=swap">
+<style>
+body{margin:0;background:#E7EEE4}
+a{color:#1E2B24}a:hover{color:#2F7D5B}
+@keyframes pw-print{from{transform:translateY(-100%)}to{transform:none}}
+@keyframes pw-fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pw-receipt{animation:pw-print 3s steps(30) .5s both}
+.pw-in{animation:pw-fade .9s cubic-bezier(.2,.7,.2,1) both}
+.pw-in2{animation-delay:.15s}.pw-in3{animation-delay:.3s}
+@media (prefers-reduced-motion: reduce){.pw-receipt,.pw-in{animation:none}}
+</style>
+</helmet>
+<div style="min-height: 100vh; box-sizing: border-box; background: #E7EEE4; color: #1E2B24; font-family: 'Epilogue', system-ui, sans-serif; display: flex; flex-direction: column; padding: clamp(16px, 3vw, 40px); gap: clamp(16px, 2.5vw, 28px)">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 28px">
+<span style="font-weight: 800; font-size: 22px; letter-spacing: -0.01em; padding: 8px 0">Presswork Web Co.</span>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 0 28px; font-size: 17px; font-weight: 500">
+<a href="#plans" style="text-decoration: none; padding: 12px 0">Plans</a>
+<a href="#work" style="text-decoration: none; padding: 12px 0">Work</a>
+<a href="#about" style="text-decoration: none; padding: 12px 0">About</a>
+<a href="#contact" style="text-decoration: none; padding: 12px 0">Contact</a>
+</nav>
+</header>
+
+<main style="flex-grow: 1; display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center; gap: clamp(32px, 6vw, 110px); padding-top: clamp(8px, 3vw, 40px)">
+
+<section style="flex: 1 1 380px; max-width: 560px; display: flex; flex-direction: column; gap: 24px; padding-top: clamp(0px, 5vw, 70px)">
+<p class="pw-in" style="margin: 0; font-size: 16px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #2F7D5B">Websites for small business</p>
+<h1 class="pw-in pw-in2" style="margin: 0; font-weight: 800; font-size: clamp(50px, 6vw, 92px); line-height: 0.98; letter-spacing: -0.035em">Your website, fully managed.</h1>
+<p class="pw-in pw-in3" style="margin: 0; font-size: clamp(18px, 1.5vw, 21px); line-height: 1.5; max-width: 40ch">No surprise bills, no fine print. Here's everything you get, and exactly what it costs.</p>
+<div class="pw-in pw-in3" style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="#contact" style="display: inline-flex; align-items: center; min-height: 54px; padding: 0 28px; background: #1E2B24; color: #F7F4EA; border-radius: 10px; font-size: 18px; font-weight: 700; text-decoration: none">Book a free site audit</a>
+<button type="button" onClick="{{reprint}}" style="min-height: 54px; padding: 0 22px; background: transparent; border: 2px solid #1E2B24; border-radius: 10px; color: #1E2B24; font-family: 'Epilogue', sans-serif; font-size: 17px; font-weight: 700; cursor: pointer">Print it again</button>
+</div>
+</section>
+
+<section id="plans" aria-label="What you get and what it costs" style="flex: 0 1 400px; display: flex; flex-direction: column; align-items: center">
+<div aria-hidden="true" style="position: relative; z-index: 2; width: 100%; box-sizing: border-box; height: 58px; border-radius: 16px 16px 10px 10px; background: #2D3A33; box-shadow: 0 10px 24px rgba(30,43,36,0.25); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 12px">
+<div style="width: 88%; height: 8px; border-radius: 4px; background: #11181A"></div>
+</div>
+<div style="width: 90%; margin-top: -14px; overflow: hidden; padding: 0 14px 30px">
+<sc-if value="{{show}}" hint-placeholder-val="{{ true }}">
+<div class="pw-receipt" style="position: relative; background: #FFFDF8; box-shadow: 0 14px 28px rgba(30,43,36,0.16); padding: 34px 26px 30px; font-family: 'Courier Prime', 'Courier New', monospace; font-size: 16px; line-height: 1.55; color: #22251F">
+<div style="text-align: center; display: flex; flex-direction: column; gap: 2px">
+<strong style="font-size: 20px; letter-spacing: 0.06em">PRESSWORK WEB CO.</strong>
+<span>Websites for small business</span>
+<span>presswork.dev</span>
+</div>
+<div aria-hidden="true" style="margin: 14px 0; border-top: 2px dashed #22251F"></div>
+<dl style="margin: 0; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt>Custom 5-page site</dt><dd style="margin: 0">INCLUDED</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt>Hosting</dt><dd style="margin: 0">INCLUDED</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt>Edits &amp; updates</dt><dd style="margin: 0">INCLUDED</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt>Fixes when it breaks</dt><dd style="margin: 0">INCLUDED</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt>Security updates</dt><dd style="margin: 0">INCLUDED</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt>Next-day replies</dt><dd style="margin: 0">INCLUDED</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><dt>Monthly report</dt><dd style="margin: 0">INCLUDED</dd></div>
+</dl>
+<div aria-hidden="true" style="margin: 14px 0; border-top: 2px dashed #22251F"></div>
+<dl style="margin: 0; display: flex; flex-direction: column; gap: 4px; font-size: 19px">
+<div style="display: flex; justify-content: space-between"><dt><strong>DUE TODAY</strong></dt><dd style="margin: 0"><strong>$0.00</strong></dd></div>
+<div style="display: flex; justify-content: space-between"><dt>MONTHLY</dt><dd style="margin: 0">$150.00</dd></div>
+</dl>
+<p style="margin: 8px 0 0; font-size: 14px; line-height: 1.45">6-month minimum, then month-to-month. +$10/month per page after 5.</p>
+<div aria-hidden="true" style="margin: 14px 0; border-top: 2px dashed #22251F"></div>
+<p style="margin: 0; text-align: center; font-weight: 700; letter-spacing: 0.04em">LOOK GOOD. GET FOUND.<br>GET TO WORK.</p>
+<p style="margin: 10px 0 0; text-align: center">*** THANK YOU ***</p>
+<div aria-hidden="true" style="margin: 16px auto 0; display: flex; justify-content: center; align-items: stretch; gap: 2px; height: 46px">
+<span style="width: 3px; background: #22251F"></span><span style="width: 1px; background: #22251F"></span><span style="width: 4px; background: #22251F"></span><span style="width: 2px; background: #22251F"></span><span style="width: 1px; background: #22251F"></span><span style="width: 3px; background: #22251F"></span><span style="width: 1px; background: #22251F"></span><span style="width: 2px; background: #22251F"></span><span style="width: 4px; background: #22251F"></span><span style="width: 1px; background: #22251F"></span><span style="width: 2px; background: #22251F"></span><span style="width: 3px; background: #22251F"></span><span style="width: 1px; background: #22251F"></span><span style="width: 1px; background: #22251F"></span><span style="width: 4px; background: #22251F"></span><span style="width: 2px; background: #22251F"></span><span style="width: 1px; background: #22251F"></span><span style="width: 3px; background: #22251F"></span><span style="width: 2px; background: #22251F"></span><span style="width: 1px; background: #22251F"></span><span style="width: 4px; background: #22251F"></span><span style="width: 1px; background: #22251F"></span><span style="width: 3px; background: #22251F"></span><span style="width: 2px; background: #22251F"></span>
+</div>
+<svg aria-hidden="true" viewBox="0 0 100 6" preserveAspectRatio="none" style="position: absolute; left: 0; bottom: -8px; width: 100%; height: 9px"><path d="M0 0 L100 0 L100 1 L96 6 L92 1 L88 6 L84 1 L80 6 L76 1 L72 6 L68 1 L64 6 L60 1 L56 6 L52 1 L48 6 L44 1 L40 6 L36 1 L32 6 L28 1 L24 6 L20 1 L16 6 L12 1 L8 6 L4 1 L0 6 Z" fill="#FFFDF8"></path></svg>
+</div>
+</sc-if>
+</div>
+</section>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+constructor(props) {
+super(props);
+this.state = { show: true };
+this.reprint = () => {
+this.setState({ show: false });
+setTimeout(() => this.setState({ show: true }), 60);
+};
+}
+renderVals() {
+return { show: this.state.show, reprint: this.reprint };
+}
+}
+</script>
+</body>
+</html>

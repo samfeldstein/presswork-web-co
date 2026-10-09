@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logo trials</title>
+<!--
+  Side-by-side logo trials in the site's palette and fonts. Open directly in a
+  browser; no build step.
+  Each card shows: the lockup large, the lockup at header size next to the nav,
+  and the mark at 64, 32 and 16 px (favicon sizes). Pick a letter, or mix
+  ("D's mark with B's wordmark").
+  Marks that use <text> rely on the web font loading. Before shipping, a chosen
+  mark would be redrawn as paths (as public/favicon.svg already is).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wdth,wght@0,62.5..100,300..700;1,62.5..100,300..700&family=Jost:wght@400;500;600&display=swap">
+<style>
+:root{
+  --night:#0f0d12;--raised:#1a161e;--cream:#f6efe4;--stone:#b8afa2;--dim:#9a9186;--smoke:#3a3340;
+  --gold:#f5c451;--peach:#f5c451;--plum:#6e1230;--plum-deep:#8a1b3d;
+  --display:"Noto Serif",Georgia,serif;--body:"Jost",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--night);color:var(--stone);font-family:var(--body);font-size:17px;line-height:1.55;padding:clamp(16px,3vw,40px)}
+.intro{padding-bottom:28px;margin-bottom:28px;border-bottom:1px solid var(--smoke)}
+.label{color:var(--gold);font-size:13px;font-weight:500;letter-spacing:.3em;text-transform:uppercase}
+.intro h1{margin-top:8px;color:var(--cream);font-family:var(--display);font-weight:300;font-size:clamp(36px,5vw,72px);line-height:.95;letter-spacing:-.03em}
+.intro p{max-width:62ch;margin-top:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:20px}
+.card{display:grid;gap:18px;align-content:start;padding:24px;border:1px solid var(--smoke);border-radius:14px;background:var(--raised)}
+.spec{color:var(--dim);font-size:13px;line-height:1.45}
+.spec b{display:block;margin-bottom:2px;color:var(--cream);font-size:15px;font-weight:600}
+.stage{display:grid;place-items:center;min-height:200px;padding:28px 16px;border-radius:10px;background:var(--night);overflow:hidden}
+.stage.cream{background:var(--cream)}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:stretch}
+.row .stage{flex:1 1 180px;min-height:120px;padding:18px 12px}
+
+/* Header-size preview: mimics SiteHeader (Jost, 15px, 500, caps, tracked) */
+.hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;border-radius:10px;background:var(--night);font-size:15px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--cream)}
+.hdr nav{display:flex;gap:18px;color:var(--stone);font-size:13px}
+@media (max-width:560px){.hdr nav{display:none}}
+
+/* Favicon-size row */
+.icons{display:flex;align-items:end;gap:18px}
+.icons figure{display:grid;justify-items:center;gap:6px;font-size:11px;color:var(--dim)}
+.icons svg{display:block}
+.tab{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 10px;border-radius:8px 8px 0 0;background:#2a2530;color:var(--stone);font-size:12px;letter-spacing:0;text-transform:none}
+
+svg.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.lockup{display:inline-flex;align-items:center;gap:.45em;line-height:1}
+.lockup svg{flex:none}
+
+/* A: current build, tracked caps */
+.a .word{color:var(--cream);font-weight:500;letter-spacing:.2em;text-transform:uppercase}
+.a .word span{color:var(--dim)}
+
+/* B: serif wordmark, gold italic sub */
+.b .word{color:var(--cream);font-family:var(--display);font-weight:300;letter-spacing:-.035em;text-transform:none}
+.b .word em{margin-left:.18em;color:var(--gold);font-weight:300;font-size:.42em;letter-spacing:0;vertical-align:.95em}
+
+/* C: condensed semibold, matches the h2 style */
+.c .word{color:var(--cream);font-family:var(--display);font-weight:600;font-stretch:72%;letter-spacing:.01em;text-transform:none}
+.c .word em{color:var(--gold);font-weight:300;font-stretch:100%;letter-spacing:-.02em}
+
+/* D: spotlight P + condensed caps */
+.d .word{color:var(--cream);font-family:var(--display);font-weight:600;font-stretch:62.5%;letter-spacing:.06em;text-transform:uppercase}
+.d .word span{color:var(--dim);font-weight:400}
+
+/* E: type sort + serif lowercase */
+.e .word{color:var(--cream);font-family:var(--display);font-weight:500;font-stretch:87.5%;letter-spacing:-.02em;text-transform:none}
+.e .word span{color:var(--dim);font-family:var(--body);font-size:.36em;font-weight:500;letter-spacing:.24em;text-transform:uppercase;vertical-align:.2em;margin-left:.5em}
+
+/* F: stamp seal */
+.f .word{color:var(--gold);font-weight:500;letter-spacing:.2em;text-transform:uppercase}
+
+/* G: misregistered print */
+.g .word{position:relative;color:var(--cream);font-family:var(--display);font-weight:700;font-stretch:72%;letter-spacing:.005em;text-transform:none;
+  text-shadow:-.035em .02em 0 var(--plum-deep),.03em -.015em 0 rgba(245,196,81,.85)}
+.g .word.flat{text-shadow:-.04em .025em 0 var(--plum-deep)}
+.cream .g-dark{color:var(--night)}
+
+/* H: wordmark with a gold full stop (blinking caret on hover) */
+.h .word{color:var(--cream);font-family:var(--display);font-weight:400;font-style:italic;letter-spacing:-.03em;text-transform:none}
+.h .word i{color:var(--gold);font-style:normal}
+.h .stage:hover .word i,.h .hdr:hover .word i{animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.h .word i{animation:none!important}}
+
+.big{font-size:clamp(40px,6vw,76px)}
+.mid{font-size:clamp(28px,3.4vw,40px)}
+.hdr .lockup{font-size:15px}
+.hdr .word.serif{font-size:22px}
+</style>
+</head>
+<body>
+
+<!-- Shared marks. viewBox 32×32 so they render at any favicon size. -->
+<svg class="sprite" aria-hidden="true">
+  <defs>
+    <radialGradient id="glow" cx=".78" cy=".22" r=".75">
+      <stop offset="0" stop-color="#8a1b3d"/><stop offset="1" stop-color="#0f0d12" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow-c" cx=".62" cy=".36" r=".7">
+      <stop offset="0" stop-color="#8a1b3d"/><stop offset="1" stop-color="#0f0d12" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="spot-clip"><circle cx="20.5" cy="12" r="9"/></clipPath>
+    <path id="p-shape" fill-rule="evenodd" d="M9 6h9.5a6.5 6.5 0 0 1 0 13H14v5h2.5v2H8v-2h2V8H9z M14 8.6v7.8h4.2a3.9 3.9 0 0 0 0-7.8z"/>
+    <path id="arc" d="M16 16 m-11.2 0 a11.2 11.2 0 1 1 22.4 0 a11.2 11.2 0 1 1 -22.4 0"/>
+  </defs>
+
+  <!-- A: current favicon -->
+  <symbol id="m-a" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="7" fill="#0f0d12"/>
+    <rect width="32" height="32" rx="7" fill="url(#glow)"/>
+    <use href="#p-shape" fill="#f5c451"/>
+  </symbol>
+
+  <!-- D: spotlight P. The P sits in shadow; a circle of light turns part of it gold. -->
+  <symbol id="m-d" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="7" fill="#0f0d12"/>
+    <circle cx="20.5" cy="12" r="9" fill="#6e1230"/>
+    <use href="#p-shape" fill="#3a3340"/>
+    <use href="#p-shape" fill="#f5c451" clip-path="url(#spot-clip)"/>
+  </symbol>
+
+  <!-- E: a metal type sort, face-on: reversed p on the face, nick groove below -->
+  <symbol id="m-e" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="7" fill="#0f0d12"/>
+    <rect x="7.5" y="3.5" width="17" height="25" rx="1.6" fill="#b8afa2"/>
+    <rect x="7.5" y="22.2" width="17" height="1.6" fill="#7d756b"/>
+    <rect x="7.5" y="25" width="17" height=".9" fill="#7d756b"/>
+    <text x="-16" y="19" transform="scale(-1 1)" text-anchor="middle" font-family="Noto Serif, Georgia, serif" font-weight="700" font-size="19" fill="#0f0d12">p</text>
+  </symbol>
+
+  <!-- F: stamp seal. Ring text drops out below 64px; the 32/16 versions keep the P only. -->
+  <symbol id="m-f" viewBox="0 0 32 32">
+    <circle cx="16" cy="16" r="15.2" fill="none" stroke="#f5c451" stroke-width="1.1"/>
+    <circle cx="16" cy="16" r="9" fill="none" stroke="#f5c451" stroke-width=".6"/>
+    <text font-family="Jost, sans-serif" font-size="3.3" font-weight="600" letter-spacing=".95" fill="#f5c451">
+      <textPath href="#arc">PRESSWORK · WEB CO · PRESSWORK · WEB CO ·</textPath>
+    </text>
+    <text x="16" y="21.3" text-anchor="middle" font-family="Noto Serif, Georgia, serif" font-style="italic" font-weight="500" font-size="14" fill="#f5c451">P</text>
+  </symbol>
+  <symbol id="m-f-small" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="7" fill="#0f0d12"/>
+    <circle cx="16" cy="16" r="12.5" fill="none" stroke="#f5c451" stroke-width="2.4"/>
+    <text x="16" y="22.6" text-anchor="middle" font-family="Noto Serif, Georgia, serif" font-style="italic" font-weight="600" font-size="18" fill="#f5c451">P</text>
+  </symbol>
+
+  <!-- G: misregistered P -->
+  <symbol id="m-g" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="7" fill="#0f0d12"/>
+    <use href="#p-shape" fill="#8a1b3d" transform="translate(-1.4 .9)"/>
+    <use href="#p-shape" fill="#f5c451" fill-opacity=".9" transform="translate(1.1 -.6)"/>
+    <use href="#p-shape" fill="#f6efe4"/>
+  </symbol>
+
+  <!-- H: lowercase p with gold full stop -->
+  <symbol id="m-h" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="7" fill="#0f0d12"/>
+    <rect width="32" height="32" rx="7" fill="url(#glow-c)"/>
+    <text x="13.5" y="21" text-anchor="middle" font-family="Noto Serif, Georgia, serif" font-style="italic" font-weight="500" font-size="24" fill="#f6efe4">p</text>
+    <circle cx="24" cy="19.6" r="2.6" fill="#f5c451"/>
+  </symbol>
+
+  <!-- B/C: monogram "Pw" -->
+  <symbol id="m-c" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="7" fill="#0f0d12"/>
+    <rect width="32" height="32" rx="7" fill="url(#glow)"/>
+    <text x="4.2" y="22.5" font-family="Noto Serif, Georgia, serif" font-weight="600" font-stretch="72%" style="font-stretch:72%" font-size="20" fill="#f6efe4">P</text>
+    <text x="14.2" y="22.5" font-family="Noto Serif, Georgia, serif" font-style="italic" font-weight="300" font-size="17" fill="#f5c451">w</text>
+  </symbol>
+</svg>
+
+<header class="intro">
+  <p class="label">Presswork Web Co.</p>
+  <h1>Logo trials</h1>
+  <p>Eight directions on the night palette. Each card shows the full lockup, the lockup at header size, and the mark at 64, 32 and 16&nbsp;px. A is what the site uses now. Pick a letter, or mix parts from different cards.</p>
+</header>
+
+<main class="grid">
+
+  <!-- A -->
+  <article class="card a">
+    <p class="spec"><b>A · Current</b>Jost 500 caps, 0.2em tracking, “Web Co.” in dim stone. Gold P favicon with a plum glow. Neat but generic: the name does all the work.</p>
+    <div class="stage"><span class="lockup big"><svg width="1.1em" height="1.1em"><use href="#m-a"/></svg><span class="word mid">Presswork <span>Web Co.</span></span></span></div>
+    <div class="hdr"><span class="lockup"><span class="word">Presswork <span>Web Co.</span></span></span><nav><span>Work</span><span>Pricing</span><span>About</span><span>Contact</span></nav></div>
+    <div class="icons">
+      <figure><svg width="64" height="64"><use href="#m-a"/></svg>64</figure>
+      <figure><svg width="32" height="32"><use href="#m-a"/></svg>32</figure>
+      <figure><svg width="16" height="16"><use href="#m-a"/></svg>16</figure>
+      <span class="tab"><svg width="16" height="16"><use href="#m-a"/></svg>Presswork Web Co.</span>
+    </div>
+  </article>
+
+  <!-- B -->
+  <article class="card b">
+    <p class="spec"><b>B · Serif wordmark</b>Noto Serif 300, tight tracking, same voice as the hero headline. “Web Co.” is a small gold italic superscript, like a footnote mark. The quietest option and the most editorial.</p>
+    <div class="stage"><span class="lockup"><span class="word big">Presswork<em>Web Co.</em></span></span></div>
+    <div class="hdr"><span class="lockup"><span class="word serif">Presswork<em>Web Co.</em></span></span><nav><span>Work</span><span>Pricing</span><span>About</span><span>Contact</span></nav></div>
+    <div class="icons">
+      <figure><svg width="64" height="64"><use href="#m-c"/></svg>64</figure>
+      <figure><svg width="32" height="32"><use href="#m-c"/></svg>32</figure>
+      <figure><svg width="16" height="16"><use href="#m-c"/></svg>16</figure>
+      <span class="tab"><svg width="16" height="16"><use href="#m-c"/></svg>Presswork Web Co.</span>
+    </div>
+  </article>
+
+  <!-- C -->
+  <article class="card c">
+    <p class="spec"><b>C · Condensed, matches the h2s</b>Noto Serif 600 at 72% width with a light gold italic “web co.”: the exact recipe of the chosen section headings (h2 style A). The logo and headings become one system. Mark: “Pw” monogram.</p>
+    <div class="stage"><span class="lockup big"><svg width="1em" height="1em"><use href="#m-c"/></svg><span class="word">Presswork <em>web co.</em></span></span></div>
+    <div class="hdr"><span class="lockup"><svg width="26" height="26"><use href="#m-c"/></svg><span class="word serif">Presswork <em>web co.</em></span></span><nav><span>Work</span><span>Pricing</span><span>About</span><span>Contact</span></nav></div>
+    <div class="icons">
+      <figure><svg width="64" height="64"><use href="#m-c"/></svg>64</figure>
+      <figure><svg width="32" height="32"><use href="#m-c"/></svg>32</figure>
+      <figure><svg width="16" height="16"><use href="#m-c"/></svg>16</figure>
+      <span class="tab"><svg width="16" height="16"><use href="#m-c"/></svg>Presswork Web Co.</span>
+    </div>
+  </article>
+
+  <!-- D -->
+  <article class="card d">
+    <p class="spec"><b>D · Spotlight P</b>The homepage idea as a mark: the P sits in shadow and a plum circle of light turns its bowl gold. Wordmark in extra-condensed caps (62.5%). The strongest tie to the site concept; reads as a gold P even at 16&nbsp;px.</p>
+    <div class="stage"><span class="lockup big"><svg width="1.15em" height="1.15em"><use href="#m-d"/></svg><span class="word">Presswork <span>Web Co.</span></span></span></div>
+    <div class="hdr"><span class="lockup"><svg width="26" height="26"><use href="#m-d"/></svg><span class="word serif">Presswork <span>Web Co.</span></span></span><nav><span>Work</span><span>Pricing</span><span>About</span><span>Contact</span></nav></div>
+    <div class="icons">
+      <figure><svg width="64" height="64"><use href="#m-d"/></svg>64</figure>
+      <figure><svg width="32" height="32"><use href="#m-d"/></svg>32</figure>
+      <figure><svg width="16" height="16"><use href="#m-d"/></svg>16</figure>
+      <span class="tab"><svg width="16" height="16"><use href="#m-d"/></svg>Presswork Web Co.</span>
+    </div>
+  </article>
+
+  <!-- E -->
+  <article class="card e">
+    <p class="spec"><b>E · Type sort</b>A piece of metal type, face-on: the letter is reversed on the block, with the nick groove below, as a printer would hold it. The “press” half of the name. The reversed p reads as a q at 16&nbsp;px; some will find that a nice puzzle, others a typo.</p>
+    <div class="stage"><span class="lockup big"><svg width="1.15em" height="1.15em"><use href="#m-e"/></svg><span class="word">presswork<span>Web Co.</span></span></span></div>
+    <div class="hdr"><span class="lockup"><svg width="26" height="26"><use href="#m-e"/></svg><span class="word serif">presswork</span></span><nav><span>Work</span><span>Pricing</span><span>About</span><span>Contact</span></nav></div>
+    <div class="icons">
+      <figure><svg width="64" height="64"><use href="#m-e"/></svg>64</figure>
+      <figure><svg width="32" height="32"><use href="#m-e"/></svg>32</figure>
+      <figure><svg width="16" height="16"><use href="#m-e"/></svg>16</figure>
+      <span class="tab"><svg width="16" height="16"><use href="#m-e"/></svg>Presswork Web Co.</span>
+    </div>
+  </article>
+
+  <!-- F -->
+  <article class="card f">
+    <p class="spec"><b>F · Rubber stamp</b>A gold seal with the name on a ring around an italic P. It pairs with the receipt pricing and could literally stamp “paid” on it. The ring text only works large, so small sizes keep just the ringed P.</p>
+    <div class="row">
+      <div class="stage"><svg width="150" height="150" style="transform:rotate(-8deg)"><use href="#m-f"/></svg></div>
+      <div class="stage cream"><svg width="150" height="150" style="transform:rotate(6deg);opacity:.85"><use href="#m-f"/></svg></div>
+    </div>
+    <div class="hdr"><span class="lockup"><svg width="26" height="26"><use href="#m-f-small"/></svg><span class="word">Presswork</span></span><nav><span>Work</span><span>Pricing</span><span>About</span><span>Contact</span></nav></div>
+    <div class="icons">
+      <figure><svg width="64" height="64"><use href="#m-f"/></svg>64</figure>
+      <figure><svg width="32" height="32"><use href="#m-f-small"/></svg>32</figure>
+      <figure><svg width="16" height="16"><use href="#m-f-small"/></svg>16</figure>
+      <span class="tab"><svg width="16" height="16"><use href="#m-f-small"/></svg>Presswork Web Co.</span>
+    </div>
+  </article>
+
+  <!-- G -->
+  <article class="card g">
+    <p class="spec"><b>G · Misregistered</b>Bold condensed serif printed in three passes that don’t quite line up: plum, gold, then cream on top. A print-shop flaw used on purpose. Loud; best as the logo only, not repeated in headings. On cream it drops to one plum offset.</p>
+    <div class="row">
+      <div class="stage"><span class="word big">Presswork</span></div>
+      <div class="stage cream"><span class="word flat g-dark mid">Presswork</span></div>
+    </div>
+    <div class="hdr"><span class="lockup"><span class="word serif">Presswork</span></span><nav><span>Work</span><span>Pricing</span><span>About</span><span>Contact</span></nav></div>
+    <div class="icons">
+      <figure><svg width="64" height="64"><use href="#m-g"/></svg>64</figure>
+      <figure><svg width="32" height="32"><use href="#m-g"/></svg>32</figure>
+      <figure><svg width="16" height="16"><use href="#m-g"/></svg>16</figure>
+      <span class="tab"><svg width="16" height="16"><use href="#m-g"/></svg>Presswork Web Co.</span>
+    </div>
+  </article>
+
+  <!-- H -->
+  <article class="card h">
+    <p class="spec"><b>H · Full stop</b>Lowercase italic serif ending in a gold dot. The dot is a full stop (“done, shipped”) and, on hover, a blinking cursor (the “web” half). It also nods to presswork<i style="color:var(--gold);font-style:normal">.</i>dev. Hover the large one.</p>
+    <div class="stage"><span class="word big">presswork<i>.</i></span></div>
+    <div class="hdr"><span class="lockup"><span class="word serif">presswork<i>.</i></span></span><nav><span>Work</span><span>Pricing</span><span>About</span><span>Contact</span></nav></div>
+    <div class="icons">
+      <figure><svg width="64" height="64"><use href="#m-h"/></svg>64</figure>
+      <figure><svg width="32" height="32"><use href="#m-h"/></svg>32</figure>
+      <figure><svg width="16" height="16"><use href="#m-h"/></svg>16</figure>
+      <span class="tab"><svg width="16" height="16"><use href="#m-h"/></svg>Presswork Web Co.</span>
+    </div>
+  </article>
+
+</main>
+</body>
+</html>

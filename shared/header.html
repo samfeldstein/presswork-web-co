@@ -1,0 +1,55 @@
+<header class="site-header">
+  <a class="brand" href="/" aria-label="{{site.title}} home"><span class="logo">presswork<span class="dot">.</span></span></a>
+
+  <nav class="nav" aria-label="Main">
+    <button class="toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <ul class="list" id="site-menu" role="list">
+{{nav:item}}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  (function () {
+    var header = document.querySelector("header.site-header");
+    var button = header && header.querySelector(".toggle");
+    if (!header || !button) return;
+
+    header.setAttribute("data-menu", "");
+
+    function setOpen(open) {
+      header.toggleAttribute("data-open", open);
+      button.setAttribute("aria-expanded", String(open));
+    }
+
+    button.addEventListener("click", function () {
+      setOpen(!header.hasAttribute("data-open"));
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && header.hasAttribute("data-open")) {
+        var inside = header.contains(document.activeElement);
+        setOpen(false);
+        if (inside) button.focus();
+      }
+    });
+
+    document.addEventListener("click", function (event) {
+      if (!header.contains(event.target)) setOpen(false);
+    });
+
+    header.addEventListener("focusout", function (event) {
+      if (event.relatedTarget && !header.contains(event.relatedTarget)) {
+        setOpen(false);
+      }
+    });
+
+    matchMedia("(max-width: 40rem)").addEventListener("change", function (e) {
+      if (!e.matches) setOpen(false);
+    });
+  })();
+</script>

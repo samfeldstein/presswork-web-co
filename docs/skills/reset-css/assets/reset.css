@@ -1,0 +1,51 @@
+/*
+  Reset for Presswork Web Co.
+  Smooths over browser differences so styles start from the same place.
+  Import this before tokens.css and global.css.
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  /* Reserve the scrollbar's space so pages don't shift sideways */
+  scrollbar-gutter: stable;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Correct bold weight in Chrome, Edge and Safari */
+b,
+strong {
+  font-weight: bolder;
+}

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Button trials</title>
+<!--
+  Side-by-side hover and press animations for the site's pill buttons, in the
+  site's palette and fonts. Open directly in a browser; no build step.
+  Every card has an outline button and a solid (gold) button, sized and styled
+  like src/components/atoms/Button.astro. The resting look is the same in all
+  of them; only the hover and press motion differs. Hover, then click and hold.
+  "Slow motion" stretches every animation 4x so
+  you can see what it's doing. Letters match the original eight so past notes still line up.
+  Hover effects apply only where the device can hover; with reduced motion they
+  collapse to a plain color change.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wdth,wght@0,62.5..100,300..700;1,62.5..100,300..700&family=Jost:wght@400;500;600&display=swap">
+<style>
+:root{
+  --night:#0f0d12;--raised:#1a161e;--cream:#f6efe4;--stone:#b8afa2;--dim:#9a9186;--smoke:#3a3340;
+  --gold:#f5c451;--plum:#6e1230;--plum-deep:#8a1b3d;
+  --display:"Noto Serif",Georgia,serif;--body:"Jost",system-ui,sans-serif;
+  --slow:1;
+  --out:cubic-bezier(.2,.7,.2,1);--stamp:cubic-bezier(.3,1.4,.5,1);
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--night);color:var(--stone);font-family:var(--body);font-size:17px;line-height:1.55;padding:clamp(16px,3vw,40px)}
+.intro{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px;padding-bottom:28px;margin-bottom:28px;border-bottom:1px solid var(--smoke)}
+.intro > div{max-width:62ch}
+.label{color:var(--gold);font-size:13px;font-weight:500;letter-spacing:.3em;text-transform:uppercase}
+.intro h1{margin-top:8px;color:var(--cream);font-family:var(--display);font-weight:300;font-size:clamp(36px,5vw,72px);line-height:.95;letter-spacing:-.03em}
+.intro p{margin-top:12px}
+.toggle{display:flex;align-items:center;gap:10px;color:var(--cream);font-size:14px;cursor:pointer;user-select:none}
+.toggle input{accent-color:var(--gold);width:18px;height:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px}
+.card{display:grid;gap:18px;align-content:start;padding:24px;border:1px solid var(--smoke);border-radius:14px;background:var(--raised)}
+.spec{color:var(--dim);font-size:13px;line-height:1.45}
+.spec b{display:block;margin-bottom:2px;color:var(--cream);font-size:15px;font-weight:600}
+.stage{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;padding:36px 16px;border-radius:10px;background:var(--night)}
+
+/* ---------- Shared button (same resting look as Button.astro) ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;
+  min-height:54px;padding:0 30px;border:1px solid var(--stone);border-radius:999px;
+  background:transparent;color:var(--cream);font:600 15px/1.2 var(--body);letter-spacing:.18em;
+  text-transform:uppercase;text-decoration:none;cursor:pointer;isolation:isolate;
+  --t:calc(180ms * var(--slow));
+}
+.btn.solid{border-color:var(--gold);background:var(--gold);color:var(--night)}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.btn .label-text{position:relative;z-index:1}
+
+/* ---------- E: arrow. Label nudges left, an arrow slides in beside it ---------- */
+.e .btn{padding-inline:34px;transition:background-color var(--t) var(--out),border-color var(--t) var(--out),color var(--t) var(--out),transform var(--t) var(--out)}
+.e .btn .label-text{transition:transform calc(320ms * var(--slow)) var(--out)}
+.e .btn .arrow{position:absolute;right:20px;top:50%;width:1.25em;height:1.25em;margin-top:-.625em;opacity:0;transform:translateX(-10px);transition:transform calc(320ms * var(--slow)) var(--out),opacity calc(240ms * var(--slow)) var(--out)}
+@media (hover:hover){
+  .e .btn:hover .label-text{transform:translateX(-12px)}
+  .e .btn:hover .arrow{opacity:1;transform:none}
+  .e .btn:not(.solid):hover{border-color:var(--gold);background:var(--gold);color:var(--night)}
+  .e .btn.solid:hover{border-color:var(--cream);background:var(--cream)}
+}
+.e .btn:active .arrow{transform:translateX(4px)}
+
+/* ---------- F: lift. Rises with a gold glow underneath; press drops it back ---------- */
+.f .btn{transition:background-color var(--t) var(--out),border-color var(--t) var(--out),color var(--t) var(--out),transform calc(240ms * var(--slow)) var(--out),box-shadow calc(240ms * var(--slow)) var(--out)}
+@media (hover:hover){
+  .f .btn:hover{transform:translateY(-4px);box-shadow:0 14px 28px -8px rgba(245,196,81,.45)}
+  .f .btn:not(.solid):hover{border-color:var(--gold);background:var(--gold);color:var(--night)}
+  .f .btn.solid:hover{border-color:var(--cream);background:var(--cream);box-shadow:0 14px 28px -8px rgba(246,239,228,.35)}
+}
+.f .btn:active{transform:translateY(0);box-shadow:0 2px 6px -2px rgba(245,196,81,.4);transition-duration:60ms}
+
+/* ---------- H: sheen. Fill fades in and a band of light sweeps across, once per hover ---------- */
+.h .btn{overflow:hidden;transition:background-color var(--t) var(--out),border-color var(--t) var(--out),color var(--t) var(--out),transform var(--t) var(--out)}
+.h .btn::after{content:"";position:absolute;top:0;bottom:0;left:0;width:45%;z-index:0;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-130%) skewX(-18deg);pointer-events:none}
+@media (hover:hover){
+  .h .btn:hover::after{transform:translateX(330%) skewX(-18deg);transition:transform calc(700ms * var(--slow)) var(--out)}
+  .h .btn:not(.solid):hover{border-color:var(--gold);background:var(--gold);color:var(--night)}
+  .h .btn.solid:hover{border-color:var(--cream);background:var(--cream)}
+}
+.h .btn:active{transform:translateY(1px)}
+
+@media (prefers-reduced-motion:reduce){
+  .btn,.btn *,.btn::before,.btn::after{transition-duration:0ms!important;animation:none!important}
+  .btn:hover,.btn:active{transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <div>
+    <p class="label">Presswork Web Co.</p>
+    <h1>Button trials</h1>
+    <p>Three hover and press animations kept from a longer list (the others were A fade, B wipe, C ink spread, D label roll and G stamp, since removed). The resting buttons are identical to the site’s. E is applied on the site; F and H are kept for reference. Hover each one, then click and hold.</p>
+  </div>
+  <label class="toggle"><input type="checkbox" id="slow"> Slow motion (4×)</label>
+</header>
+
+<main class="grid">
+
+
+
+
+
+  <article class="card e">
+    <p class="spec"><b>E · Arrow (applied)</b>The label slides left and an arrow slides in beside it. Tells people “this goes somewhere,” which suits the link buttons (“Book a call”, “Learn more”). On a form’s Send button it would be a little odd.</p>
+    <div class="stage">
+      <a class="btn" href="#" data-demo><span class="label-text">Book a call</span><svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+      <a class="btn solid" href="#" data-demo><span class="label-text">Learn more</span><svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"/></svg></a>
+    </div>
+  </article>
+
+  <article class="card f">
+    <p class="spec"><b>F · Lift</b>Rises 4&nbsp;px with a soft glow beneath it, then drops flat and fast when pressed. Physical and calm. The glow is gold on outline buttons, cream on solid ones.</p>
+    <div class="stage"><a class="btn" href="#" data-demo>Book a call</a><a class="btn solid" href="#" data-demo>Learn more</a></div>
+  </article>
+
+
+  <article class="card h">
+    <p class="spec"><b>H · Sheen</b>Fill fades in as usual, and a band of light sweeps across once, like a glint on a freshly printed foil. Subtle, and it adds a little shine to the gold buttons.</p>
+    <div class="stage"><a class="btn" href="#" data-demo>Book a call</a><a class="btn solid" href="#" data-demo>Learn more</a></div>
+  </article>
+
+</main>
+
+<script>
+  // Demo buttons don't navigate.
+  document.querySelectorAll("[data-demo]").forEach((b) => b.addEventListener("click", (e) => e.preventDefault()));
+
+  // Slow motion toggle.
+  document.getElementById("slow").addEventListener("change", (e) => {
+    document.documentElement.style.setProperty("--slow", e.target.checked ? "4" : "1");
+  });
+
+</script>
+</body>
+</html>

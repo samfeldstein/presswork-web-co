@@ -1,0 +1,30 @@
+{
+  "name": "presswork",
+  // The contact form's Worker (worker/index.js). It only runs for the
+  // addresses in "run_worker_first" below; everything else is served straight
+  // from site/ as static files.
+  "main": "worker/index.js",
+  "compatibility_date": "2026-02-27",
+  // The live site. Deploying attaches the domain and its certificate.
+  "routes": [{ "pattern": "presswork.dev", "custom_domain": true }],
+  // Routes would switch off the workers.dev address; keep it. It serves the
+  // same Worker, so it shows whatever is live (canonical URLs still point to
+  // presswork.dev).
+  "workers_dev": true,
+  // Cloudflare Email Service, for the contact form (worker/index.js).
+  // It may only send from form@presswork.dev. Locally the dev server
+  // simulates it: the email is logged, not sent.
+  "send_email": [
+    { "name": "EMAIL", "allowed_sender_addresses": ["form@presswork.dev"] }
+  ],
+  "assets": {
+    "directory": "./site/",
+    "not_found_handling": "404-page",
+    // The Worker reads the static contact page through this binding (to
+    // fill in the time and show errors). run_worker_first makes the Worker
+    // answer /contact and /contact/ before the static file would be served;
+    // without it the page would be served as is and the form could not work.
+    "binding": "ASSETS",
+    "run_worker_first": ["/contact", "/contact/"]
+  }
+}

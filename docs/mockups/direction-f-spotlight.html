@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork homepage, spotlight direction (reference mockup)</title>
+<!--
+  Reference mockup for Direction F (spotlight). Standalone port of the artboard
+  "Spotlight.dc.html" from the Presswork Homepage Mockup canvas. Open this file
+  directly in a browser; no build step.
+
+  How it works:
+  - Layer 1 (plain): the real page content.
+  - Layer 2 (hidden): an identical-layout copy in a different color, with extra
+    text, absolutely positioned on top and revealed through a CSS radial-gradient
+    mask centered on the spotlight position (--x, --y, --r).
+  - Pointer move sets the position. After 2.5s idle, an auto-sweep takes over.
+  - prefers-reduced-motion: no auto-sweep and no entrance animation.
+
+  Known gaps versus the build brief (fix in the Astro build):
+  - Touch: pointermove only. The brief wants auto-sweep plus drag on touch.
+  - Accessibility: the whole hidden layer is aria-hidden here. The brief wants the
+    hidden text to stay readable by screen readers and search engines, so give the
+    hidden-layer-only text real, non-duplicated markup and hide only the duplicated
+    chrome (nav, headline, CTA copy).
+  - Copy: the lead paragraph says "Custom-built by hand", which the brief says not
+    to use. Left as in the mockup; swap in the real copy during the build.
+  - Fonts load from Google Fonts here. Fonts and colors are still undecided.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..700&family=Jost:wght@400;500;600&display=swap">
+<style>
+:root{
+  --gold:#F5C451;      /* alternates in the mockup: #F6EFE4, #F2A57E */
+  --radius:300px;      /* mockup range 140 to 520 */
+  --field:#6E1230;
+  --x:520px;
+  --y:380px;
+}
+body{margin:0;background:#0F0D12}
+a{color:#B8AFA2}a:hover{color:#F5C451}
+@keyframes pw-fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.pw-in{animation:pw-fade 1.2s cubic-bezier(.2,.7,.2,1) both}
+.pw-in2{animation-delay:.2s}.pw-in3{animation-delay:.4s}
+@media (prefers-reduced-motion: reduce){.pw-in{animation:none}}
+
+#stage{position:relative;min-height:100vh;overflow:hidden;background:#0F0D12;color:#B8AFA2;font-family:'Jost',system-ui,sans-serif;cursor:crosshair}
+.page{position:relative;min-height:100vh;box-sizing:border-box;display:flex;flex-direction:column;padding:clamp(16px,3vw,40px)}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 28px;font-size:15px;font-weight:500;letter-spacing:.2em;text-transform:uppercase}
+.bar>span:first-child,.bar a,.bar nav span{padding:12px 0}
+.bar nav,.bar .links{display:flex;flex-wrap:wrap;gap:0 28px}
+.bar a{text-decoration:none}
+main,.mid{flex-grow:1;display:flex;flex-direction:column;justify-content:center;gap:clamp(20px,3vw,36px);padding:clamp(24px,5vw,64px) 0}
+.eyebrow{margin:0;font-size:15px;font-weight:500;letter-spacing:.3em;text-transform:uppercase}
+.h1{margin:0;font-family:'Bodoni Moda',Didot,serif;font-weight:500;font-size:clamp(64px,11vw,190px);line-height:.9;letter-spacing:-.03em}
+.h1 em{font-weight:400}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:20px 40px}
+.row p{flex:0 1 460px;margin:0;font-size:clamp(18px,1.5vw,21px);line-height:1.5}
+.cta{display:inline-flex;align-items:center;min-height:54px;padding:0 30px;border-radius:999px;font-size:15px;font-weight:600;letter-spacing:.18em;text-transform:uppercase}
+.hint{margin:0;font-size:13px;letter-spacing:.3em;text-transform:uppercase}
+
+/* plain layer colors */
+.plain .h1{color:#9A9186}
+.plain .cta{border:1px solid #B8AFA2;text-decoration:none}
+.plain .bar>span:first-child{color:#F6EFE4}
+.plain .hint{opacity:.8}
+
+/* hidden layer: masked by the spotlight */
+.reveal{
+  position:absolute;inset:0;pointer-events:none;background:var(--field);
+  -webkit-mask-image:radial-gradient(circle var(--radius) at var(--x) var(--y),#000 0%,#000 55%,transparent 100%);
+          mask-image:radial-gradient(circle var(--radius) at var(--x) var(--y),#000 0%,#000 55%,transparent 100%);
+}
+.reveal .big{position:absolute;margin:0;font-family:'Bodoni Moda',serif;font-style:italic;line-height:1;color:#8A1B3D}
+.reveal .page{color:#F6EFE4}
+.reveal .eyebrow,.reveal .hint{color:var(--gold)}
+.reveal .h1{color:var(--gold)}
+.reveal .h1 em{color:#F6EFE4}
+.reveal .cta{background:var(--gold);color:#0F0D12}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- Layer 1: the plain page -->
+  <div class="page plain">
+    <header class="bar">
+      <span>Presswork</span>
+      <nav aria-label="Main">
+        <a href="#plans">Plans</a>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <main>
+      <p class="eyebrow pw-in">Websites for small business</p>
+      <h1 class="h1 pw-in pw-in2">Your website,<br><em>fully managed.</em></h1>
+      <div class="row pw-in pw-in3">
+        <p>Custom-built by hand, made to be found in search, and looked after by one person who answers. $0 down, plans from $150/mo.</p>
+        <a class="cta" href="#contact">Book a free site audit</a>
+      </div>
+    </main>
+    <p class="hint">Move the light ↗</p>
+  </div>
+
+  <!-- Layer 2: the hidden layer (same layout, revealed by the spotlight) -->
+  <div class="reveal" aria-hidden="true">
+    <p class="big" style="top:14%;right:-2%;font-size:clamp(90px,13vw,220px)">Look good.</p>
+    <p class="big" style="bottom:20%;right:6%;font-size:clamp(70px,9vw,160px)">Get found.</p>
+    <p class="big" style="bottom:-4%;left:2%;font-size:clamp(80px,11vw,190px)">Get to work.</p>
+    <div class="page">
+      <div class="bar">
+        <span>Presswork</span>
+        <span class="links"><span>Plans</span><span>Work</span><span>About</span><span>Contact</span></span>
+      </div>
+      <div class="mid">
+        <p class="eyebrow">Websites for small business</p>
+        <p class="h1">Your website,<br><em>fully managed.</em></p>
+        <div class="row">
+          <p>Custom-built by hand, made to be found in search, and looked after by one person who answers. $0 down, plans from $150/mo.</p>
+          <span class="cta">Book a free site audit</span>
+        </div>
+      </div>
+      <p class="hint">Move the light ↗</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var root = document.documentElement;
+  var lastMove = 0;
+  var frame = null;
+
+  function setPos(x, y) {
+    root.style.setProperty('--x', Math.round(x) + 'px');
+    root.style.setProperty('--y', Math.round(y) + 'px');
+  }
+
+  // Cursor (or finger drag) moves the light.
+  stage.addEventListener('pointermove', function (e) {
+    var r = stage.getBoundingClientRect();
+    lastMove = Date.now();
+    setPos(e.clientX - r.left, e.clientY - r.top);
+  });
+
+  // After 2.5s idle, the light sweeps on its own.
+  function tick() {
+    if (Date.now() - lastMove > 2500) {
+      var w = stage.clientWidth, h = stage.clientHeight;
+      var t = Date.now() / 1000;
+      setPos(w * (0.5 + 0.32 * Math.sin(t * 0.35)), h * (0.5 + 0.22 * Math.sin(t * 0.7)));
+    }
+    frame = requestAnimationFrame(tick);
+  }
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) { frame = requestAnimationFrame(tick); }
+})();
+</script>
+</body>
+</html>

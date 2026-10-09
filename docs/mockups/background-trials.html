@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Background trials</title>
+<!--
+  Side-by-side background treatments for everything below the hero, in the
+  site's palette and fonts. Open directly in a browser; no build step.
+  Each card is a small scrollable window onto stand-in homepage sections (the
+  hero is not touched, it's a labelled strip). Scroll inside each window and
+  move the pointer over it: some effects react to both.
+  Pick a letter, or mix ("B's glows with F's dust").
+  Everything runs on CSS plus a few lines of JS (C, F) and stops with reduced
+  motion. G uses scroll-driven animation (Chrome, Edge, Safari 26+); elsewhere
+  it simply sits still. "Pause motion" freezes every effect. If your system has
+  Reduce Motion turned on, a notice says so and the effects are forced on here.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wdth,wght@0,62.5..100,300..700;1,62.5..100,300..700&family=Jost:wght@400;500;600&display=swap">
+<style>
+:root{
+  --night:#0f0d12;--raised:#1a161e;--cream:#f6efe4;--stone:#b8afa2;--dim:#9a9186;--smoke:#3a3340;
+  --gold:#f5c451;--plum:#6e1230;--plum-deep:#8a1b3d;
+  --display:"Noto Serif",Georgia,serif;--body:"Jost",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--night);color:var(--stone);font-family:var(--body);font-size:17px;line-height:1.55;padding:clamp(16px,3vw,40px)}
+.intro{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:20px;padding-bottom:28px;margin-bottom:28px;border-bottom:1px solid var(--smoke)}
+.intro > div{max-width:64ch}
+.label{color:var(--gold);font-size:13px;font-weight:500;letter-spacing:.3em;text-transform:uppercase}
+.intro h1{margin-top:8px;color:var(--cream);font-family:var(--display);font-weight:300;font-size:clamp(36px,5vw,72px);line-height:.95;letter-spacing:-.03em}
+.intro p{margin-top:12px}
+.toggle{display:flex;align-items:center;gap:10px;color:var(--cream);font-size:14px;cursor:pointer;user-select:none}
+.toggle[hidden]{display:none}
+.toggle input{accent-color:var(--gold);width:18px;height:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:20px}
+.card{display:grid;gap:14px;align-content:start;padding:20px;border:1px solid var(--smoke);border-radius:14px;background:var(--raised)}
+.spec{color:var(--dim);font-size:13px;line-height:1.45}
+.spec b{display:block;margin-bottom:2px;color:var(--cream);font-size:15px;font-weight:600}
+
+/* The window: scrolls like the page does */
+.frame{height:560px;overflow:auto;border-radius:10px;background:var(--night);border:1px solid var(--smoke);overscroll-behavior:contain}
+.hero-strip{position:relative;z-index:1;display:grid;place-items:center;height:110px;background:var(--plum);color:var(--plum-deep);font-family:var(--display);font-style:italic;font-weight:300;font-size:26px}
+.hero-strip small{display:block;margin-top:2px;color:var(--cream);opacity:.55;font:500 11px var(--body);letter-spacing:.28em;text-transform:uppercase;font-style:normal;text-align:center}
+.page{position:relative;min-height:1150px;overflow:clip}
+.fx{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:clip}
+.content{position:relative;z-index:1}
+
+/* Stand-in sections */
+.sec{position:relative;padding:44px 28px}
+.eyebrow{color:var(--gold);font-size:12px;font-weight:500;letter-spacing:.3em;text-transform:uppercase}
+.sec h2{margin-top:8px;color:var(--cream);font-family:var(--display);font-size:clamp(30px,3.2vw,40px);line-height:1;font-weight:600;font-stretch:72%;letter-spacing:.01em}
+.sec h2 em{color:var(--gold);font-weight:300;font-style:italic;font-stretch:100%;letter-spacing:-.02em}
+.sec p.t{max-width:44ch;margin-top:14px;font-size:15px}
+.shot{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.shot i{display:block;height:130px;border-radius:10px;border:1px solid var(--smoke);background:rgba(26,22,30,.7)}
+.shot i:last-child{background:rgba(246,239,228,.9)}
+.rcpt{width:210px;margin-top:20px;padding:14px 16px;background:#fffdf8;color:#22251f;font:13px/1.6 "Courier New",monospace;box-shadow:0 12px 24px rgba(0,0,0,.35)}
+.rcpt b{display:block;text-align:center}
+.pill{display:inline-block;margin-top:20px;padding:15px 28px;border:1px solid var(--gold);border-radius:999px;background:var(--gold);color:var(--night);font:600 13px var(--body);letter-spacing:.18em;text-transform:uppercase}
+.sec.close{text-align:center;padding-bottom:70px}.sec.close p.t{margin-inline:auto}
+
+/* ---------- B: drifting glows. Three big soft blobs wander behind the sections ---------- */
+.v-b .blob{position:absolute;width:75%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(138,27,61,.75),transparent 65%)}
+.v-b .b1{top:-4%;left:-20%;animation:drift1 14s ease-in-out infinite alternate}
+.v-b .b2{top:36%;right:-30%;background:radial-gradient(circle,rgba(138,27,61,.7),transparent 65%);animation:drift2 18s ease-in-out infinite alternate}
+.v-b .b3{top:70%;left:-10%;width:60%;background:radial-gradient(circle,rgba(245,196,81,.2),transparent 65%);animation:drift3 16s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(60%,40%) scale(1.25)}}
+@keyframes drift2{to{transform:translate(-55%,-30%) scale(1.2)}}
+@keyframes drift3{to{transform:translate(70%,-35%) scale(1.3)}}
+
+/* ---------- F: gold dust. Tiny specks twinkle on and off and rise a little ---------- */
+.v-f .speck{position:absolute;border-radius:50%;background:var(--gold);box-shadow:0 0 6px 1px rgba(245,196,81,.5);opacity:0;animation:twinkle var(--d,5s) ease-in-out var(--delay,0s) infinite}
+@keyframes twinkle{0%,100%{opacity:0;transform:translateY(0) scale(.6)}50%{opacity:var(--o,.7);transform:translateY(-16px) scale(1)}}
+
+/* Pause / reduced motion */
+.paused .fx *,.paused .fx{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){
+  body:not(.force-motion) .fx *,body:not(.force-motion) .fx{animation:none!important}
+  body:not(.force-motion) .v-f .speck{opacity:.35}
+}
+.notice{display:none;margin-bottom:24px;padding:14px 18px;border:1px solid var(--gold);border-radius:10px;color:var(--cream);font-size:14px}
+.notice.show{display:block}
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <div>
+    <p class="label">Presswork Web Co.</p>
+    <h1>Background trials</h1>
+    <p>Two ways to break up the black below the hero, kept from a longer list (the removed ones were A flat, C follow the light, D halftone, E sheen, G scroll-linked and H bands). F is applied on the site; B is kept for reference. The hero is a labelled strip and stays as it is. Scroll inside each window. The letters match the original eight.</p>
+  </div>
+  <div><label class="toggle"><input type="checkbox" id="pause"> Pause motion</label><label class="toggle" id="forceLabel" hidden><input type="checkbox" id="force" checked> Show motion anyway</label></div>
+</header>
+
+<p class="notice" id="notice"><b>Reduce Motion is on for this computer.</b> The real site will keep these effects still for you. Here they are forced on so you can judge them. Uncheck "Show motion anyway" at the top to see the reduced-motion version.</p>
+
+<main class="grid">
+  <article class="card"><p class="spec"><b>B · Drifting glows</b>Three large, soft plum blobs (and one faint gold) wander behind the sections, 14–18 seconds a lap. The page always feels lit from somewhere that’s moving. Cheapest to build.</p><div class="frame v-b" data-fx><template data-layers><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></template></div></article>
+  <article class="card"><p class="spec"><b>F · Gold dust (applied)</b>Forty tiny gold specks twinkle on and off and rise a few pixels, like dust in a projector beam. Adds sparkle without changing the overall darkness.</p><div class="frame v-f" data-fx data-dust></div></article>
+</main>
+
+<template id="page">
+  <div class="hero-strip"><div>hidden layer<small>Hero, unchanged</small></div></div>
+  <div class="page">
+    <div class="fx" aria-hidden="true"></div>
+    <div class="content">
+      <section class="sec">
+        <p class="eyebrow">Before &amp; after</p>
+        <h2>See the <em>difference.</em></h2>
+        <p class="t">Drag the slider to see the old site next to the one we built, with the same content and a lot more care.</p>
+        <div class="shot"><i></i><i></i></div>
+      </section>
+      <section class="sec">
+        <p class="eyebrow">What we offer</p>
+        <h2>One price, <em>everything in it.</em></h2>
+        <p class="t">$0 down, then $150 a month. Here’s everything you get, and exactly what it costs.</p>
+        <div class="rcpt"><b>PRESSWORK WEB CO.</b>DESIGN ......... INCLUDED<br>HOSTING ........ INCLUDED<br>CHANGES ........ INCLUDED<br><b>MONTHLY  $150</b></div>
+      </section>
+      <section class="sec">
+        <p class="eyebrow">How it works</p>
+        <h2>We build it. <em>You run the business.</em></h2>
+        <p class="t">A short call, a first draft in two weeks, and a site that stays up to date without you thinking about it.</p>
+      </section>
+      <section class="sec close">
+        <p class="eyebrow">Get in touch</p>
+        <h2>You run the business. <em>We handle the website.</em></h2>
+        <span class="pill">Book a free site audit</span>
+      </section>
+    </div>
+  </div>
+</template>
+
+<script>
+  const tpl = document.getElementById("page");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll("[data-fx]").forEach((frame) => {
+    const layers = frame.querySelector("[data-layers]");
+    frame.append(tpl.content.cloneNode(true));
+    const fx = frame.querySelector(".fx");
+    if (layers) fx.append(layers.content);
+    layers?.remove();
+
+    // F: scatter the dust
+    if (frame.hasAttribute("data-dust")) {
+      for (let i = 0; i < 40; i++) {
+        const s = document.createElement("i");
+        s.className = "speck";
+        const size = 1.5 + Math.random() * 2.5;
+        s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;width:${size}px;height:${size}px;--d:${3.5 + Math.random() * 4}s;--delay:${-Math.random() * 6}s;--o:${0.35 + Math.random() * 0.5}`;
+        fx.append(s);
+      }
+    }
+  });
+
+  if (reduce) {
+    document.body.classList.add("force-motion");
+    document.getElementById("notice").classList.add("show");
+    document.getElementById("forceLabel").hidden = false;
+    document.getElementById("force").addEventListener("change", (e) => {
+      document.body.classList.toggle("force-motion", e.target.checked);
+    });
+  }
+
+  document.getElementById("pause").addEventListener("change", (e) => {
+    document.body.classList.toggle("paused", e.target.checked);
+  });
+</script>
+</body>
+</html>
