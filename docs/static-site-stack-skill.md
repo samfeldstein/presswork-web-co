@@ -1,6 +1,6 @@
 ---
 name: static-site-stack
-description: Use when building or rebuilding a small website (marketing site, portfolio, landing pages, up to roughly 10-15 pages). Defaults to plain HTML, CSS and vanilla JS with no framework or bundler, self-hosted fonts, a tiny Cloudflare Worker only when a form or endpoint is needed, and dependency-free scripts that prevent drift between pages. Says when to escalate to Astro or similar.
+description: Use when building or rebuilding a small website (marketing site, portfolio, landing pages, up to roughly 10-15 pages). Defaults to plain HTML, CSS, and vanilla JS with no framework or bundler, self-hosted fonts, a tiny Cloudflare Worker only when a form or endpoint is needed, and dependency-free scripts that prevent drift between pages. Says when to escalate to Astro or similar.
 ---
 
 # Static site stack
@@ -10,7 +10,7 @@ The user has Claude write all the code, so build tools that exist to save humans
 ## Default stack
 
 - Plain HTML, CSS, and a little vanilla JS. No bundler, no framework, no npm dependencies.
-- Files must open directly in a browser and deploy by uploading the folder (Cloudflare Pages/Workers, Netlify, GitHub Pages).
+- The site is a plain folder of files that deploys as is, with no build step (Cloudflare Workers or Pages, Netlify, GitHub Pages). Use root-relative paths and preview with a local server such as `npx wrangler dev`.
 - Shared elements (header, footer, nav) are duplicated across pages. Update all pages in one pass when they change, and use the drift scripts below so they can't fall out of sync.
 
 ## Progressive enhancement
@@ -54,12 +54,12 @@ If CSS and JS links carry a content hash (`?v=...`, written by the sync script),
 
 ## Preventing drift
 
-Anything that exists in more than one place can drift: header, footer, nav links, the sitemap, meta tags, canonical URLs, prices and other key facts. Keep one source for each fact and let a script either generate the copies or check them. Use the two dependency-free Node scripts bundled with this skill in `scripts/` (plain `node`, no install step). Copy `sync.mjs` and `check.mjs` into the site's root unchanged and keep them side by side. Setup steps and the optional `site.config.json` settings are in `references/drift-scripts.md`; read it the first time you set a site up.
+Anything that exists in more than one place can drift: header, footer, nav links, the sitemap, meta tags, canonical URLs, prices, and other key facts. Keep one source for each fact and let a script either generate the copies or check them. Use the two dependency-free Node scripts bundled with this skill in `scripts/` (plain `node`, no install step; the folder is in the installed skill, not included in this repo). Copy `sync.mjs` and `check.mjs` into the site's root unchanged and keep them side by side. Setup steps and the optional `site.config.json` settings are in `references/drift-scripts.md`; read it the first time you set a site up.
 
 1. **`sync.mjs`** writes the shared parts.
    - The header and footer live once, in `shared/header.html` and `shared/footer.html`.
    - Each page wraps its copy in marker comments, e.g. `<!-- shared:header -->…<!-- /shared:header -->`, and the script rewrites what's between them.
-   - Pages stay plain, openable HTML, and the shared parts can't drift because they are regenerated.
+   - Pages stay plain HTML, and the shared parts can't drift because they are regenerated.
    - The same script regenerates `sitemap.xml` from the list of page files.
 2. **`check.mjs`** catches everything else. It fails if:
    - a page is missing a `<title>`, meta description, canonical URL, `lang`, or has other than exactly one `<h1>`;
@@ -87,7 +87,7 @@ Keep a short checklist in the repo and run it after any major change (shared par
 2. **Judgment, reporting only problems:** accessibility semantics (names, roles, focus order, decorative things hidden), SEO impact, Worker security (validation, escaping, size limits, no internals in errors, no header injection), the performance rules above, and hard-coded things that may now be stale (Lighthouse scores shown on the site, prices, nav, docs).
 3. **Only the owner can run:** Lighthouse (mobile, incognito, every page), Firefox GPU helper on the home page, a real phone, a screen reader (VoiceOver in Safari) when markup changed, the contact form once for real, and the W3C validator and WAVE after larger markup changes. Give these one at a time.
 
-**Hosting dashboard settings are changes too.** A setting turned on in the dashboard can change what the site sends without touching the repo. On Cloudflare, Bot Fight Mode on the Free plan injects a bot-detection script into every page, and its deprecated-API warnings dropped Lighthouse Best Practices from 100 to 81; turning it off fixed it after some minutes. After changing anything under Security, Speed or Rules, run Lighthouse on the live site and search the page source for scripts you didn't add. Security response headers, HSTS on a `.dev` domain, and Rocket Loader were judged not worth it for a small static site with no logins, stored data or uploads.
+**Hosting dashboard settings are changes too.** A setting turned on in the dashboard can change what the site sends without touching the repo. On Cloudflare, Bot Fight Mode on the Free plan injects a bot-detection script into every page, and its deprecated-API warnings dropped Lighthouse Best Practices from 100 to 81; turning it off fixed it after some minutes. After changing anything under Security, Speed, or Rules, run Lighthouse on the live site and search the page source for scripts you didn't add. Security response headers, HSTS on a `.dev` domain, and Rocket Loader were judged not worth it for a small static site with no logins, stored data or uploads.
 
 ## Read-only data sites
 
@@ -125,4 +125,4 @@ Astro still outputs mostly static HTML, so migrating later is cheap. Don't migra
 - JS-only rendering for static content
 - Heavy dependencies for things the platform does natively
 - Hand-copying shared markup or key facts between pages without a check
-- Unwrapped scripts, third-party hosts, or a mask on anything that moves
+- Script files not loaded as modules, third-party hosts, or a mask on anything that moves

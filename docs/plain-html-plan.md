@@ -4,7 +4,7 @@ Drafted 2026-10-07; carried out and deployed the same day. Skill: `docs/static-s
 
 ## Rule for the whole port
 
-**Port, don't redesign.** CSS and JS move over as they are. The handoff lists hard-won Firefox performance findings (no `mask-image` on moving things, stepped animations, fixed keyframe values, px keyframes). A "cleanup" could undo those. Only the mechanics change: Astro components become inline HTML, scoped styles become plain CSS.
+**Port, don't redesign.** CSS and JS move over as they are. They hold hard-won fixes for animation performance in Firefox (no `mask-image` on moving things, stepped animations, fixed keyframe values, px keyframes). A "cleanup" could undo those. Only the mechanics change: Astro components become inline HTML, scoped styles become plain CSS.
 
 ## Target layout
 
@@ -25,7 +25,7 @@ sync.mjs  check.mjs  test/*.test.mjs   ← dependency-free Node scripts
 wrangler.jsonc
 ```
 
-No `package.json` dependencies at all. Wrangler is run with `npx` (as the user already does for deploys).
+No `package.json` dependencies at all. Wrangler is run with `npx`.
 
 ## What replaces each Astro feature
 
@@ -38,8 +38,6 @@ No `package.json` dependencies at all. Wrangler is run with `npx` (as the user a
 | `@fontsource` packages | Copy the `.woff2` files in; `@font-face` with `unicode-range` |
 | Image optimization | One-time conversion of the few images used (not a dependency), committed as files |
 | Prefetch (viewport strategy) | Native Speculation Rules: a `<script type="speculationrules">` JSON block in `shared/head.html`, prefetch only (not prerender, which would run the dust and shooting-star animations in a hidden page). Chromium browsers only; Firefox and Safari ignore it harmlessly. No viewport trigger exists, so use `eagerness: "eager"` (only 4 small same-origin pages) |
-| Content collection / Work page | Not ported. Work page is off. Case studies move to an archive folder for the Prairie Rose redo |
-| `FontTester`, `EasterEgg` | Not ported (unused) |
 | Astro Action + `astro:env` | `worker/index.js` + Worker secret `CONTACT_TO_EMAIL` (already set) |
 
 ## The contact form (the only real server code)
@@ -59,7 +57,7 @@ Validation is tested with the built-in `node --test` (no packages): good and bad
 ## Drift protection
 
 - `sync.mjs`: header, footer, shared `<head>` tags, sitemaps.
-- `check.mjs`: one `<h1>` per page, title/description/canonical/og tags, all internal links and asset paths resolve, sitemap matches pages, prices and nav identical everywhere, every character on the site is covered by the font subsets we ship (guards the "arrow pulls in the math subset" problem).
+- `check.mjs`: one `<h1>` per page, title/description/canonical/og tags, all internal links and asset paths resolve, sitemap matches pages, prices and nav identical everywhere, every character on the site is covered by the font subsets we ship (so a stray symbol like → can't make browsers download an extra font file).
 - Both run before every deploy.
 
 ## Steps
@@ -68,17 +66,13 @@ Validation is tested with the built-in `node --test` (no packages): good and bad
 2. **Skeleton.** `site/`, tokens/reset/global CSS verbatim, fonts, `wrangler.jsonc` pointing at `site/`.
 3. **Shared parts and scripts.** `shared/*`, `sync.mjs`, `check.mjs`.
 4. **Pages.** 404, about, pricing, then home (hero, before/after, receipt, closing CTA), then contact markup.
-5. **Scripts.** Port each component script as a plain `.js` file, deferred, no behavior changes.
+5. **Scripts.** Port each component script as a plain `.js` file, deferred, no behavior changes. (They became ES modules on 2026-10-12.)
 6. **Worker + tests.**
 7. **Images.**
-8. **Compare.** Text and structure diff of each page against `.reference/dist` (I can run this in the sandbox), then Lighthouse and a visual check on the preview by the user, including Firefox CPU for the home page since the perf findings live there.
-9. **Preview.** `wrangler versions upload` from the user's terminal. Send one real contact message through the preview URL.
-10. **Cutover (only on the user's say-so).** Merge to `main`, `wrangler deploy`. Rollback is `wrangler rollback` (previous version) or reverting the merge. Afterwards: remove Astro files and dependencies, rewrite the project notes and the build notes, delete the stale sandbox build-env memory.
+8. **Compare.** Text and structure diff of each page against `.reference/dist`, then Lighthouse and a visual check on the preview, including Firefox CPU for the home page since the perf findings live there.
+9. **Preview.** `wrangler versions upload`, then one real contact message through the preview URL.
+10. **Cutover.** Merge to `main`, `wrangler deploy`. Rollback is `wrangler rollback` (previous version) or reverting the merge. Afterwards: remove Astro files and dependencies, rewrite the project notes and the build notes.
 
 ## Limits and risks
 
-- I can't reach localhost, the preview URL or Cloudflare from the sandbox, so the visual check, performance check and real-email test are the user's. I can verify structure, text, links, validation logic and CSS by diffing files.
-- Deploy goes live. Nothing here deploys; only the user's `wrangler deploy` does.
-- The sandbox build env vars in memory apply to `main`'s Astro build only. The new site needs no build.
 - Pages use root-relative paths (`/css/...`), so they need `wrangler dev` or any local server, not `file://`. `check.mjs` verifies the paths.
-- Work done on `plain-html` may be auto-committed by Git Docs; check that it's watching the right branch.
