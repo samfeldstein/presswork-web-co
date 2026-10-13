@@ -36,7 +36,7 @@ Lighthouse on the live site, mobile, scores 98 to 100 across every page. Before 
 
 ## Further reading
 
-- [`docs/astro-to-plain-html-report.md`](docs/astro-to-plain-html-report.md): the site started on Astro. How and why I rebuilt it as plain HTML, and what I'd do differently.
+- [`docs/astro-to-plain-html-report.md`](docs/astro-to-plain-html-report.md): the site started on Astro. How and why I rebuilt it as plain HTML, and what I learned.
 - [`docs/plain-html-plan.md`](docs/plain-html-plan.md): the plan I wrote before the rebuild.
 - [`docs/static-site-stack-skill.md`](docs/static-site-stack-skill.md): a Claude skill, written as instructions for Claude, that captures the lessons from this site. It tells Claude how to build small static sites the same way.
 
