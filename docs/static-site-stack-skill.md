@@ -23,7 +23,9 @@ The user has Claude write all the code, so build tools that exist to save humans
 
 ## Scripts
 
-- Each script is a classic deferred script (`<script src="..." defer>`) wrapped in a self-calling function, `(() => { ... })();`, so top-level names can't collide. Two scripts that each declared the same top-level `const` once broke a slider with no visible error. Inline scripts get the same wrapper.
+- Load each script file as a module (`<script type="module" src="...">`). A module defers on its own and keeps its top-level names private. Classic scripts all share one global scope, and two that each declared the same top-level `const` once broke a slider with no visible error.
+- An inline script that must run while the page is parsed (for example one that collapses a menu before first paint) stays classic, wrapped in a self-calling function, `(() => { ... })();`, for the same reason.
+- Have a check fail on a script file loaded without `type="module"` and on an unwrapped classic inline script.
 - Load nothing from third-party hosts: no CDN libraries, no analytics snippets, no font hosts. Keep a short allowed-hosts list and have a check fail on anything else.
 - Keep comments out of shipped CSS and JS except the few that stop a regression (browser workarounds).
 
@@ -72,7 +74,7 @@ Once a site has settled, rules like these are worth adding to `check.mjs`, with 
 - a gzipped size budget per page (HTML plus linked CSS and JS), set about a third above the measured size;
 - WCAG AA contrast (4.5:1) for a list of text and background color pairs, read from the design tokens;
 - no `mask` on animated rules or inside `@keyframes`;
-- every script wrapped in a self-calling function, and no hosts outside the allowed list;
+- every script file loaded as a module and every classic inline script wrapped in a self-calling function, and no hosts outside the allowed list;
 - every character on a page covered by the shipped font subsets, balanced CSS braces, and `for`/`aria-*` references that point at ids that exist.
 
 Prove each rule works by breaking something on purpose in a test (a copy of the site with a bad script, host, color or mask) and watching it fail.

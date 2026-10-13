@@ -118,7 +118,7 @@ test("hostProblems allows listed hosts and flags others", () => {
   assert.equal(hostProblems("//cdn.example.net/lib.js", allowed).length, 1);
 });
 
-test("check reports an unwrapped script and third-party hosts", () => {
+test("check reports a non-module script file, an unwrapped inline script, and third-party hosts", () => {
   const dir = copyOfSite();
   try {
     writeFileSync(join(dir, "site/js/leaky.js"), 'const x = 1;\nfetch("https://tracker.example.com/");\n');
@@ -128,11 +128,13 @@ test("check reports an unwrapped script and third-party hosts", () => {
       page,
       html.replace(
         /<main\b[^>]*>/,
-        (open) => `${open}<script>var leak = 1;</script><script src="https://cdn.example.org/lib.js"></script><img src="//img.example.io/a.png" alt=""><a href="https://example.com/">fine</a>`,
+        (open) => `${open}<script>var leak = 1;</script><script src="/js/leaky.js"></script><script type="module">const fine = 1;</script><script src="https://cdn.example.org/lib.js"></script><img src="//img.example.io/a.png" alt=""><a href="https://example.com/">fine</a>`,
       ),
     );
     const problems = check({ root: join(dir, "site"), shared: join(dir, "shared") });
-    assert.ok(problems.some((p) => /js\/leaky\.js: script isn't wrapped/.test(p)), problems.join("\n"));
+    assert.ok(problems.some((p) => /about\/index\.html: <script src="\/js\/leaky\.js"> isn't type="module"/.test(p)), problems.join("\n"));
+    assert.ok(!problems.some((p) => /js\/leaky\.js: script isn't wrapped/.test(p)), problems.join("\n"));
+    assert.equal(problems.filter((p) => /inline <script>: script isn't wrapped/.test(p)).length, 1, problems.join("\n"));
     assert.ok(problems.some((p) => /js\/leaky\.js: refers to tracker\.example\.com/.test(p)), problems.join("\n"));
     assert.ok(problems.some((p) => /about\/index\.html: inline <script>: script isn't wrapped/.test(p)), problems.join("\n"));
     assert.ok(problems.some((p) => /<script> refers to cdn\.example\.org/.test(p)), problems.join("\n"));

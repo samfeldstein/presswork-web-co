@@ -21,7 +21,8 @@
     - robots.txt points at a sitemap that exists
     - no mask or mask-image on an animated rule or inside @keyframes (a moving
       mask is drawn in software in Firefox)
-    - every script (files and inline) runs inside a self-calling function, and
+    - every script file is loaded as a module (type="module"), every classic
+      inline script runs inside a self-calling function, and
       no script, stylesheet, image or form points at a host outside facts.json
       "allowedHosts" (plain <a> links to other sites are fine)
     - text/background color pairs listed in facts.json "contrast" meet WCAG AA
@@ -188,7 +189,7 @@ export function maskProblems(css) {
   return problems;
 }
 
-/** Every script must run inside a function, so top-level names can't collide between scripts. */
+/** A classic inline script must run inside a function, so top-level names can't collide between scripts. */
 export function scriptProblems(code) {
   const body = code.replace(/^(?:\s|\/\/[^\n]*|\/\*[\s\S]*?\*\/)*/, "").replace(/\s+$/, "");
   const opens = /^;?\(\s*(?:async\s*)?(?:\(\s*\)\s*=>|function\b)|^!\s*function\b|^;?\(\s*(?:async\s*)?\(\s*\)\s*=>/.test(body);
@@ -401,14 +402,14 @@ export function check({ root, shared, showFacts = false }) {
     for (const problem of contrastProblems(readFileSync(join(root, "css/tokens.css"), "utf8"), facts.contrast)) fail("css/tokens.css", problem);
   }
 
-  // Scripts: wrapped in a function, and nothing loads from a third-party host
+  // Scripts: files load as modules, classic inline scripts are wrapped, and nothing loads from a third-party host
   const allowedHosts = facts.allowedHosts ?? [];
   const scriptLabel = (label, problems) => problems.forEach((m) => fail(label, m));
   const jsDir = join(root, "js");
   if (existsSync(jsDir)) {
     for (const name of readdirSync(jsDir).filter((n) => n.endsWith(".js"))) {
       const code = readFileSync(join(jsDir, name), "utf8");
-      scriptLabel(`js/${name}`, [...scriptProblems(code), ...hostProblems(code, allowedHosts)]);
+      scriptLabel(`js/${name}`, hostProblems(code, allowedHosts));
     }
   }
   for (const page of pages) {
@@ -416,8 +417,11 @@ export function check({ root, shared, showFacts = false }) {
     const html = readFileSync(page.file, "utf8").replace(/<!--[\s\S]*?-->/g, "");
     for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
       const attrs = parseAttrs(m[1]);
-      if (attrs.src === undefined && (!attrs.type || /javascript|module/i.test(attrs.type)) && m[2].trim()) {
-        scriptLabel(`${label}: inline <script>`, [...scriptProblems(m[2]), ...hostProblems(m[2], allowedHosts)]);
+      if (attrs.src !== undefined) {
+        if (attrs.type?.trim().toLowerCase() !== "module") fail(label, `<script src="${attrs.src}"> isn't type="module", so its top-level names are shared with every other script`);
+      } else if ((!attrs.type || /javascript|module/i.test(attrs.type)) && m[2].trim()) {
+        const wrap = attrs.type?.trim().toLowerCase() === "module" ? [] : scriptProblems(m[2]);
+        scriptLabel(`${label}: inline <script>`, [...wrap, ...hostProblems(m[2], allowedHosts)]);
       }
     }
     for (const t of tags(simplify(html).markup)) {
