@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { validate, buildEmail, typedValues } from "../worker/validate.js";
-import { tooFast, botReason, looksLikeSpam, HONEYPOT } from "../worker/spam.js";
+import { tooFast, botReason, trapped, looksLikeSpam, HONEYPOT } from "../worker/spam.js";
 import { stampTime, sentState, errorState } from "../worker/render.js";
 import worker from "../worker/index.js";
 
@@ -274,11 +274,13 @@ test("a spammy name gets a field error; business is not checked", () => {
   }
 });
 
-test("botReason: honeypot first, then timing", () => {
-  assert.equal(botReason(form({ ...good, renderedAt: old(), [HONEYPOT]: "x" })), "hidden field filled");
-  assert.equal(botReason(form({ ...good, renderedAt: old(), [HONEYPOT]: "" })), null);
+test("botReason is the timing check; trapped is the honeypot", () => {
+  assert.equal(botReason(form({ ...good, renderedAt: old(), [HONEYPOT]: "x" })), null);
   assert.equal(botReason(form({ ...good, renderedAt: old() })), null);
   assert.match(botReason(form({ ...good })), /without a valid timestamp \(none\)/);
+  assert.equal(trapped(form({ ...good, [HONEYPOT]: "x" })), true);
+  assert.equal(trapped(form({ ...good, [HONEYPOT]: "" })), false);
+  assert.equal(trapped(form(good)), false);
 });
 
 test("the page has the honeypot, hidden from people and keyboards", () => {
@@ -289,24 +291,32 @@ test("the page has the honeypot, hidden from people and keyboards", () => {
   assert.doesNotMatch(block, /class="field"/);
 });
 
-test("a filled honeypot pretends to succeed, sends nothing, and logs no personal data", async (t) => {
-  const warn = t.mock.method(console, "warn", () => {});
+test("a filled honeypot still sends, marked as likely spam, and logs no personal data", async (t) => {
+  const log = t.mock.method(console, "log", () => {});
   const e = env();
   const json = await worker.fetch(post({ ...good, renderedAt: old(), [HONEYPOT]: "x" }, { accept: "application/json" }), e);
   assert.deepEqual(await json.json(), { sent: true });
   const plain = await worker.fetch(post({ ...good, renderedAt: old(), [HONEYPOT]: "x" }), e);
   assert.equal(plain.status, 303);
-  assert.equal(plain.headers.get("location"), "https://presswork.dev/contact/?sent=1");
-  assert.equal(e.sent.length, 0);
-  const logged = warn.mock.calls.map((c) => c.arguments.join(" ")).join("\n");
-  assert.match(logged, /hidden field filled, message dropped/);
+  assert.equal(e.sent.length, 2);
+  assert.equal(e.sent[0].subject, "[Likely spam] New inquiry from Rosa");
+  assert.match(e.sent[0].text, /^Likely spam: a hidden field was filled in\. Check before replying\.\n\nName: Rosa\n/);
+  const logged = log.mock.calls.map((c) => c.arguments.join(" ")).join("\n");
+  assert.match(logged, /message sent as likely spam \(hidden field filled\)/);
   assert.doesNotMatch(logged, /Rosa|rosa@example\.com|Hello/);
 });
 
-test("a bot with bad fields still gets the fake success", async (t) => {
+test("an empty honeypot sends a normal subject", async () => {
+  const e = env();
+  await worker.fetch(post({ ...good, renderedAt: old(), [HONEYPOT]: "" }, { accept: "application/json" }), e);
+  assert.equal(e.sent[0].subject, "New inquiry from Rosa");
+  assert.match(e.sent[0].text, /^Name: Rosa\n/);
+});
+
+test("a too-fast bot with bad fields still gets the fake success", async (t) => {
   t.mock.method(console, "warn", () => {});
   const e = env();
-  const res = await worker.fetch(post({ name: spamNames[0], email: "x", message: "", [HONEYPOT]: "x", renderedAt: old() }, { accept: "application/json" }), e);
+  const res = await worker.fetch(post({ name: spamNames[0], email: "x", message: "", renderedAt: String(Date.now()) }, { accept: "application/json" }), e);
   assert.deepEqual(await res.json(), { sent: true });
   assert.equal(e.sent.length, 0);
 });

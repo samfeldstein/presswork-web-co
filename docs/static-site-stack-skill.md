@@ -33,6 +33,20 @@ The user has Claude write all the code, so build tools that exist to save humans
 
 A static folder can't send email or handle a form POST. When a site needs that, add one small Cloudflare Worker script: a `fetch` handler that serves the static assets and handles the POST, with bindings such as `send_email` declared in `wrangler.jsonc`. It needs no build step and no dependencies. Keep the form working without JS (a plain `<form method="post">`). Needing a server endpoint is not a reason to bring a framework back.
 
+**Contact form spam.** Layer defenses that need no third-party script:
+
+1. The Worker writes the render time into a hidden field. A post under 2 seconds after render, or without a 13-digit timestamp, is a bot.
+2. Add a honeypot: a text field off-screen (not `display:none`), in a wrapper with `inert` and `aria-hidden="true"`, the input with `tabindex="-1"` and `autocomplete="off"`, a name with no contact meaning (not "website" or "homepage", which autofill may fill), and a "Leave this empty" label. Never echo its value back.
+3. Run check 1 before validating the fields and give those bots a fake success (the same JSON or redirect as a real send) with nothing sent. Don't drop on the honeypot: deliver those messages with "[Likely spam]" at the start of the subject and a warning as the first line of the body (some email apps fold a message into an earlier conversation and hide its subject). A honeypot once swallowed real messages through browser autofill, and a drop can't be told apart from a lost lead.
+4. Reject a name containing a link (a scheme, `www.`, or a common domain ending), a money amount, or `<` or `>`, after NFKC normalization and stripping invisible characters, with a visible field error, so a person can fix a false positive. Don't check the business or message fields for links.
+5. Log every outcome (sent with the time since render, marked as likely spam, dropped with the reason, rejected with field names only), never the form's contents. Turn on Workers Logs in `wrangler.jsonc` with per-request logs off: `"observability": { "enabled": true, "logs": { "invocation_logs": false } }`.
+6. **Never send an auto-reply that repeats what the visitor typed.** Bots put a scam in the name field and a victim's address in the email field, so an echoing "Hi {name}, thanks" email delivers the scam from the client's own domain. A fixed-text confirmation at most.
+7. Test accepted names (accents, O'Brien, "Smith & Co.", "Studio 54", a phone number, "Ana.Co") and rejected ones.
+
+If spam keeps getting through after this, add Cloudflare Turnstile (free, but a third-party script and no form without JavaScript; it's the owner's call), then a Workers Rate Limiting binding. Reference implementation: `worker/spam.js` in the presswork-web-co repo.
+
+Set everything that can be set in code (bindings, routes, observability, rate limits) in `wrangler.jsonc`, not the Cloudflare dashboard, so it's versioned and reusable.
+
 ## Fonts
 
 Self-host fonts as `.woff2` files committed to the repo, loaded with `@font-face` and `font-display: swap`. Never load from Google Fonts or other third-party font hosts.

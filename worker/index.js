@@ -1,5 +1,5 @@
 import { validate, typedValues, buildEmail } from "./validate.js";
-import { botReason } from "./spam.js";
+import { botReason, trapped } from "./spam.js";
 import { stampTime, sentState, errorState } from "./render.js";
 
 const SITE_TITLE = "Presswork Web Co.";
@@ -60,9 +60,15 @@ async function handlePost(request, env) {
       console.log(`contact: rejected (${Object.keys(result.fields).join(", ")})`);
       return errorResponse(env, request, 400, { fields: result.fields, typed: typedValues(form) });
     }
+    const suspect = trapped(form);
+    const mail = buildEmail(result.data, SITE_TITLE);
+    if (suspect) {
+      mail.subject = `[Likely spam] ${mail.subject}`;
+      mail.text = `Likely spam: a hidden field was filled in. Check before replying.\n\n${mail.text}`;
+    }
     try {
-      await env.EMAIL.send({ ...buildEmail(result.data, SITE_TITLE), to: env.CONTACT_TO_EMAIL });
-      console.log(`contact: message sent (${Date.now() - Number(form.get("renderedAt"))} ms after render)`);
+      await env.EMAIL.send({ ...mail, to: env.CONTACT_TO_EMAIL });
+      console.log(`contact: message sent${suspect ? " as likely spam (hidden field filled)" : ""} (${Date.now() - Number(form.get("renderedAt"))} ms after render)`);
     } catch (error) {
       console.error(`contact: Email Service rejected the message: ${error?.message ?? "unknown error"}`);
       return errorResponse(env, request, 500, { message: GENERIC_ERROR, typed: typedValues(form) });

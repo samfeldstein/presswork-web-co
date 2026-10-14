@@ -6,9 +6,12 @@ export function tooFast(renderedAt, now = Date.now()) {
   return { bot: age < 2000, age };
 }
 
+export function trapped(form) {
+  const value = form.get(HONEYPOT);
+  return typeof value === "string" && value !== "";
+}
+
 export function botReason(form, now = Date.now()) {
-  const trap = form.get(HONEYPOT);
-  if (typeof trap === "string" && trap !== "") return "hidden field filled";
   const renderedAt = form.get("renderedAt");
   const { bot, age } = tooFast(typeof renderedAt === "string" ? renderedAt : undefined, now);
   return bot ? `submitted too fast or without a valid timestamp (${age === null ? "none" : `${age} ms`})` : null;
