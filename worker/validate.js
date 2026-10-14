@@ -1,3 +1,5 @@
+import { looksLikeSpam } from "./spam.js";
+
 /* Flatten line breaks so a name can't fake extra "Email:" lines in the message. */
 export const oneLine = (value) => value.replace(/[\r\n\u2028\u2029]+/g, " ");
 
@@ -15,6 +17,7 @@ export function validate(form) {
   const name = text(form, "name")?.trim() ?? "";
   if (!name) fail("name", "Enter your name.");
   else if (name.length > 200) fail("name", "Keep your name under 200 characters.");
+  else if (looksLikeSpam(name)) fail("name", "Enter just your name here. Links and other details can go in your message.");
 
   const email = text(form, "email")?.trim() ?? "";
   if (!EMAIL.test(email)) fail("email", "Enter a valid email address.");
@@ -43,7 +46,6 @@ export function validate(form) {
       audit,
       siteUrl: siteUrl === undefined ? undefined : oneLine(siteUrl),
       message,
-      renderedAt: text(form, "renderedAt"),
     },
   };
 }
@@ -75,10 +77,4 @@ export function buildEmail(data, siteTitle) {
       .filter((line) => line !== null)
       .join("\n"),
   };
-}
-
-export function tooFast(renderedAt, now = Date.now()) {
-  if (typeof renderedAt !== "string" || !/^\d{13}$/.test(renderedAt)) return { bot: true, age: null };
-  const age = now - Number(renderedAt);
-  return { bot: age < 2000, age };
 }

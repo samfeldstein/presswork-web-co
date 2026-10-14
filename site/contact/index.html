@@ -66,6 +66,14 @@
       gap: var(--space-lg);
     }
 
+    .extra {
+      position: absolute;
+      inset-inline-start: -100vw;
+      inline-size: 1px;
+      block-size: 1px;
+      overflow: hidden;
+    }
+
     .summary {
       padding: var(--space-md);
       border: 2px solid var(--color-stamp);
@@ -463,6 +471,11 @@
   <div class="field">
             <label for="field-message">How can we help?</label>
             <textarea id="field-message" name="message" rows="6" required></textarea>
+          </div>
+
+          <div class="extra" aria-hidden="true" inert>
+            <label for="field-referral">Leave this empty</label>
+            <input id="field-referral" name="referral" type="text" tabindex="-1" autocomplete="off">
           </div>
 
           <input type="hidden" name="renderedAt" value="__RENDERED_AT__">

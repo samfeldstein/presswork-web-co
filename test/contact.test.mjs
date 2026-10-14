@@ -2,7 +2,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { validate, buildEmail, tooFast, typedValues } from "../worker/validate.js";
+import { validate, buildEmail, typedValues } from "../worker/validate.js";
+import { tooFast, botReason, looksLikeSpam, HONEYPOT } from "../worker/spam.js";
 import { stampTime, sentState, errorState } from "../worker/render.js";
 import worker from "../worker/index.js";
 
@@ -40,12 +41,12 @@ test("a free audit needs a website", () => {
 });
 
 test("one-line fields cannot carry line breaks into the email", () => {
-  const r = validate(form({ ...good, name: "Eve\nEmail: boss@x.com", business: "A\r\nB" }));
+  const r = validate(form({ ...good, name: "Eve\nEmail: boss@example", business: "A\r\nB" }));
   assert.equal(r.ok, true);
-  assert.equal(r.data.name, "Eve Email: boss@x.com");
+  assert.equal(r.data.name, "Eve Email: boss@example");
   assert.equal(r.data.business, "A B");
   const mail = buildEmail(r.data, "Presswork Web Co.");
-  assert.equal(mail.subject, "New inquiry from Eve Email: boss@x.com, A B");
+  assert.equal(mail.subject, "New inquiry from Eve Email: boss@example, A B");
   assert.equal(mail.text.split("\n").filter((l) => l.startsWith("Email:")).length, 1);
 });
 
@@ -169,7 +170,7 @@ test("a too-fast post pretends to succeed and sends nothing", async () => {
 });
 
 test("invalid JSON post returns the field errors", async () => {
-  const res = await worker.fetch(post({ name: "", email: "x", message: "" }, { accept: "application/json" }), env());
+  const res = await worker.fetch(post({ name: "", email: "x", message: "", renderedAt: old() }, { accept: "application/json" }), env());
   assert.equal(res.status, 400);
   assert.ok((await res.json()).fields.email);
 });
@@ -233,7 +234,101 @@ test("a missing contact page asset is an error, not a 200", async () => {
   const get = await worker.fetch(new Request("https://presswork.dev/contact/"), e);
   assert.equal(get.status, 500);
   assert.doesNotMatch(await get.text(), /not found page/);
-  const bad = await worker.fetch(post({ name: "", email: "x", message: "" }), e);
+  const bad = await worker.fetch(post({ name: "", email: "x", message: "", renderedAt: old() }), e);
   assert.equal(bad.status, 500);
   assert.match(await bad.text(), /couldn't be sent/);
+});
+
+
+// ---- spam defenses
+const spamNames = [
+  'Your balance: $39,437.15 GET > "https://www.google.com/share.google?q=BOVPro5Xbso0J7rSL"',
+  "Visit www.x.com",
+  "https://x.io",
+  "bit.ly/abc",
+  "Rosa $500",
+  "€1.000",
+  "ｗｗｗ.example.com",
+  "x\u200b.com",
+  "a<b",
+];
+const realNames = [
+  "Rosa", "José Núñez", "O'Brien", "Smith & Co.", "Studio 54", "Dr. Smith", "St.John", "J.R.R. Tolkien",
+  "Mary-Kate", "李雷", "Zoë", 'Robert "Bob" Smith', "Rosa (Rosa's Bakery)", "Rosa 555-123-4567", "Ana.Co", "Mr.Me",
+];
+
+test("the name check catches links, money, and angle brackets", () => {
+  for (const name of spamNames) assert.equal(looksLikeSpam(name), true, JSON.stringify(name));
+});
+
+test("the name check lets real names through", () => {
+  for (const name of realNames) assert.equal(looksLikeSpam(name), false, JSON.stringify(name));
+});
+
+test("a spammy name gets a field error; business is not checked", () => {
+  const r = validate(form({ ...good, name: spamNames[0] }));
+  assert.equal(r.ok, false);
+  assert.match(r.fields.name[0], /Enter just your name here/);
+  for (const business of ["Acme.io", "$5 Pizza", "www.acme.com"]) {
+    assert.equal(validate(form({ ...good, business })).ok, true, business);
+  }
+});
+
+test("botReason: honeypot first, then timing", () => {
+  assert.equal(botReason(form({ ...good, renderedAt: old(), [HONEYPOT]: "x" })), "hidden field filled");
+  assert.equal(botReason(form({ ...good, renderedAt: old(), [HONEYPOT]: "" })), null);
+  assert.equal(botReason(form({ ...good, renderedAt: old() })), null);
+  assert.match(botReason(form({ ...good })), /without a valid timestamp \(none\)/);
+});
+
+test("the page has the honeypot, hidden from people and keyboards", () => {
+  const block = page.match(/<div class="extra" aria-hidden="true" inert>[\s\S]*?<\/div>/)?.[0];
+  assert.ok(block, "honeypot wrapper");
+  assert.match(block, new RegExp(`<input id="field-${HONEYPOT}" name="${HONEYPOT}" type="text" tabindex="-1" autocomplete="off">`));
+  assert.match(block, new RegExp(`<label for="field-${HONEYPOT}">`));
+  assert.doesNotMatch(block, /class="field"/);
+});
+
+test("a filled honeypot pretends to succeed, sends nothing, and logs no personal data", async (t) => {
+  const warn = t.mock.method(console, "warn", () => {});
+  const e = env();
+  const json = await worker.fetch(post({ ...good, renderedAt: old(), [HONEYPOT]: "x" }, { accept: "application/json" }), e);
+  assert.deepEqual(await json.json(), { sent: true });
+  const plain = await worker.fetch(post({ ...good, renderedAt: old(), [HONEYPOT]: "x" }), e);
+  assert.equal(plain.status, 303);
+  assert.equal(plain.headers.get("location"), "https://presswork.dev/contact/?sent=1");
+  assert.equal(e.sent.length, 0);
+  const logged = warn.mock.calls.map((c) => c.arguments.join(" ")).join("\n");
+  assert.match(logged, /hidden field filled, message dropped/);
+  assert.doesNotMatch(logged, /Rosa|rosa@example\.com|Hello/);
+});
+
+test("a bot with bad fields still gets the fake success", async (t) => {
+  t.mock.method(console, "warn", () => {});
+  const e = env();
+  const res = await worker.fetch(post({ name: spamNames[0], email: "x", message: "", [HONEYPOT]: "x", renderedAt: old() }, { accept: "application/json" }), e);
+  assert.deepEqual(await res.json(), { sent: true });
+  assert.equal(e.sent.length, 0);
+});
+
+test("a spammy name from a person comes back as a field error and sends nothing", async (t) => {
+  const log = t.mock.method(console, "log", () => {});
+  const e = env();
+  const res = await worker.fetch(post({ ...good, name: spamNames[0], renderedAt: old() }, { accept: "application/json" }), e);
+  assert.equal(res.status, 400);
+  assert.ok((await res.json()).fields.name);
+  assert.equal(e.sent.length, 0);
+  assert.equal(log.mock.calls[0].arguments[0], "contact: rejected (name)");
+});
+
+test("the honeypot value is never echoed back", async () => {
+  const res = await worker.fetch(post({ name: "", email: "x", message: "", [HONEYPOT]: "", renderedAt: old() }), env());
+  assert.doesNotMatch(await res.text(), new RegExp(`name="${HONEYPOT}"[^>]*value=`));
+});
+
+test("failure logs carry only the error message", async (t) => {
+  const error = t.mock.method(console, "error", () => {});
+  const e = env({ send: async () => { throw new Error("down"); } });
+  await worker.fetch(post({ ...good, renderedAt: old() }, { accept: "application/json" }), e);
+  assert.deepEqual(error.mock.calls[0].arguments, ["contact: Email Service rejected the message: down"]);
 });

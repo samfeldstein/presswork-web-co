@@ -1,4 +1,5 @@
-import { validate, typedValues, buildEmail, tooFast } from "./validate.js";
+import { validate, typedValues, buildEmail } from "./validate.js";
+import { botReason } from "./spam.js";
 import { stampTime, sentState, errorState } from "./render.js";
 
 const SITE_TITLE = "Presswork Web Co.";
@@ -50,18 +51,20 @@ async function handlePost(request, env) {
   }
   if (form === null) return errorResponse(env, request, 413, { message: TOO_LARGE });
 
-  const result = validate(form);
-  if (!result.ok) return errorResponse(env, request, 400, { fields: result.fields, typed: typedValues(form) });
-
-  const { bot, age } = tooFast(result.data.renderedAt);
-  if (bot) {
-    console.warn(`contact: submitted too fast or without a valid timestamp (${age === null ? "none" : `${age} ms`}), message dropped`);
+  const reason = botReason(form);
+  if (reason) {
+    console.warn(`contact: ${reason}, message dropped`);
   } else {
+    const result = validate(form);
+    if (!result.ok) {
+      console.log(`contact: rejected (${Object.keys(result.fields).join(", ")})`);
+      return errorResponse(env, request, 400, { fields: result.fields, typed: typedValues(form) });
+    }
     try {
       await env.EMAIL.send({ ...buildEmail(result.data, SITE_TITLE), to: env.CONTACT_TO_EMAIL });
-      console.log("contact: message sent");
+      console.log(`contact: message sent (${Date.now() - Number(form.get("renderedAt"))} ms after render)`);
     } catch (error) {
-      console.error("contact: Email Service rejected the message", error);
+      console.error(`contact: Email Service rejected the message: ${error?.message ?? "unknown error"}`);
       return errorResponse(env, request, 500, { message: GENERIC_ERROR, typed: typedValues(form) });
     }
   }
@@ -91,7 +94,7 @@ export default {
     try {
       return await route(request, env);
     } catch (error) {
-      console.error("contact: unexpected failure", error);
+      console.error(`contact: unexpected failure: ${error?.message ?? "unknown error"}`);
       if (acceptsJson(request)) return json({ message: GENERIC_ERROR }, 500);
       return new Response(GENERIC_ERROR, {
         status: 500,

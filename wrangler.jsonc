@@ -11,6 +11,12 @@
   // same Worker, so it shows whatever is live (canonical URLs still point to
   // presswork.dev).
   "workers_dev": true,
+  // Keeps the Worker's own log lines (sent, dropped, rejected) for a few days.
+  // Per-request logs are off so visitors' request details aren't stored.
+  "observability": {
+    "enabled": true,
+    "logs": { "invocation_logs": false }
+  },
   // Cloudflare Email Service, for the contact form (worker/index.js).
   // It may only send from form@presswork.dev. Locally the dev server
   // simulates it: the email is logged, not sent.
