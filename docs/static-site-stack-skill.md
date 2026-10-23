@@ -26,7 +26,7 @@ The user has Claude write all the code, so build tools that exist to save humans
 - Load each script file as a module (`<script type="module" src="...">`). A module defers on its own and keeps its top-level names private. Classic scripts all share one global scope, and two that each declared the same top-level `const` once broke a slider with no visible error.
 - An inline script that must run while the page is parsed (for example one that collapses a menu before first paint) stays classic, wrapped in a self-calling function, `(() => { ... })();`, for the same reason.
 - Have a check fail on a script file loaded without `type="module"` and on an unwrapped classic inline script.
-- Load nothing from third-party hosts: no CDN libraries, no analytics snippets, no font hosts. Keep a short allowed-hosts list and have a check fail on anything else.
+- Load nothing from third-party hosts: no CDN libraries, no analytics snippets, no font hosts. Keep a short allowed-hosts list and have a check fail on anything else. The one defensible exception is the host's own cookieless analytics beacon: allow its host, load it from a small inline `load` listener (not from the head, where it counts toward first paint), and say so in the README.
 - Keep comments out of shipped CSS and JS except the few that stop a regression (browser workarounds).
 
 ## Forms and other server needs
@@ -51,6 +51,10 @@ Set everything that can be set in code (bindings, routes, observability, rate li
 
 Self-host fonts as `.woff2` files committed to the repo, loaded with `@font-face` and `font-display: swap`. Never load from Google Fonts or other third-party font hosts.
 
+- Preload only the files used above the fold, and trim variable fonts to the axes the CSS actually uses (for example weight 300 to 700 and the one or two widths in use, with an axis pinned when a style never changes it, such as italic width), using fontTools `instancer` once, outside the site. Two Latin files went from 149 KB to 91 KB with the same glyphs.
+- Fonts are cached as immutable, so give a changed font file a new name.
+- In Lighthouse's slow-4G model, two preloaded fonts cost about 0.9 s of LCP, roughly 4 points (a copy of a page with system fonts held 99 to 100). That is a design tradeoff, not a bug.
+
 ## Performance rules for animation
 
 Learned by profiling in Firefox (the Firefox Profiler, Graphics preset, about 10 seconds, and the GPU helper in Activity Monitor rather than `top`). Profile early when something feels heavy.
@@ -65,6 +69,8 @@ Learned by profiling in Firefox (the Firefox Profiler, Graphics preset, about 10
 ## Caching and content hashes
 
 If CSS and JS links carry a content hash (`?v=...`, written by the sync script), the host can cache them as immutable for a year, and page changes stop revalidating every stylesheet and script. Run the sync script after any CSS or JS edit or the old hash is served. On Cloudflare Workers, the `_headers` file applies to static files only, not to responses the Worker's own code builds, and static HTML is sent `max-age=0, must-revalidate` by default, which is what you want for pages.
+
+`Cache-Control: no-transform` stops Cloudflare injecting its bot-detection script into a page, but it also turns off Cloudflare's compression, so HTML went out at 18 to 32 KB uncompressed and Lighthouse flagged "Document request latency". Check any such header on every page, and measure before keeping it. It wasn't needed in the end (see the next section).
 
 ## Preventing drift
 
@@ -99,9 +105,9 @@ Keep a short checklist in the repo and run it after any major change (shared par
 
 1. **Automatic:** the sync and check scripts and the tests.
 2. **Judgment, reporting only problems:** accessibility semantics (names, roles, focus order, decorative things hidden), SEO impact, Worker security (validation, escaping, size limits, no internals in errors, no header injection), the performance rules above, and hard-coded things that may now be stale (Lighthouse scores shown on the site, prices, nav, docs).
-3. **Only the owner can run:** Lighthouse (mobile, incognito, every page), Firefox GPU helper on the home page, a real phone, a screen reader (VoiceOver in Safari) when markup changed, the contact form once for real, and the W3C validator and WAVE after larger markup changes. Give these one at a time.
+3. **Only the owner can run:** Lighthouse (mobile, incognito, every page), Firefox GPU helper on the home page, a real phone, a screen reader (VoiceOver in Safari) when markup changed, the contact form once for real, and the W3C validator and WAVE after larger markup changes. Give these one at a time. Scores on the same page swing 3 to 6 points between runs, so use repeated runs (the PageSpeed Insights API, with the host speed and first paint printed per run) for diagnosis and treat one run as one sample.
 
-**Hosting dashboard settings are changes too.** A setting turned on in the dashboard can change what the site sends without touching the repo. On Cloudflare, Bot Fight Mode on the Free plan injects a bot-detection script into every page, and its deprecated-API warnings dropped Lighthouse Best Practices from 100 to 81; turning it off fixed it after some minutes. After changing anything under Security, Speed, or Rules, run Lighthouse on the live site and search the page source for scripts you didn't add. Security response headers, HSTS on a `.dev` domain, and Rocket Loader were judged not worth it for a small static site with no logins, stored data or uploads.
+**Hosting dashboard settings are changes too.** A setting turned on in the dashboard can change what the site sends without touching the repo. On Cloudflare, Bot Fight Mode on the Free plan injects a bot-detection script into every page, and its deprecated-API warnings dropped Lighthouse Best Practices from 100 to 81; turning it off fixed it after some minutes. In October 2026 the same script came back with every bot setting off; Lighthouse named that script as the source of the deprecated-API warnings. Loading Web Analytics from a manual snippet instead of letting Cloudflare inject it brought Best Practices back to 100: the injected tag was still in the HTML, but the script was no longer requested in later runs (why isn't known). After changing anything under Security, Speed, or Rules, run Lighthouse on the live site and search the page source for scripts you didn't add. Security response headers, HSTS on a `.dev` domain, and Rocket Loader were judged not worth it for a small static site with no logins, stored data or uploads.
 
 ## Read-only data sites
 
