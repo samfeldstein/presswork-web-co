@@ -22,7 +22,7 @@ Styling is plain CSS. Colors, type, and spacing are tokens in one file, and each
 - every character on every page is covered by the font subsets I ship;
 - each page stays under a gzipped size budget (16 KB, 24 KB for the home page);
 - the color pairs in the design pass WCAG AA contrast;
-- every script file loads as a module, and no page loads from a host that isn't on an allowlist (which keeps third-party scripts out).
+- every script file loads as a module, and no page loads from a host that isn't on an allowlist (which keeps third-party scripts out; the one exception is Cloudflare's cookieless Web Analytics beacon, which loads after the page does).
 
 `test/` holds tests for the contact form and the Worker, and tests that `check.mjs` itself catches broken CSS and dangling ids. Before any commit or deploy, I run `node sync.mjs && node check.mjs && node --test test/`.
 
@@ -32,7 +32,7 @@ The Worker (`worker/`) answers only `/contact`; everything else is served as sta
 
 ## Performance and accessibility
 
-Lighthouse on the live site, mobile, scores 98 to 100 across every page. Before launch I also ran the W3C and schema.org validators, WAVE, a keyboard-only pass, a VoiceOver pass, Firefox profiles (where I found and fixed animation costs that Chrome hides), and a real phone. The performance rules that came out of that work are in the stack write-up below.
+On the live site, mobile, PageSpeed Insights scores accessibility, best practices, and SEO at 100 on every page, and performance between 94 and 100 depending on the run (`lighthouse.mjs` and `pagespeed.mjs` score every page from the command line). Before launch I also ran the W3C and schema.org validators, WAVE, a keyboard-only pass, a VoiceOver pass, Firefox profiles (where I found and fixed animation costs that Chrome hides), and a real phone. The performance rules that came out of that work are in the stack write-up below.
 
 ## Further reading
 
