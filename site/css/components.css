@@ -106,37 +106,6 @@
       }
     }
   }
-
-  &.lift {
-    transition:
-      background-color var(--duration-fast) var(--ease-out),
-      border-color var(--duration-fast) var(--ease-out),
-      color var(--duration-fast) var(--ease-out),
-      transform 240ms var(--ease-out),
-      box-shadow 240ms var(--ease-out);
-
-    @media (hover: hover) {
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 14px 28px -8px rgb(245 196 81 / 0.45);
-      }
-    }
-
-    &:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 6px -2px rgb(245 196 81 / 0.4);
-      transition-duration: 60ms;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0ms;
-
-      &:hover,
-      &:active {
-        transform: none;
-      }
-    }
-  }
 }
 
 /* The skip link: the gold pill button, parked above the page until it gets
@@ -650,7 +619,7 @@ a:is(:hover, :focus-visible) > .logo .dot {
   width: 100%;
   max-width: var(--width-wide);
   margin-inline: auto;
-  padding: var(--space-2xl) var(--gutter) var(--space-4xl);
+  padding: var(--space-2xl) var(--gutter) var(--space-section);
 
   > .page-heading {
     display: grid;
@@ -683,15 +652,11 @@ a:is(:hover, :focus-visible) > .logo .dot {
 
   > .body {
     display: grid;
-    gap: var(--space-2xl);
+    gap: var(--space-section);
 
     > * {
       inline-size: 100%;
       margin-inline: auto;
-    }
-
-    > .closing {
-      margin-block-start: var(--space-2xl);
     }
   }
 }
@@ -718,5 +683,22 @@ a:is(:hover, :focus-visible) > .logo .dot {
   .email {
     color: var(--color-ink-dim);
     font-size: var(--text-sm);
+  }
+}
+
+.check-list li {
+  display: flex;
+  gap: var(--space-sm);
+
+  &::before {
+    content: "";
+    flex: none;
+    inline-size: 0.45em;
+    block-size: 0.85em;
+    margin-block-start: 0.25em;
+    margin-inline: 0.2em 0.35em;
+    border-inline-end: 2px solid var(--color-accent);
+    border-block-end: 2px solid var(--color-accent);
+    transform: rotate(45deg);
   }
 }

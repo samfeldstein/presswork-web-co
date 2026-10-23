@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How we price heading options</title>
+<style>
+  :root {
+    --paper: #0f0d12;
+    --ink: #f3eee2;
+    --soft: #b9b3a6;
+    --gold: #f5c451;
+    --rule: #2a262e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 3rem 1.5rem;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Serif", Georgia, serif;
+  }
+
+  .list {
+    display: grid;
+    gap: 2rem;
+    max-width: 70rem;
+    margin: 0 auto;
+  }
+
+  .option {
+    padding: 1.5rem 2rem 2.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+  }
+
+  .tag {
+    margin: 0 0 2.5rem;
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .how {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0 5rem;
+    align-items: start;
+  }
+
+  h2 {
+    position: relative;
+    margin: 0;
+    font-size: 2.9rem;
+    font-weight: 600;
+    line-height: 1.1;
+    text-align: end;
+  }
+
+  p {
+    margin: 0;
+    color: var(--soft);
+    font-size: 1.3rem;
+    line-height: 1.55;
+  }
+
+  p + p { margin-top: 1rem; }
+
+  em { color: var(--gold); font-weight: 400; }
+
+  .a h2::before {
+    content: "";
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline: 0;
+    block-size: 2px;
+    margin-block-end: 0.75rem;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+
+  .b h2::after {
+    content: "";
+    display: block;
+    block-size: 2px;
+    margin-block-start: 1rem;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+
+  .c .eyebrow {
+    display: block;
+    margin-block-end: 0.9rem;
+    color: var(--gold);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .d .how {
+    gap: 0;
+  }
+
+  .d h2 {
+    padding-inline-end: 2.5rem;
+  }
+
+  .d .text {
+    padding-inline-start: 2.5rem;
+    border-inline-start: 2px solid transparent;
+    border-image: linear-gradient(180deg, var(--gold), transparent) 1;
+  }
+
+  .f h2 .dot {
+    color: var(--gold);
+  }
+
+  .g h2::before {
+    content: "";
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline-end: 0;
+    inline-size: 16px;
+    block-size: 16px;
+    margin-block-end: 0.9rem;
+    background: var(--gold);
+    clip-path: path("M8 0c.3 2.7 2.3 4.7 5 5-2.7.3-4.7 2.3-5 5-.3-2.7-2.3-4.7-5-5 2.7-.3 4.7-2.3 5-5z");
+  }
+
+  .g h2::before {
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  }
+
+  .h .how {
+    grid-template-columns: 1.6fr 2fr;
+  }
+
+  .h h2 {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding-block-start: 0.15em;
+  }
+
+  .h h2::before {
+    content: "";
+    flex: 1;
+    min-inline-size: 3rem;
+    block-size: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+
+  .i h2 {
+    padding-block: 0.5rem;
+    border-block: 1px solid var(--rule);
+  }
+
+  .i h2::after {
+    content: "";
+    position: absolute;
+    inset-block-end: -1px;
+    inset-inline-end: 0;
+    inline-size: 40%;
+    block-size: 2px;
+    background: var(--gold);
+  }
+</style>
+</head>
+<body>
+<div class="list">
+
+  <section class="option a">
+    <p class="tag">A. Current: tapering bar above, right-aligned</p>
+    <div class="how">
+      <h2>How we price</h2>
+      <div class="text"><p>Most of the work happens once, whatever the size of the site. Designing, building, and launching the site all go into the first page, which is why it's $800.</p></div>
+    </div>
+  </section>
+
+  <section class="option b">
+    <p class="tag">B. Tapering line below the heading</p>
+    <div class="how">
+      <h2>How we price</h2>
+      <div class="text"><p>Most of the work happens once, whatever the size of the site. Designing, building, and launching the site all go into the first page, which is why it's $800.</p></div>
+    </div>
+  </section>
+
+  <section class="option c">
+    <p class="tag">C. Small gold eyebrow above (like "Pricing" and "Get in touch" elsewhere on the site; the wording would be ours to choose)</p>
+    <div class="how">
+      <h2><span class="eyebrow">Our approach</span>How we price</h2>
+      <div class="text"><p>Most of the work happens once, whatever the size of the site. Designing, building, and launching the site all go into the first page, which is why it's $800.</p></div>
+    </div>
+  </section>
+
+  <section class="option d">
+    <p class="tag">D. Vertical gold rule between heading and text, fading downward</p>
+    <div class="how">
+      <h2>How we price</h2>
+      <div class="text"><p>Most of the work happens once, whatever the size of the site. Designing, building, and launching the site all go into the first page, which is why it's $800.</p><p>For additional pages, we try to scale the price to the work involved. The first few pages of a site are typically unique.</p></div>
+    </div>
+  </section>
+
+  <section class="option e">
+    <p class="tag">E. One italic gold word, like "Simple, <em>flexible.</em>" and "<em>Send them our way.</em>"</p>
+    <div class="how">
+      <h2>How we <em>price</em></h2>
+      <div class="text"><p>Most of the work happens once, whatever the size of the site. Designing, building, and launching the site all go into the first page, which is why it's $800.</p></div>
+    </div>
+  </section>
+
+  <section class="option f">
+    <p class="tag">F. Gold period, echoing the logo</p>
+    <div class="how">
+      <h2>How we price<span class="dot">.</span></h2>
+      <div class="text"><p>Most of the work happens once, whatever the size of the site. Designing, building, and launching the site all go into the first page, which is why it's $800.</p></div>
+    </div>
+  </section>
+
+  <section class="option g">
+    <p class="tag">G. Small gold sparkle above, right-aligned</p>
+    <div class="how">
+      <h2>How we price</h2>
+      <div class="text"><p>Most of the work happens once, whatever the size of the site. Designing, building, and launching the site all go into the first page, which is why it's $800.</p></div>
+    </div>
+  </section>
+
+  <section class="option h">
+    <p class="tag">H. A gold line fading in from the left and running into the heading (column widened so the line has room)</p>
+    <div class="how">
+      <h2>How we price</h2>
+      <div class="text"><p>Most of the work happens once, whatever the size of the site. Designing, building, and launching the site all go into the first page, which is why it's $800.</p></div>
+    </div>
+  </section>
+
+  <section class="option i">
+    <p class="tag">I. Hairlines above and below with a gold accent under the right end</p>
+    <div class="how">
+      <h2>How we price</h2>
+      <div class="text"><p>Most of the work happens once, whatever the size of the site. Designing, building, and launching the site all go into the first page, which is why it's $800.</p></div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

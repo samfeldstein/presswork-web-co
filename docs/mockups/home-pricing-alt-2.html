@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home pricing alt 2</title>
+<style>
+@font-face { font-family: "Noto Serif Variable"; font-style: normal; font-weight: 100 900; font-stretch: 62.5% 100%; font-display: swap; src: url(../../site/fonts/noto-serif-latin-wdth-normal.woff2) format("woff2-variations"); }
+@font-face { font-family: "Noto Serif Variable"; font-style: italic; font-weight: 100 900; font-stretch: 62.5% 100%; font-display: swap; src: url(../../site/fonts/noto-serif-latin-wdth-italic.woff2) format("woff2-variations"); }
+:root {
+  color-scheme: dark;
+  --color-paper: #0f0d12; --color-paper-raised: #1a161e; --color-ink: #f6efe4; --color-ink-soft: #b8afa2;
+  --color-ink-dim: #9a9186; --color-accent: #f5c451; --color-accent-contrast: #0f0d12; --color-rule: #3a3340;
+  --font-display: "Noto Serif Variable", "Noto Serif", Georgia, serif; --font-body: var(--font-display);
+  --text-xs: 0.8125rem; --text-sm: 0.9375rem; --text-base: 1.0625rem;
+  --text-lg: clamp(1.125rem, 1rem + 0.5vw, 1.3125rem); --text-xl: clamp(1.375rem, 1.1rem + 1vw, 1.875rem);
+  --text-2xl: clamp(2.25rem, 1.5rem + 3.2vw, 4.25rem); --text-3xl: clamp(2.75rem, 1.6rem + 5vw, 5.5rem);
+  --leading-tight: 1.1; --leading-body: 1.55; --tracking-section: 0.01em; --tracking-caps: 0.2em; --tracking-wide: 0.3em;
+  --stretch-condensed: 72%;
+  --space-2xs: 0.25rem; --space-xs: 0.5rem; --space-sm: 0.75rem; --space-md: 1rem; --space-lg: 1.5rem;
+  --space-xl: 2.5rem; --space-2xl: 4rem; --space-3xl: 6rem;
+  --measure: 62ch; --width-wide: 84rem; --gutter: clamp(1rem, 3vw, 2.5rem); --radius-pill: 999px;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body, h2, h3, p, ul, dl, dd, table { margin: 0; padding: 0; }
+body { min-height: 100vh; overflow-x: clip; background-color: var(--color-paper); color: var(--color-ink-soft); font-family: var(--font-body); font-size: var(--text-base); line-height: var(--leading-body); -webkit-font-smoothing: antialiased; }
+h2 { color: var(--color-ink); font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 600; font-stretch: var(--stretch-condensed); line-height: var(--leading-tight); letter-spacing: var(--tracking-section); text-wrap: balance; }
+h2 em { color: var(--color-accent); font-stretch: 100%; font-weight: 300; letter-spacing: -0.02em; }
+:where(p, li) { max-width: var(--measure); text-wrap: pretty; }
+.eyebrow { color: var(--color-accent); font-size: var(--text-xs); font-weight: 500; letter-spacing: var(--tracking-wide); text-transform: uppercase; }
+.button { display: inline-flex; align-items: center; justify-content: center; min-height: 3.375rem; padding: 0 1.875rem; border: 1px solid var(--color-accent); border-radius: var(--radius-pill); background-color: var(--color-accent); color: var(--color-accent-contrast); font-size: var(--text-sm); font-weight: 600; letter-spacing: 0.18em; text-decoration: none; text-transform: uppercase; }
+.button:hover { border-color: var(--color-ink); background-color: var(--color-ink); }
+.button:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 3px; }
+.mock-label { padding: var(--space-sm) var(--gutter); border-block-end: 1px solid var(--color-rule); color: var(--color-ink-dim); font-size: var(--text-xs); }
+.mock-label b { color: var(--color-ink); font-weight: 500; }
+main { max-width: var(--width-wide); margin-inline: auto; padding: var(--space-3xl) var(--gutter); }
+.home-pricing { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2xl) var(--space-3xl); }
+.home-pricing .intro { flex: 1 1 22rem; max-width: 36rem; display: grid; gap: var(--space-md); justify-items: start; }
+.home-pricing .lead { font-size: var(--text-lg); }
+.home-pricing .actions { margin-block-start: var(--space-sm); }
+.home-pricing .display { flex: 0 1 34rem; width: 100%; margin-inline: auto; }
+@media (max-width: 40rem) { .home-pricing .intro { justify-items: center; text-align: center; } }
+
+/* variant */
+
+.steps { display: grid; gap: var(--space-lg); }
+.chart { display: grid; grid-template-columns: repeat(3, 1fr); align-items: end; gap: var(--space-sm); border-block-end: 1px solid var(--color-ink-soft); }
+.step { display: grid; gap: var(--space-xs); align-content: end; }
+.step .price { color: var(--color-ink); font-family: var(--font-display); font-size: var(--text-xl); line-height: 1.1; }
+.step .price small { display: block; color: var(--color-ink-soft); font-size: var(--text-sm); }
+.step .bar { block-size: var(--h); border-radius: 6px 6px 0 0; background: var(--color-paper-raised); border-block-start: 2px solid var(--color-ink-soft); }
+.step.first .price { color: var(--color-accent); }
+.step.first .bar { border-block-start-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 14%, var(--color-paper)); }
+.labels { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm); color: var(--color-ink); font-size: var(--text-lg); line-height: 1.3; }
+.note { color: var(--color-ink-soft); font-size: var(--text-base); }
+
+</style>
+</head>
+<body>
+  <p class="mock-label"><b>Alt 2: Stepped bars.</b> Three bars drawn to scale, so the price visibly drops as the site grows.</p>
+  <main>
+    <section id="plans" class="home-pricing" aria-labelledby="plans-heading">
+      <div class="intro">
+        <p class="eyebrow" aria-hidden="true">What it costs</p>
+        <h2 id="plans-heading">Pricing that <em>fits your business.</em></h2>
+        <p class="lead">We designed our fee structure to be simple and flexible, so you only pay for the pages you need. Whether that’s a simple landing page or a full-fledged website, no project is too big or too small.</p>
+        <div class="actions"><a href="#" class="button">Learn more</a></div>
+      </div>
+
+      <div class="display steps">
+        <div class="chart" aria-hidden="true">
+          <div class="step first"><p class="price">$800</p><div class="bar" style="--h: 16rem"></div></div>
+          <div class="step"><p class="price">$300<small>per page</small></p><div class="bar" style="--h: 6rem"></div></div>
+          <div class="step"><p class="price">$150<small>per page</small></p><div class="bar" style="--h: 3rem"></div></div>
+        </div>
+        <div class="labels" aria-hidden="true"><p>First page</p><p>Pages 2 to 5</p><p>Page 6 and up</p></div>
+        <ul class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">
+          <li>First page: $800</li><li>Pages 2 to 5: $300 per page</li><li>Page 6 and up: $150 per page</li>
+        </ul>
+        <p class="note">The first page covers design, setup, the contact form, and launch.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

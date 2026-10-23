@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing page divider options</title>
+<style>
+  :root {
+    --paper: #0f0d12;
+    --raised: #1a171e;
+    --ink: #e9e4d8;
+    --soft: #b9b3a6;
+    --gold: #f5c451;
+    --rule: #2a262e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 3rem 1.5rem;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Serif", Georgia, serif;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+    gap: 2.5rem;
+    max-width: 78rem;
+    margin: 0 auto;
+  }
+
+  .option {
+    padding: 1.5rem;
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+  }
+
+  .tag {
+    margin: 0 0 1.5rem;
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  p {
+    margin: 0;
+    color: var(--soft);
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+
+  .divider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-block: 2.5rem;
+  }
+
+  .box {
+    inline-size: 85%;
+    margin-inline: auto;
+    padding: 1.5rem 2rem;
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    background: var(--raised);
+    text-align: center;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .bar {
+    inline-size: 3rem;
+    block-size: 3px;
+    background: var(--gold);
+  }
+
+  .taper {
+    inline-size: 8rem;
+    block-size: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .diamond {
+    gap: 0.9rem;
+
+    &::before,
+    &::after {
+      content: "";
+      inline-size: 2.5rem;
+      block-size: 1px;
+      background: var(--gold);
+    }
+
+    i {
+      inline-size: 7px;
+      block-size: 7px;
+      background: var(--gold);
+      transform: rotate(45deg);
+    }
+  }
+
+  .dot i {
+    inline-size: 8px;
+    block-size: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .dots {
+    gap: 0.7rem;
+
+    i {
+      inline-size: 5px;
+      block-size: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+  }
+
+  .sparkle svg {
+    inline-size: 22px;
+    block-size: 22px;
+    fill: var(--gold);
+  }
+
+  .sparkle-lines {
+    gap: 1rem;
+
+    &::before,
+    &::after {
+      content: "";
+      inline-size: 3rem;
+      block-size: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    &::after {
+      background: linear-gradient(270deg, transparent, var(--gold));
+    }
+
+    svg {
+      inline-size: 20px;
+      block-size: 20px;
+      fill: var(--gold);
+    }
+  }
+</style>
+</head>
+<body>
+<div class="grid">
+
+  <section class="option">
+    <p class="tag">0. Current: bar</p>
+    <p>After that, each page is mostly adding content to a design that's already built, and the work is routine enough that each one is $150.</p>
+    <div class="divider"><span class="bar"></span></div>
+    <div class="box">Example pricing</div>
+  </section>
+
+  <section class="option">
+    <p class="tag">1. Tapering hairline</p>
+    <p>After that, each page is mostly adding content to a design that's already built, and the work is routine enough that each one is $150.</p>
+    <div class="divider"><span class="taper"></span></div>
+    <div class="box">Example pricing</div>
+  </section>
+
+  <section class="option">
+    <p class="tag">2. Hairlines and diamond</p>
+    <p>After that, each page is mostly adding content to a design that's already built, and the work is routine enough that each one is $150.</p>
+    <div class="divider diamond"><i></i></div>
+    <div class="box">Example pricing</div>
+  </section>
+
+  <section class="option">
+    <p class="tag">3. Sparkle (SVG)</p>
+    <p>After that, each page is mostly adding content to a design that's already built, and the work is routine enough that each one is $150.</p>
+    <div class="divider sparkle">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10C5.4 9.4 9.4 5.4 10 0z"/></svg>
+    </div>
+    <div class="box">Example pricing</div>
+  </section>
+
+  <section class="option">
+    <p class="tag">3b. Sparkle with fading lines</p>
+    <p>After that, each page is mostly adding content to a design that's already built, and the work is routine enough that each one is $150.</p>
+    <div class="divider sparkle-lines">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 0c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10C5.4 9.4 9.4 5.4 10 0z"/></svg>
+    </div>
+    <div class="box">Example pricing</div>
+  </section>
+
+  <section class="option">
+    <p class="tag">4. Gold dot (echoes the logo's period)</p>
+    <p>After that, each page is mostly adding content to a design that's already built, and the work is routine enough that each one is $150.</p>
+    <div class="divider dot"><i></i></div>
+    <div class="box">Example pricing</div>
+  </section>
+
+  <section class="option">
+    <p class="tag">5. Three dots</p>
+    <p>After that, each page is mostly adding content to a design that's already built, and the work is routine enough that each one is $150.</p>
+    <div class="divider dots"><i></i><i></i><i></i></div>
+    <div class="box">Example pricing</div>
+  </section>
+
+</div>
+</body>
+</html>

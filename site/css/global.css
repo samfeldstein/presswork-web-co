@@ -32,7 +32,7 @@ h2 {
   font-size: var(--text-2xl);
   font-weight: 600;
   font-stretch: var(--stretch-condensed);
-  line-height: 1;
+  line-height: var(--leading-tight);
   letter-spacing: var(--tracking-section);
 }
 

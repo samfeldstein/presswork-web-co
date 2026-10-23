@@ -74,6 +74,9 @@ const siteUrl = form?.querySelector("#field-siteUrl");
 const syncAudit = () => {
   if (siteUrl && audit) siteUrl.required = audit.checked;
 };
+if (audit && new URLSearchParams(location.search).get("audit") === "1") {
+  audit.checked = true;
+}
 audit?.addEventListener("change", syncAudit);
 syncAudit();
 

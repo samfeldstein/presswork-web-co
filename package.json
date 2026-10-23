@@ -9,7 +9,8 @@
     "check": "node check.mjs",
     "test": "node --test test/",
     "dev": "wrangler dev",
-    "dev:phone": "wrangler dev --ip 0.0.0.0"
+    "dev:phone": "wrangler dev --ip 0.0.0.0",
+    "lighthouse": "node lighthouse.mjs"
   },
   "dependencies": {
     "wrangler": "^4.144.0"

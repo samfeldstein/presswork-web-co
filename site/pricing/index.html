@@ -1,20 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
-<!-- page: {"title": "Pricing", "description": "Two ways to pay for a fast, modern website: $0 down and $150 a month, or a $1,500 flat fee."} -->
+<!-- page: {"title": "Pricing", "description": "Simple pricing for a fast, modern website: $800 for the first page, $300 for pages 2 to 5, and $150 for each page after that. Half when we start, half at launch."} -->
 <!-- shared:head -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pricing | Presswork Web Co.</title>
-<meta name="description" content="Two ways to pay for a fast, modern website: $0 down and $150 a month, or a $1,500 flat fee.">
+<meta name="description" content="Simple pricing for a fast, modern website: $800 for the first page, $300 for pages 2 to 5, and $150 for each page after that. Half when we start, half at launch.">
 <link rel="canonical" href="https://presswork.dev/pricing/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Presswork Web Co.">
 <meta property="og:title" content="Pricing | Presswork Web Co.">
-<meta property="og:description" content="Two ways to pay for a fast, modern website: $0 down and $150 a month, or a $1,500 flat fee.">
+<meta property="og:description" content="Simple pricing for a fast, modern website: $800 for the first page, $300 for pages 2 to 5, and $150 for each page after that. Half when we start, half at launch.">
 <meta property="og:url" content="https://presswork.dev/pricing/">
 <meta name="twitter:title" content="Pricing | Presswork Web Co.">
-<meta name="twitter:description" content="Two ways to pay for a fast, modern website: $0 down and $150 a month, or a $1,500 flat fee.">
+<meta name="twitter:description" content="Simple pricing for a fast, modern website: $800 for the first page, $300 for pages 2 to 5, and $150 for each page after that. Half when we start, half at launch.">
 <meta property="og:image" content="https://presswork.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -29,11 +29,11 @@
 <link rel="preload" href="/fonts/noto-serif-latin-wdth-italic.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="color-scheme" content="dark">
 <style>html{background:#0f0d12;color-scheme:dark}</style>
-<link rel="stylesheet" href="/css/fonts.css?v=931d9814">
+<link rel="stylesheet" href="/css/fonts.css?v=bcd6f455">
 <link rel="stylesheet" href="/css/reset.css?v=679b7cf5">
-<link rel="stylesheet" href="/css/tokens.css?v=2be8dc80">
-<link rel="stylesheet" href="/css/global.css?v=a27e3dd2">
-<link rel="stylesheet" href="/css/components.css?v=076f22de">
+<link rel="stylesheet" href="/css/tokens.css?v=6fc74c01">
+<link rel="stylesheet" href="/css/global.css?v=8921f192">
+<link rel="stylesheet" href="/css/components.css?v=36f751d0">
 <script type="speculationrules">
 { "prefetch": [{ "where": { "and": [{ "href_matches": "/*" }, { "not": { "href_matches": "/contact/" } }] }, "eagerness": "eager" }] }
 </script>
@@ -59,37 +59,86 @@
 <style>
   .pricing {
     display: grid;
-    justify-items: center;
-    gap: var(--space-xl);
-    text-align: center;
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-      gap: var(--space-lg);
-      inline-size: 100%;
-    }
+    container-type: inline-size;
   }
 
-  .price-card {
-    display: grid;
-    align-content: start;
-    justify-items: center;
-    gap: var(--space-md);
-    padding: var(--space-xl) var(--space-lg);
-    border: var(--border-hair);
-    border-radius: 14px;
-    text-align: center;
+  .panel:has(+ .panel) {
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+  }
 
-    &.featured {
-      border: var(--border-accent);
-      background-color: var(--color-paper-raised);
+  .panel + .panel {
+    border-block-start: 0;
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+  }
+
+  .panel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(33.333cqi, auto);
+    border: var(--border-rule);
+    border-radius: 14px;
+    overflow: hidden;
+
+    > section {
+      display: grid;
+      align-content: start;
+      gap: var(--space-lg);
+      padding: var(--space-xl) var(--space-lg);
+
+      &:nth-child(3n + 2),
+      &:nth-child(3n) {
+        border-inline-start: var(--border-rule);
+      }
+
+      &:nth-child(n + 4) {
+        border-block-start: var(--border-rule);
+      }
+
+      &.wide {
+        grid-column: span 2;
+      }
+
+      &.rate {
+        align-content: center;
+        gap: var(--space-xl);
+      }
+
+      &.included,
+      &.addons {
+        grid-template-rows: auto 1fr;
+        padding: var(--space-lg) var(--space-xl);
+      }
+
+      &.rate:first-child {
+        background-color: var(--color-paper-raised);
+      }
     }
 
-    .name {
+    h3 {
       font-size: var(--text-lg);
       letter-spacing: var(--tracking-caps);
       text-transform: uppercase;
+    }
+
+    ul {
+      display: grid;
+      padding: 0;
+      list-style: none;
+
+      li {
+        max-width: none;
+      }
+    }
+  }
+
+  .rate {
+    justify-items: center;
+    text-align: center;
+
+    &:first-child .price {
+      color: var(--color-accent);
     }
 
     .price {
@@ -99,30 +148,322 @@
     }
 
     .terms {
+      max-inline-size: 22ch;
       color: var(--color-ink-soft);
-      font-size: var(--text-sm);
+      font-size: var(--text-lg);
+      text-wrap: balance;
+    }
+  }
+
+  .included ul {
+    align-content: space-between;
+    gap: var(--space-sm);
+    padding-block: var(--space-sm);
+  }
+
+  .included li {
+    font-size: var(--text-lg);
+  }
+
+  .addons {
+    .items {
+      display: grid;
+      grid-auto-rows: 1fr;
     }
 
-    .features {
+    .item {
       display: grid;
-      gap: var(--space-xs);
-      inline-size: 100%;
-      margin-block-end: var(--space-md);
-      padding: var(--space-md) 0 0;
-      border-block-start: var(--border-rule);
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      column-gap: var(--space-md);
+      border-block-end: var(--border-rule);
+
+      &:last-child {
+        border-block-end: 0;
+      }
+    }
+
+    .name {
+      color: var(--color-ink-soft);
+      font-size: var(--text-lg);
+    }
+
+    .price {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      text-align: end;
+    }
+  }
+
+  @media (min-width: 75rem) {
+    .included li {
+      font-size: min(var(--text-lg), calc((33.333cqi - 5rem) / 17));
+      white-space: nowrap;
+    }
+  }
+
+  .how,
+  .faq {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-content: start;
+    gap: var(--space-md) 0;
+
+    h2 {
+      font-size: calc((var(--text-xl) + var(--text-2xl)) / 2);
+      margin-block-start: calc(0.624 * var(--text-lg) - 0.474em);
+      text-align: end;
+
+      .dot {
+        color: var(--color-accent);
+      }
+    }
+
+    .text {
+      display: grid;
+      gap: var(--space-md);
+      max-width: var(--measure);
+      padding-inline-start: calc(var(--space-xl) * 4);
+      font-size: var(--text-lg);
+    }
+
+    .divider {
+      justify-self: center;
+      inline-size: 8rem;
+      block-size: 2px;
+      margin-block: var(--space-xl);
+      background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    }
+
+    .examples {
+      display: grid;
+      gap: var(--space-md);
+
+      h3 {
+        margin-block-end: var(--space-md);
+        font-size: var(--text-lg);
+        letter-spacing: var(--tracking-caps);
+        text-align: center;
+        text-transform: uppercase;
+      }
+    }
+
+    ul {
+      display: grid;
+      padding: 0;
       list-style: none;
+    }
+
+    li {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      column-gap: var(--space-md);
+      padding-block: var(--space-sm);
+      border-block-end: var(--border-rule);
+
+      &:last-child {
+        border-block-end: 0;
+      }
+    }
+
+    .label {
+      color: var(--color-ink-soft);
+      font-size: var(--text-base);
+    }
+
+    .total {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+    }
+
+    .totals li {
+      grid-template-columns: 5.5rem 1fr auto;
+      align-items: center;
+    }
+
+    .tiles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+
+      i {
+        inline-size: 7px;
+        block-size: 10px;
+        border-radius: 1px;
+        background: var(--color-ink-dim);
+
+        &.t1 {
+          background: var(--color-accent);
+        }
+
+        &.t2 {
+          background: var(--color-ink);
+        }
+      }
+    }
+
+    .totals li:first-child .total {
+      color: var(--color-accent);
+    }
+
+    .key {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs) var(--space-lg);
+      padding-block-start: var(--space-sm);
+      font-size: var(--text-sm);
 
       li {
-        max-width: none;
+        display: flex;
+        align-items: center;
+        gap: var(--space-xs);
+        padding: 0;
+        border: 0;
+        color: var(--color-ink-soft);
+
+        &::before {
+          content: "";
+          inline-size: 7px;
+          block-size: 10px;
+          border-radius: 1px;
+          background: var(--k);
+        }
       }
 
-      .off {
-        color: var(--color-ink-dim);
-        text-decoration: line-through;
+      b {
+        color: var(--color-ink);
+        font-weight: 500;
+      }
+    }
+
+    @media (max-width: 30rem) {
+      .totals li {
+        grid-template-columns: 1fr auto;
+        row-gap: var(--space-xs);
+      }
+
+      .totals .tiles {
+        grid-row: 2;
+        grid-column: 1 / -1;
+      }
+    }
+
+    .text:has(.qa) {
+      gap: 0;
+    }
+
+    .qa {
+      border-block-end: var(--border-rule);
+
+      &:first-child {
+        border-block-start: var(--border-rule);
+      }
+
+      summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-md);
+        padding-block: var(--space-md);
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        cursor: pointer;
+        list-style: none;
+
+        &::-webkit-details-marker {
+          display: none;
+        }
+
+        &::after {
+          content: "";
+          flex: none;
+          inline-size: 0.6em;
+          block-size: 0.6em;
+          border-inline-end: 2px solid var(--color-accent);
+          border-block-end: 2px solid var(--color-accent);
+          transform: translateY(-0.15em) rotate(45deg);
+        }
+
+        &:focus-visible {
+          outline: 2px solid var(--color-accent);
+          outline-offset: -2px;
+        }
+      }
+
+      &[open]:not([data-closing]) summary::after {
+        transform: translateY(0.15em) rotate(-135deg);
+      }
+
+      p {
+        padding-block-end: var(--space-md);
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        summary::after {
+          transition: transform 0.3s ease;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 60rem) {
+    .how,
+    .faq {
+      grid-template-columns: 1fr;
+
+      h2 {
+        margin-block: 0 var(--space-sm);
+        text-align: start;
+      }
+
+      .text {
+        padding-inline-start: 0;
+      }
+    }
+
+    .included li,
+    .addons .item {
+      padding-block: var(--space-sm);
+    }
+
+    .included li {
+      font-size: min(var(--text-lg), calc((100cqi - 3rem) / 17.5));
+      white-space: nowrap;
+    }
+
+    .panel {
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+
+      > section {
+        &:nth-child(3n + 2),
+        &:nth-child(3n) {
+          border-inline-start: 0;
+        }
+
+        &.wide {
+          grid-column: auto;
+        }
+
+        &.included,
+        &.addons {
+          padding-inline: var(--space-lg);
+        }
+
+        &.rate {
+          aspect-ratio: 1;
+          gap: var(--space-xl);
+        }
+
+        &:nth-child(n + 2) {
+          border-block-start: var(--border-rule);
+        }
       }
     }
   }
 </style>
+<script type="module" src="/js/faq.js?v=c108c81a"></script>
 </head>
 <body>
 <!-- shared:skip-link -->
@@ -262,52 +603,128 @@
   <main id="main" class="page" tabindex="-1">
     <header class="page-heading">
       <p class="eyebrow">Pricing</p>
-      <h1>Two ways to pay. <em>No surprises.</em></h1>
+      <h1>One plan, <em>tailored to your needs.</em></h1>
       <div class="intro">
-        <p>Pay a flat fee, or pay monthly with nothing down.</p>
+        <p>No tiers to choose between: you only pay for the pages you need. Half when we start and half at launch.</p>
       </div>
     </header>
 
     <div class="body">
       <section class="pricing" aria-labelledby="pricing-heading">
-        <h2 id="pricing-heading" class="visually-hidden">The two offers</h2>
+        <h2 id="pricing-heading" class="visually-hidden">Prices</h2>
 
-        <div class="cards">
-        <article class="price-card featured">
-          <h3 class="name">Monthly</h3>
-          <p class="price">$150</p>
-          <p class="terms">$0 down.</p>
-          <ul class="features" role="list">
-            <li>5-page website</li>
-            <li>Design and development</li>
-            <li>Hosting included</li>
-            <li>+$10/month per page after 5</li>
-            <li>Unlimited edits</li>
-            <li>Ongoing support</li>
-          </ul>
-          <a href="/contact/" class="button solid has-arrow"><span class="content"><span class="label">Book a call</span><svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"></path></svg></span></a>
-        </article>
-        <article class="price-card">
-          <h3 class="name">Flat fee</h3>
-          <p class="price">$1,500</p>
-          <p class="terms">Half to start, half before launch.</p>
-          <ul class="features" role="list">
-            <li>5-page website</li>
-            <li>Design and development</li>
-            <li>$10/month hosting</li>
-            <li>+$100 per page after 5</li>
-            <li class="off"><span class="visually-hidden">Not included: </span>Unlimited edits</li>
-            <li class="off"><span class="visually-hidden">Not included: </span>Ongoing support</li>
-          </ul>
-          <a href="/contact/" class="button outline has-arrow"><span class="content"><span class="label">Book a call</span><svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"></path></svg></span></a>
-        </article>
+        <div class="panel">
+          <section class="rate">
+            <h3>First page</h3>
+            <p class="price">$800</p>
+            <p class="terms">Covers design, build, and launch</p>
+          </section>
+          <section class="rate">
+            <h3>Pages 2 to 5</h3>
+            <p class="price">$300</p>
+            <p class="terms">Per page</p>
+          </section>
+          <section class="rate">
+            <h3>Page 6 and up</h3>
+            <p class="price">$150</p>
+            <p class="terms">Per page</p>
+          </section>
+        </div>
+
+        <div class="panel">
+          <section class="included">
+            <h3>Included</h3>
+            <ul class="check-list" role="list">
+              <li>Design and development</li>
+              <li>Contact form</li>
+              <li>Free hosting</li>
+              <li>Basic SEO</li>
+              <li>Unlimited feedback until launch</li>
+            </ul>
+          </section>
+          <section class="addons wide">
+            <h3>Add-ons</h3>
+            <div class="items">
+              <div class="item">
+                <p class="name">Care plan</p>
+                <p class="price">$99/month</p>
+              </div>
+              <div class="item">
+                <p class="name">Blog</p>
+                <p class="price">$250</p>
+              </div>
+              <div class="item">
+                <p class="name">Copywriting</p>
+                <p class="price">$100/page</p>
+              </div>
+              <div class="item">
+                <p class="name">Other features</p>
+                <p class="price">Quoted</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="how" aria-labelledby="how-heading">
+        <h2 id="how-heading">How we price<span class="dot">.</span></h2>
+        <div class="text">
+          <p>Most of the work happens once, whatever the size of the site. Designing, building, and launching the site all go into the first page, which is why it's $800.</p>
+          <p>For additional pages, we try to scale the price to the work involved. The first few pages of a site are typically unique. A pricing page often has elements of its own, like a table or a services menu; an about page is different again, often with photos and a bio or business description; a contact page includes a contact form, and so on. That's why pages 2 to 5 are $300 each.</p>
+          <p>After that, each page is mostly adding content to a design that's already built, and the work is routine enough that each one is $150.</p>
+          <p>A page that needs far more work than a typical content page, such as one with a very large amount of content or custom interactive parts, is quoted before we start, and nothing changes without your written approval. Other services, like finding stock photos, are quoted separately, according to our base rate of $65 an hour.</p>
+          <div class="divider" aria-hidden="true"></div>
+          <div class="examples">
+            <h3 id="examples-heading">Example pricing</h3>
+            <ul class="totals" role="list" aria-labelledby="examples-heading">
+              <li><span class="label">1 page</span><span class="tiles" aria-hidden="true"><i class="t1"></i></span><span class="total">$800</span></li>
+              <li><span class="label">5 pages</span><span class="tiles" aria-hidden="true"><i class="t1"></i><i class="t2"></i><i class="t2"></i><i class="t2"></i><i class="t2"></i></span><span class="total">$2,000</span></li>
+              <li><span class="label">10 pages</span><span class="tiles" aria-hidden="true"><i class="t1"></i><i class="t2"></i><i class="t2"></i><i class="t2"></i><i class="t2"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i></span><span class="total">$2,750</span></li>
+              <li><span class="label">25 pages</span><span class="tiles" aria-hidden="true"><i class="t1"></i><i class="t2"></i><i class="t2"></i><i class="t2"></i><i class="t2"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i><i class="t3"></i></span><span class="total">$5,000</span></li>
+            </ul>
+            <ul class="key" role="list" aria-label="Page rates">
+              <li style="--k: var(--color-accent)">First page <b>$800</b></li>
+              <li style="--k: var(--color-ink)">Pages 2 to 5 <b>$300</b></li>
+              <li style="--k: var(--color-ink-dim)">Page 6 and up <b>$150</b></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">FAQ<span class="dot">.</span></h2>
+        <div class="text">
+          <details class="qa" name="faq">
+            <summary>What counts as a page?</summary>
+            <p>A page is any part of your site with its own address and its own purpose, like your home page, an about page, or a page for each service you offer. Pages built automatically from a shared template, like blog posts, don't count. Legal pages, like a privacy policy, are always free.</p>
+          </details>
+          <details class="qa" name="faq">
+            <summary>Do I need to supply the text and photos?</summary>
+            <p>You can write the text yourself, or we can write it for you for $100 a page. If we write it, we'll start with an interview about your business. Then we'll draft the text and send it to you for approval before it goes live. We don't do photography, but we can help you find stock photos at $65 an hour. Otherwise, photos come from you or a photographer you hire.</p>
+          </details>
+          <details class="qa" name="faq">
+            <summary>Do I need the care plan?</summary>
+            <p>No, it's optional. Without it, your site stays online at no charge, and changes after launch are billed at $65 an hour. With the care plan, $99 a month covers unlimited edits, backups, security and software updates, and keeping your Google Business Profile current. Either way, questions are always free. We only charge for the actual work.</p>
+          </details>
+          <details class="qa" name="faq">
+            <summary>What happens if I cancel the care plan?</summary>
+            <p>You can cancel at any time with 30 days' notice. Your site stays online with us at no charge, and you can still come to us for changes at $65 an hour.</p>
+          </details>
+          <details class="qa" name="faq">
+            <summary>Who owns my site and domain?</summary>
+            <p>You do. Once the final payment is made, the design, code, text, and photos made for your site are yours. Some of the code we reuse on every site stays ours, but you can keep using it as part of your site, even if you move it to another developer. If we buy your domain for you, it's registered in your name, and its yearly renewal is billed each January at cost.</p>
+          </details>
+          <details class="qa" name="faq">
+            <summary>Can I move my site somewhere else later?</summary>
+            <p>Yes. We'll hand over your site's files and your domain at no charge. If you'd like help setting up with a new host or developer, that's billed at $65 an hour.</p>
+          </details>
         </div>
       </section>
 
       <section class="closing" aria-labelledby="closing-heading">
         <p class="eyebrow" aria-hidden="true">Get in touch</p>
-        <h2 id="closing-heading"><span class="visually-hidden">Get in touch: </span>Not sure which fits? <em>We can talk it through.</em></h2>
-        <a href="/contact/" class="button solid has-arrow"><span class="content"><span class="label">Book a call</span><svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"></path></svg></span></a>
+        <h2 id="closing-heading"><span class="visually-hidden">Get in touch: </span>Questions about our pricing? <em>Send them our way.</em></h2>
+        <a href="/contact/" class="button solid has-arrow"><span class="content"><span class="label">Contact us</span><svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h13M11 5l5 5-5 5"></path></svg></span></a>
         <p class="email">Or email <a href="mailto:hello@presswork.dev">hello@presswork.dev</a></p>
       </section>
     </div>

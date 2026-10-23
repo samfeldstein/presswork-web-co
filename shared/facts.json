@@ -2,7 +2,7 @@
   "site": {
     "url": "https://presswork.dev",
     "title": "Presswork Web Co.",
-    "description": "Websites for small businesses, built to be found in search and fully managed for you. $0 down, plans from $150 a month.",
+    "description": "Fast, modern websites for small businesses, with flexible pricing: $800 for your first page, $300 for pages 2 to 5, and $150 for each page after.",
     "themeColor": "#0f0d12"
   },
   "me": {
@@ -28,13 +28,16 @@
     }
   ],
   "amounts": [
-    "$0",
-    "$0.00",
-    "$10",
     "$100",
     "$150",
-    "$150.00",
-    "$1,500"
+    "$65",
+    "$99",
+    "$250",
+    "$300",
+    "$800",
+    "$2,000",
+    "$2,750",
+    "$5,000"
   ],
   "contrast": [
     { "fg": "--color-ink", "bg": "--color-paper" },
@@ -46,8 +49,7 @@
     { "fg": "--color-accent", "bg": "--color-paper" },
     { "fg": "--color-accent", "bg": "--color-paper-raised" },
     { "fg": "--color-accent-contrast", "bg": "--color-accent" },
-    { "fg": "--color-stamp", "bg": "--color-paper" },
-    { "fg": "--ink-receipt-type", "bg": "--ink-receipt" }
+    { "fg": "--color-stamp", "bg": "--color-paper" }
   ],
   "allowedHosts": [
     "presswork.dev",
