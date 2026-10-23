@@ -11,6 +11,25 @@
 /js/*
   Cache-Control: public, max-age=31556952, immutable
 
+# no-transform stops Cloudflare injecting its bot-detection script into pages
+# (Best Practices 100 to 81 in Lighthouse). It also stops the automatic Web
+# Analytics beacon, so the pages carry the beacon themselves. Listed per page:
+# a wildcard would stack on top of the rules above.
+/
+  Cache-Control: no-transform
+
+/about/
+  Cache-Control: no-transform
+
+/pricing/
+  Cache-Control: no-transform
+
+/contact/
+  Cache-Control: no-transform
+
+/404.html
+  Cache-Control: no-transform
+
 # Files at the top level keep the same name when they change (icons, the
 # share image), so cache them for a day only. Not a wildcard: Cloudflare
 # would stack a wildcard's header on top of the /fonts/ rule above.

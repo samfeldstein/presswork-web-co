@@ -132,7 +132,7 @@ const old = () => String(Date.now() - 10_000);
 test("GET /contact/ stamps the time, uncached", async () => {
   const res = await worker.fetch(new Request("https://presswork.dev/contact/"), env());
   assert.equal(res.status, 200);
-  assert.equal(res.headers.get("cache-control"), "no-store");
+  assert.equal(res.headers.get("cache-control"), "no-store, no-transform");
   assert.match(await res.text(), /name="renderedAt" value="\d{13}"/);
 });
 

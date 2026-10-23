@@ -53,7 +53,8 @@
   ],
   "allowedHosts": [
     "presswork.dev",
-    "www.w3.org"
+    "www.w3.org",
+    "static.cloudflareinsights.com"
   ],
   "sizeBudgetKB": {
     "default": 16,
