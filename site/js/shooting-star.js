@@ -21,4 +21,4 @@ const fly = () => {
 };
 
 const next = () => setTimeout(() => (fly(), next()), between(7000, 18000));
-if (star) setTimeout(() => (fly(), next()), between(2500, 5000));
+if (star) setTimeout(() => (fly(), next()), between(6000, 9000));

@@ -68,7 +68,7 @@ for (const page of pages) {
         if (!["binary", "numeric", "metricSavings"].includes(audit.scoreDisplayMode)) continue;
         seen.add(id);
         console.log(`  [${category}] ${audit.title}${audit.displayValue ? ` (${audit.displayValue})` : ""}`);
-        for (const item of (audit.details?.items ?? []).slice(0, 5)) {
+        for (const item of (Array.isArray(audit.details?.items) ? audit.details.items : []).slice(0, 5)) {
           console.log(`      ${String(describe(item)).replace(/\s+/g, " ").slice(0, 160)}`);
         }
       }

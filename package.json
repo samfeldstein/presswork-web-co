@@ -10,7 +10,8 @@
     "test": "node --test test/",
     "dev": "wrangler dev",
     "dev:phone": "wrangler dev --ip 0.0.0.0",
-    "lighthouse": "node lighthouse.mjs"
+    "lighthouse": "node lighthouse.mjs",
+    "pagespeed": "node --env-file-if-exists=.env pagespeed.mjs"
   },
   "dependencies": {
     "wrangler": "^4.144.0"

@@ -25,11 +25,11 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#0f0d12">
-<link rel="preload" href="/fonts/noto-serif-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/noto-serif-latin-wdth-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/noto-serif-latin-normal-trim.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/noto-serif-latin-italic-trim.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="color-scheme" content="dark">
 <style>html{background:#0f0d12;color-scheme:dark}</style>
-<link rel="stylesheet" href="/css/fonts.css?v=bcd6f455">
+<link rel="stylesheet" href="/css/fonts.css?v=ed943faf">
 <link rel="stylesheet" href="/css/reset.css?v=679b7cf5">
 <link rel="stylesheet" href="/css/tokens.css?v=6fc74c01">
 <link rel="stylesheet" href="/css/global.css?v=8921f192">
@@ -55,7 +55,17 @@
     });
   })();
 </script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "51fc03e0b2844eb69122caee61074a3c"}'></script>
+<script>
+  (function () {
+    addEventListener("load", function () {
+      var script = document.createElement("script");
+      script.type = "module";
+      script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+      script.setAttribute("data-cf-beacon", '{"token": "51fc03e0b2844eb69122caee61074a3c"}');
+      document.head.appendChild(script);
+    });
+  })();
+</script>
 <!-- /shared:head -->
 <style>
   .contact {
@@ -415,7 +425,7 @@
   </div>
 </div>
 <span class="star" aria-hidden="true" data-star></span>
-<script type="module" src="/js/shooting-star.js?v=ddae5733"></script>
+<script type="module" src="/js/shooting-star.js?v=73c74f35"></script>
 <!-- /shared:sky -->
 
   <main id="main" class="page" tabindex="-1">
@@ -511,7 +521,7 @@
       <div class="scores" role="group" aria-labelledby="scores-title">
         <p class="visually-hidden" id="scores-title">Lighthouse scores, mobile</p>
         <dl>
-          <div><dt><span aria-hidden="true">Perf</span><span class="visually-hidden">Performance</span></dt><dd style="--score: 98">98</dd></div>
+          <div><dt><span aria-hidden="true">Perf</span><span class="visually-hidden">Performance</span></dt><dd style="--score: 99">99</dd></div>
           <div><dt><span aria-hidden="true">A11y</span><span class="visually-hidden">Accessibility</span></dt><dd style="--score: 100">100</dd></div>
           <div><dt><span aria-hidden="true">Practices</span><span class="visually-hidden">Best practices</span></dt><dd style="--score: 100">100</dd></div>
           <div><dt>SEO</dt><dd style="--score: 100">100</dd></div>

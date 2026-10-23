@@ -23,7 +23,7 @@ if (headline && word && !reduceMotion.matches) {
   const typing = (on) => headline.toggleAttribute("data-typing", on);
 
   const loop = async () => {
-    await wait(2400);
+    await wait(6000);
     const cycle = [...words, ""];
     for (let i = 0; ; i = (i + 1) % cycle.length) {
       if (reduceMotion.matches) return show("");

@@ -21,8 +21,8 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="{{site.themeColor}}">
-<link rel="preload" href="/fonts/noto-serif-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/noto-serif-latin-wdth-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/noto-serif-latin-normal-trim.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/noto-serif-latin-italic-trim.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="color-scheme" content="dark">
 <style>html{background:{{site.themeColor}};color-scheme:dark}</style>
 <link rel="stylesheet" href="/css/fonts.css">
@@ -51,4 +51,14 @@
     });
   })();
 </script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "51fc03e0b2844eb69122caee61074a3c"}'></script>
+<script>
+  (function () {
+    addEventListener("load", function () {
+      var script = document.createElement("script");
+      script.type = "module";
+      script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+      script.setAttribute("data-cf-beacon", '{"token": "51fc03e0b2844eb69122caee61074a3c"}');
+      document.head.appendChild(script);
+    });
+  })();
+</script>
