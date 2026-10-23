@@ -1,0 +1,12 @@
+# Presswork Web Co.
+
+> Presswork Web Co. designs, builds, hosts, and maintains fast, modern websites for small businesses. Pricing is per page: $800 for the first page, $300 for each of pages 2 to 5, and $150 for each page after that. Hosting is free. An optional care plan is $99 a month.
+
+Founded in 2026 by Sam Feldstein, the owner and lead developer. Contact: hello@presswork.dev or the contact form. Existing sites can get a free site audit covering speed, how the site works on phones and other devices, search basics, and accessibility.
+
+## Pages
+
+- [Home](https://presswork.dev/): what we do, the services we offer, and a pricing summary
+- [Pricing](https://presswork.dev/pricing/): prices per page, what is included, add-ons (care plan, blog, copywriting), how we price, and an FAQ on ownership, cancelling, and moving the site
+- [About](https://presswork.dev/about/): who runs Presswork Web Co. and why
+- [Contact](https://presswork.dev/contact/): send a message or request a free site audit

@@ -22,6 +22,8 @@ const walk = (dir, url) => {
 };
 walk("site", "/");
 pages.sort();
+const notFound = "/404";
+pages.push(notFound);
 
 if (repeat && !only) {
   console.error("--runs needs --page=/path/");
@@ -147,6 +149,7 @@ if (rows.length) {
   for (const [page, ...s] of rows) {
     console.log(page.padEnd(14) + s.map((n) => String(n).padEnd(6)).join(""));
   }
-  const lowest = categories.map((_, i) => Math.min(...rows.map((r) => r[i + 1])));
-  console.log(`${"lowest".padEnd(14)}${lowest.map((n) => String(n).padEnd(6)).join("")}`);
+  const scored = rows.filter(([page]) => page !== notFound);
+  const lowest = categories.map((_, i) => Math.min(...scored.map((r) => r[i + 1])));
+  if (scored.length) console.log(`${"lowest".padEnd(14)}${lowest.map((n) => String(n).padEnd(6)).join("")}`);
 }

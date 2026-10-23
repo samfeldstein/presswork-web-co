@@ -3,7 +3,7 @@ import { botReason, trapped } from "./spam.js";
 import { stampTime, sentState, errorState } from "./render.js";
 
 const SITE_TITLE = "Presswork Web Co.";
-const GENERIC_ERROR = "Your message couldn't be sent. Try again, or email us directly.";
+const GENERIC_ERROR = "Your message couldn’t be sent. Try again, or email us directly.";
 const TOO_LARGE = "Your message was too large to send. Shorten it and try again.";
 const MAX_BODY = 64 * 1024;
 

@@ -179,7 +179,7 @@ test("a failed send returns 500 and the generic message", async () => {
   const e = env({ send: async () => { throw new Error("down"); } });
   const res = await worker.fetch(post({ ...good, renderedAt: old() }, { accept: "application/json" }), e);
   assert.equal(res.status, 500);
-  assert.match((await res.json()).message, /couldn't be sent/);
+  assert.match((await res.json()).message, /couldn’t be sent/);
 });
 
 test("plain post: success redirects to the thank-you", async () => {
@@ -236,7 +236,7 @@ test("a missing contact page asset is an error, not a 200", async () => {
   assert.doesNotMatch(await get.text(), /not found page/);
   const bad = await worker.fetch(post({ name: "", email: "x", message: "", renderedAt: old() }), e);
   assert.equal(bad.status, 500);
-  assert.match(await bad.text(), /couldn't be sent/);
+  assert.match(await bad.text(), /couldn’t be sent/);
 });
 
 

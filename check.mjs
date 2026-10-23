@@ -4,7 +4,8 @@
   No dependencies. Run it (after sync.mjs) before every deploy.
 
   What it checks:
-    - sync is up to date: shared parts, sitemaps (runs sync.mjs --dry)
+    - sync is up to date: shared parts, sitemaps, and the copy/ extracts
+      (runs sync.mjs --dry)
     - each page: lang, one <h1>, one <main id="main">, headings that don't
       skip a level, unique ids, <img> alt text, a title and description
     - every link and asset path resolves to a real file (in pages and CSS),
@@ -15,6 +16,8 @@
       comments or strings
     - prices and emails: every $ amount on the site must be listed in
       shared/facts.json, and the only email address is the one in facts
+    - no straight quotes, apostrophes or "..." in page text (sync.mjs makes
+      them typographic; code, scripts, styles and attributes are left alone)
     - every character shown on the page is covered by the font files we ship
       (or listed in facts.json "allowedChars": decorative symbols that are
       meant to come from the system font, like the stars in the bakery drawing)
@@ -30,23 +33,16 @@
     - each page's gzipped HTML + linked CSS and JS stays within its budget in
       facts.json "sizeBudgetKB" (a "default" and optional per-path overrides)
 
-  Usage: node check.mjs [--root site] [--shared shared] [--facts]
+  Usage: node check.mjs [--root site] [--shared shared] [--copy copy] [--facts]
   --facts prints where each price appears, to review after a price change.
 */
 import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { join, relative, resolve, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { gzipSync } from "node:zlib";
-import { sync } from "./sync.mjs";
+import { decodeEntities, straightQuotes, sync } from "./sync.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
-
-const ENTITIES = {
-  amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", copy: "©", reg: "®",
-  trade: "™", mdash: "—", ndash: "–", hellip: "…", lsquo: "‘", rsquo: "’",
-  ldquo: "“", rdquo: "”", middot: "·", times: "×", bull: "•", shy: "­",
-  thinsp: " ", deg: "°",
-};
 
 /** Remove comments, and the insides of <script> and <style>; keep JSON-LD for the price check. */
 function simplify(html) {
@@ -86,17 +82,7 @@ function visibleText(markup) {
 }
 
 function decode(text, problems, label) {
-  return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (all, ref) => {
-    if (ref[0] === "#") {
-      const code = ref[1].toLowerCase() === "x" ? parseInt(ref.slice(2), 16) : parseInt(ref.slice(1), 10);
-      return String.fromCodePoint(code);
-    }
-    if (!(ref in ENTITIES)) {
-      problems.push(`${label}: unknown entity ${all} (add it to ENTITIES in check.mjs)`);
-      return "";
-    }
-    return ENTITIES[ref];
-  });
+  return decodeEntities(text, (all) => problems.push(`${label}: unknown entity ${all} (add it to ENTITIES in sync.mjs)`));
 }
 
 function fontRanges(css) {
@@ -242,17 +228,20 @@ export function contrastProblems(tokens, pairs) {
   return problems;
 }
 
-export function check({ root, shared, showFacts = false }) {
+export function check({ root, shared, copy, showFacts = false }) {
   const problems = [];
   const fail = (label, msg) => problems.push(`${label}: ${msg}`);
 
   let result;
   try {
-    result = sync({ root, shared, write: false });
+    result = sync({ root, shared, ...(copy && { copy }), write: false });
   } catch (e) {
     return [`sync: ${e.message}`];
   }
-  for (const f of result.changed) fail(relative(root, f), "out of date; run `node sync.mjs`");
+  for (const f of result.changed) {
+    const inSite = !relative(root, f).startsWith("..");
+    fail(inSite ? relative(root, f) : relative(dirname(root), f), inSite ? "out of date; run `node sync.mjs`" : "copy extract is stale or has no page; run `node sync.mjs`");
+  }
   const { facts, pages } = result;
 
   const exists = (p) => existsSync(join(root, p));
@@ -379,6 +368,8 @@ export function check({ root, shared, showFacts = false }) {
       if (!covered(cp) && !(facts.allowedChars ?? []).includes(ch)) bad.add(`${ch} (U+${cp.toString(16).toUpperCase().padStart(4, "0")})`);
     }
     if (bad.size) fail(label, `characters outside the shipped fonts: ${[...bad].join(", ")}`);
+
+    for (const snippet of straightQuotes(html)) fail(label, `straight quote or "..." in text: "${snippet}" (run \`node sync.mjs\`; write an entity like &quot; as the curly character itself)`);
   }
 
   // CSS files: url() and @import must resolve
@@ -464,6 +455,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   const problems = check({
     root: resolve(here, opt("--root", "site")),
     shared: resolve(here, opt("--shared", "shared")),
+    copy: resolve(here, opt("--copy", "copy")),
     showFacts: args.includes("--facts"),
   });
   if (problems.length) {

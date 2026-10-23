@@ -26,6 +26,7 @@ function copyOfSite() {
   const dir = mkdtempSync(join(tmpdir(), "presswork-check-"));
   cpSync(new URL("../site", import.meta.url), join(dir, "site"), { recursive: true });
   cpSync(new URL("../shared", import.meta.url), join(dir, "shared"), { recursive: true });
+  cpSync(new URL("../copy", import.meta.url), join(dir, "copy"), { recursive: true });
   return dir;
 }
 
