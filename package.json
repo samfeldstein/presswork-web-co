@@ -10,6 +10,7 @@
     "test": "node --test test/",
     "dev": "wrangler dev",
     "dev:phone": "wrangler dev --ip 0.0.0.0",
+    "followups": "node followups.mjs",
     "lighthouse": "node lighthouse.mjs",
     "pagespeed": "node --env-file-if-exists=.env pagespeed.mjs"
   },
