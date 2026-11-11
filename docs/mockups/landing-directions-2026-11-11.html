@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Landing page directions (2026-11-11)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: Georgia, "Times New Roman", serif; }
+  .label { font: 600 14px/1.4 system-ui, sans-serif; background: #222; color: #fff; padding: 12px 24px; position: sticky; top: 0; z-index: 5; }
+  .label span { opacity: .7; font-weight: 400; }
+  a { color: inherit; }
+  section.dir { min-height: 100vh; padding: 0 clamp(16px, 5vw, 64px) 96px; }
+  nav.top { display: flex; justify-content: space-between; align-items: center; padding: 28px 0; font-size: 15px; }
+  nav.top .logo { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; }
+  nav.top ul { display: flex; gap: 24px; list-style: none; padding: 0; }
+  ul.plain { list-style: none; padding: 0; }
+
+  /* A: Plain sheet */
+  .a { background: #fff; color: #111; }
+  .a .logo b { color: #c8102e; }
+  .a .hero { max-width: 1100px; padding: 12vh 0 10vh; border-bottom: 1px solid #111; }
+  .a h1 { font-size: clamp(44px, 8vw, 112px); font-weight: 400; line-height: 1; letter-spacing: -0.035em; }
+  .a .lead { font: 400 clamp(18px, 1.6vw, 22px)/1.5 system-ui, sans-serif; max-width: 34em; margin-top: 32px; color: #333; }
+  .a .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
+  .a .btn { font: 600 16px system-ui, sans-serif; padding: 16px 22px; text-decoration: none; border: 1px solid #111; border-radius: 2px; }
+  .a .btn.solid { background: #111; color: #fff; }
+  .a .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1100px; }
+  .a .grid div { padding: 32px 24px 32px 0; border-bottom: 1px solid #ddd; }
+  .a .grid h2 { font-size: 22px; font-weight: 400; margin-bottom: 8px; }
+  .a .grid p { font: 15px/1.55 system-ui, sans-serif; color: #444; }
+  .a .price { max-width: 1100px; display: grid; grid-template-columns: 1fr 2fr; gap: 32px; padding: 64px 0; }
+  .a .price h2 { font-size: 34px; font-weight: 400; letter-spacing: -0.02em; }
+  .a .price h2 b { color: #c8102e; }
+  .a .price p { font: 18px/1.55 system-ui, sans-serif; color: #333; max-width: 36em; }
+  .a .price p + p { margin-top: 16px; }
+  @media (max-width: 700px) { .a .price { grid-template-columns: 1fr; } }
+
+  /* B: Dark, form on the page */
+  .b { background: #0f0d12; color: #f6efe4; }
+  .b .logo b { color: #f5c451; }
+  .b .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: start; padding-top: 10vh; max-width: 1200px; }
+  .b .eyebrow { color: #f5c451; font-size: 15px; margin-bottom: 20px; }
+  .b h1 { font-size: clamp(40px, 6vw, 84px); font-weight: 400; line-height: 1.02; letter-spacing: -0.03em; }
+  .b .lead { font-size: 19px; line-height: 1.55; color: #b8afa2; margin-top: 28px; max-width: 30em; }
+  .b ul.checks { margin-top: 36px; display: grid; gap: 14px; }
+  .b ul.checks li { padding-left: 28px; position: relative; font-size: 17px; }
+  .b ul.checks li::before { content: ""; position: absolute; left: 0; top: .55em; width: 14px; height: 1px; background: #f5c451; }
+  .b form { background: #1a161e; border: 1px solid #3a3340; padding: clamp(24px, 3vw, 40px); border-radius: 6px; }
+  .b form h2 { font-size: 26px; font-weight: 400; }
+  .b form > p { color: #b8afa2; margin: 8px 0 24px; font-size: 16px; line-height: 1.5; }
+  .b label { display: block; font: 14px system-ui, sans-serif; color: #b8afa2; margin: 16px 0 6px; }
+  .b input, .b textarea { width: 100%; background: #0f0d12; border: 1px solid #3a3340; color: #f6efe4; padding: 12px; font: 16px system-ui, sans-serif; border-radius: 3px; }
+  .b .check { display: flex; gap: 10px; align-items: center; margin-top: 16px; font: 15px system-ui, sans-serif; }
+  .b .check input { width: auto; }
+  .b button { margin-top: 24px; width: 100%; background: #f5c451; color: #0f0d12; border: 0; padding: 16px; font: 600 16px system-ui, sans-serif; border-radius: 3px; }
+  .b .small { font: 14px system-ui, sans-serif; color: #9a9186; margin-top: 14px; text-align: center; }
+  @media (max-width: 860px) { .b .wrap { grid-template-columns: 1fr; } }
+
+  /* C: Job ticket */
+  .c { background: #e9e6df; color: #1d1b18; }
+  .c nav.top .logo b { color: #1f4fa3; }
+  .c .ticket { max-width: 860px; margin: 6vh auto 0; background: #fff; border: 2px solid #1d1b18; font-family: "Courier New", monospace; }
+  .c .ticket header { display: flex; justify-content: space-between; border-bottom: 2px solid #1d1b18; padding: 14px 20px; font-size: 14px; text-transform: uppercase; letter-spacing: .08em; }
+  .c .ticket h1 { font-family: Georgia, serif; font-weight: 400; font-size: clamp(36px, 6vw, 72px); line-height: 1.02; letter-spacing: -0.03em; padding: 32px 20px 24px; border-bottom: 1px solid #1d1b18; }
+  .c .row { display: grid; grid-template-columns: 180px 1fr; border-bottom: 1px solid #1d1b18; }
+  .c .row > * { padding: 14px 20px; font-size: 15px; line-height: 1.5; }
+  .c .row dt { border-right: 1px solid #1d1b18; text-transform: uppercase; letter-spacing: .06em; font-size: 13px; }
+  .c .row dd { font-family: system-ui, sans-serif; }
+  .c .box { display: inline-block; width: 14px; height: 14px; border: 1.5px solid #1d1b18; margin-right: 8px; vertical-align: -2px; }
+  .c .box.x { background: linear-gradient(45deg, transparent 45%, #1f4fa3 45% 55%, transparent 55%), linear-gradient(-45deg, transparent 45%, #1f4fa3 45% 55%, transparent 55%); }
+  .c .quote dd { font-family: Georgia, serif; font-size: 22px; color: #1f4fa3; }
+  .c .foot { display: flex; flex-wrap: wrap; gap: 12px; padding: 20px; }
+  .c .btn { font: 600 16px system-ui, sans-serif; padding: 14px 20px; text-decoration: none; border: 2px solid #1d1b18; }
+  .c .btn.solid { background: #1f4fa3; border-color: #1f4fa3; color: #fff; }
+  .c .stamp { position: relative; }
+  .c .stamp::after { content: "Open for new jobs"; position: absolute; right: 24px; top: 50%; transform: translateY(-50%) rotate(-8deg); border: 3px solid #1f4fa3; color: #1f4fa3; padding: 6px 12px; font: 700 15px "Courier New", monospace; text-transform: uppercase; letter-spacing: .1em; opacity: .85; }
+  @media (max-width: 640px) { .c .row { grid-template-columns: 1fr; } .c .row dt { border-right: 0; padding-bottom: 0; } .c .stamp::after { display: none; } }
+</style>
+</head>
+<body>
+
+<p class="label">A. Plain sheet <span>— light, crisp, Studio Self level of simplicity. Serif headline, sans text, one red accent, hairline rules, square corners.</span></p>
+<section class="dir a">
+  <nav class="top"><span class="logo">Presswork<b>.</b></span><ul><li>About</li><li>Contact</li></ul></nav>
+  <div class="hero">
+    <h1>Your website,<br>fully managed.</h1>
+    <p class="lead">We build fast, modern sites for small businesses, and look after them once they’re live. Already have a site? We’ll tell you what’s working and what isn’t, for free.</p>
+    <div class="ctas"><a class="btn solid" href="#">Contact us for pricing</a><a class="btn" href="#">Request a free site audit</a></div>
+  </div>
+  <div class="grid">
+    <div><h2>Design and development</h2><p>Built around your business, quick to load on phones, tablets, and computers.</p></div>
+    <div><h2>Found in search</h2><p>Set up so search engines can read it and customers can find you.</p></div>
+    <div><h2>Care plan</h2><p>Unlimited edits, backups, and updates. You never have to learn to edit it.</p></div>
+    <div><h2>Any stage</h2><p>A new site, a move off your current platform, or a fix for the one you have.</p></div>
+  </div>
+  <div class="price">
+    <h2>How pricing works<b>.</b></h2>
+    <div><p>Every business needs something different, so we quote each project after a short conversation. Tell us what you have and what you need, and we’ll send a clear price before any work starts.</p><p><a href="#">Contact us for pricing →</a></p></div>
+  </div>
+</section>
+
+<p class="label">B. Form on the page <span>— keeps today’s dark palette and serif, but the whole page is one screen: pitch on the left, the pricing request form on the right.</span></p>
+<section class="dir b">
+  <nav class="top"><span class="logo">Presswork<b>.</b></span><ul><li>About</li><li>Contact</li></ul></nav>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Websites for small businesses</p>
+      <h1>Your website, fully managed.</h1>
+      <p class="lead">We build fast, modern sites and look after them once they’re live, so you can get back to running your business.</p>
+      <ul class="plain checks">
+        <li>Designed around your business, fast on every device</li>
+        <li>Set up to be found in search</li>
+        <li>Unlimited edits on the care plan</li>
+        <li>New site, platform move, or a fix for the one you have</li>
+      </ul>
+    </div>
+    <form onsubmit="return false">
+      <h2>Get a price</h2>
+      <p>Tell us a little about your business. We’ll reply within one business day with a quote.</p>
+      <label>Name</label><input>
+      <label>Email</label><input>
+      <label>Your current site, if you have one</label><input placeholder="https://">
+      <label>What do you need?</label><textarea rows="3"></textarea>
+      <label class="check"><input type="checkbox"> Include a free audit of my current site</label>
+      <button>Send</button>
+      <p class="small">Or email hello@presswork.dev</p>
+    </form>
+  </div>
+</section>
+
+<p class="label">C. Job ticket <span>— the page is a print shop’s work order (the press in Presswork). The quote line reads “on request”; the buttons fill in the ticket.</span></p>
+<section class="dir c">
+  <nav class="top"><span class="logo">Presswork<b>.</b></span><ul><li>About</li><li>Contact</li></ul></nav>
+  <div class="ticket">
+    <header><span>Presswork Web Co. — Work order</span><span>No. ____</span></header>
+    <h1>Your website, fully managed.</h1>
+    <dl>
+      <div class="row"><dt>Customer</dt><dd>Small businesses: clinics, studios, shops, and venues</dd></div>
+      <div class="row"><dt>Job</dt><dd><span class="box x"></span>New site <span class="box x" style="margin-left:16px"></span>Platform move <span class="box x" style="margin-left:16px"></span>Fix the one you have</dd></div>
+      <div class="row"><dt>Includes</dt><dd>Design and development, fast on every device · Set up for search · Free hosting</dd></div>
+      <div class="row"><dt>Upkeep</dt><dd>Care plan: unlimited edits, backups, and updates</dd></div>
+      <div class="row quote stamp"><dt>Quote</dt><dd>On request</dd></div>
+    </dl>
+    <div class="foot"><a class="btn solid" href="#">Contact us for pricing</a><a class="btn" href="#">Request a free site audit</a></div>
+  </div>
+</section>
+
+</body>
+</html>

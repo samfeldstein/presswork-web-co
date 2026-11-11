@@ -25,6 +25,10 @@ When a heading and a paragraph sit side by side, equal box tops are not equal le
 - **Heading beside text.** A two-column grid (`1fr 2fr`) with the heading in the first column and one wrapper in the second; below 60rem it collapses to one column. See "Section headings" above for lining up the heading's letters with the first line.
 - **Fonts are trimmed, so ranges are limits.** The preloaded Latin files cover weight 300 to 700 and width 72% to 100% (italic: weight 300 to 700 at width 100% only). A heavier weight, a width outside that range, or a condensed italic needs the file re-made with fontTools `instancer` from the original (in git history before commit `17c88f8`); until then the browser clamps. The files are cached as immutable, so a re-made file needs a new filename (and new names in `fonts.css` and the preloads in `shared/head.html`).
 
+## Motif
+
+Decided 2026-11-11: all Presswork design work uses the printing press as its motif: presswork, letterpress, and type, plus objects from that world (proofs, type cases, printed matter). Each design concept is one real-world object picked from this world, not a standard layout dressed in a theme.
+
 ## Inspiration
 
 - https://www.thisisstudioself.com/ (saved 2026-11-10): general inspiration, not tied to one page. The user likes its simplicity, that it doesn't lean heavily on images, and that it looks crisp, clean, professional, and easy to understand.
