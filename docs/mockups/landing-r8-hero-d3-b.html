@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 8, hero only, designer 3, pitch B (redo): "Two voices."
+  Bitter, a slab serif, for the headline and the intro; Work Sans for the wordmark, nav, and buttons.
+  Headline and intro share one left edge and one family, the intro set large as a second voice,
+  so the space above is taken by type rather than left blank.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bitter:wght@300..700&family=Work+Sans:wght@400..700&display=swap">
+<style>
+:root {
+  --paper: #f2f1ed;
+  --ink: #262523;
+  --grey: #5d5b57;
+  --gutter: 56px;
+  --slab: "Bitter", Rockwell, Georgia, serif;
+  --sans: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--slab);
+  font-kerning: normal;
+  font-feature-settings: "kern" 1;
+}
+a { color: inherit; text-underline-offset: .22em; text-decoration-thickness: 1px; }
+ul { list-style: none; margin: 0; padding: 0; }
+.nobr { white-space: nowrap; }
+
+.page { min-height: 100svh; display: flex; flex-direction: column; padding: 0 var(--gutter); }
+
+.masthead {
+  display: flex; align-items: baseline; gap: 56px;
+  padding-block: 26px;
+  font-family: var(--sans);
+}
+.wordmark { font-weight: 700; font-size: 1.3125rem; line-height: 1; letter-spacing: -0.02em; text-decoration: none; margin-right: auto; }
+.masthead nav ul { display: flex; gap: 30px; }
+.masthead nav a { font-size: .9375rem; font-weight: 500; text-decoration: none; }
+.masthead nav a:hover { text-decoration: underline; }
+
+.hero { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: 0 48px; }
+
+.hero h1 {
+  margin: 0;
+  font-weight: 650;
+  font-size: 10.75rem;
+  line-height: .94;
+  letter-spacing: -0.03em;
+  margin-left: -0.05em;
+  max-width: none;
+}
+.hero h1 > span { display: block; }
+.hero p {
+  margin: 44px 0 0;
+  max-width: 46ch;
+  font-weight: 350;
+  font-size: 2.25rem;
+  line-height: 1.28;
+  letter-spacing: -0.012em;
+  text-wrap: pretty;
+}
+.actions { display: flex; align-items: center; gap: 28px; margin-top: 40px; font-family: var(--sans); }
+.button {
+  display: inline-block; font-weight: 600; font-size: 1.0625rem; line-height: 1;
+  padding: 18px 26px; background: var(--ink); color: var(--paper); text-decoration: none;
+  border: 1.5px solid var(--ink);
+}
+.button:hover { background: transparent; color: var(--ink); }
+.textlink { font-weight: 600; font-size: 1.0625rem; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top" class="hero" aria-labelledby="hero-title">
+  <h1 id="hero-title"><span>Websites for</span> <span><span class="nobr">owner-run</span> local</span> <span>businesses.</span></h1>
+  <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+  <div class="actions">
+    <a class="button" href="#contact">Ask for a free check</a>
+    <a class="textlink" href="#prices">See example prices</a>
+  </div>
+</main>
+
+</div>
+</body>
+</html>

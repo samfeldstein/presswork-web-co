@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 9, hero only, designer 3, pitch B: "Tall and quiet."
+  Oat paper and tobacco ink. The headline in Noto Serif Display at its narrowest, lightest cut, set very large,
+  so it reads tall and fine instead of loud. Everything else is small and crisp, pushed to the right third.
+  One clay square button.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wdth,wght@62.5..100,100..700&family=Noto+Serif:wght@400;500&family=Oswald:wght@400;500&display=swap">
+<style>
+:root {
+  --oat: #ebe3d3;
+  --ink: #2a2019;
+  --soft: #6b5d50;
+  --hair: #c9bca6;
+  --clay: #a8492a;
+  --gutter: 56px;
+  --display: "Noto Serif Display", Georgia, serif;
+  --text: "Noto Serif", Georgia, serif;
+  --ui: "Oswald", "Arial Narrow", sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--oat);
+  color: var(--ink);
+  font-family: var(--text);
+  font-kerning: normal;
+  font-size: 17px;
+  line-height: 1.6;
+}
+a { color: inherit; text-underline-offset: .3em; text-decoration-thickness: 1px; }
+:focus-visible { outline: 3px solid var(--clay); outline-offset: 4px; }
+ul { list-style: none; margin: 0; padding: 0; }
+.wrap { padding-inline: var(--gutter); }
+
+.page { min-height: 100svh; display: flex; flex-direction: column; }
+
+.masthead {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 24px;
+  align-items: baseline;
+  padding-block: 26px 0;
+  font-family: var(--ui);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+.wordmark { grid-column: 1 / 4; font-weight: 500; font-size: 17px; text-decoration: none; letter-spacing: .16em; }
+.masthead nav { grid-column: 8 / 13; }
+.masthead nav ul { display: flex; justify-content: space-between; }
+.masthead nav a { font-size: 13px; text-decoration: none; color: var(--soft); }
+.masthead nav a:hover { color: var(--ink); }
+
+.hero {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 24px;
+  align-content: space-between;
+  row-gap: 26px;
+  padding-block: 8px 30px;
+}
+.hero h1 {
+  grid-column: 1 / 13;
+  margin: 0;
+  font-family: var(--display);
+  font-variation-settings: "wdth" 62.5;
+  font-stretch: 62.5%;
+  font-weight: 300;
+  font-size: 186px;
+  line-height: .9;
+  letter-spacing: -0.012em;
+  max-width: 1240px;
+  text-wrap: balance;
+}
+.side {
+  grid-column: 8 / 13;
+  border-top: 1px solid var(--ink);
+  padding-top: 22px;
+}
+.side p {
+  margin: 0 0 24px;
+  font-size: 19px;
+  line-height: 1.55;
+  max-width: 36ch;
+  text-wrap: pretty;
+}
+.actions {
+  display: flex; align-items: center; gap: 30px;
+  font-family: var(--ui);
+  text-transform: uppercase;
+  letter-spacing: .09em;
+}
+.button {
+  display: inline-block;
+  padding: 18px 28px 17px;
+  background: var(--clay);
+  color: var(--oat);
+  font-weight: 500; font-size: 16px; line-height: 1;
+  text-decoration: none;
+  border: 1.5px solid var(--clay);
+}
+.button:hover { background: transparent; color: var(--clay); }
+.textlink { font-size: 15px; color: var(--ink); }
+.textlink:hover { color: var(--clay); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="wrap masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top" class="wrap hero" aria-labelledby="hero-title">
+  <h1 id="hero-title">A website built and looked after by one person.</h1>
+  <div class="side">
+    <p>I’m Sam. I work with owner-run businesses in Colorado: clinics, studios, venues, and small shops. I build the site, keep it running, and help people find you on Google and in AI search, so you never have to learn the tools.</p>
+    <div class="actions">
+      <a class="button" href="#contact">Ask for a free website check</a>
+      <a class="textlink" href="#prices">See example prices</a>
+    </div>
+  </div>
+</main>
+
+</div>
+</body>
+</html>

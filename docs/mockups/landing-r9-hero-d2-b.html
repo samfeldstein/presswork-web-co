@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 9, hero only, designer 2, pitch B: "Red rock."
+  A full-bleed Colorado red-clay field. The headline is set in condensed capitals,
+  each line sized to run exactly gutter to gutter, so the type is the whole wall.
+  The hero is a clay block at its natural height; the page below returns to bone.
+  Antonio for headline, wordmark, nav, and buttons; Noto Serif for the intro.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Antonio:wght@400..700&family=Noto+Serif:wght@400;500&display=swap">
+<style>
+:root {
+  --clay: #9e4426;
+  --clay-deep: #8a3a20;
+  --bone: #f2e6d4;
+  --bone-dim: #e2c6ae;
+  --ink: #1f1814;
+  --gutter: 72px;
+  --display: "Antonio", "Arial Narrow", sans-serif;
+  --text: "Noto Serif", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bone);
+  color: var(--bone);
+  font-family: var(--text);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-kerning: normal;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .26em; }
+:focus-visible { outline: 2px solid var(--bone); outline-offset: 4px; }
+ul { list-style: none; margin: 0; padding: 0; }
+.wrap { padding-inline: var(--gutter); }
+
+.page {
+  display: flex; flex-direction: column;
+  background: linear-gradient(180deg, var(--clay) 0%, var(--clay) 55%, var(--clay-deep) 100%);
+}
+
+.masthead {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding-block: 26px;
+  font-family: var(--display);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.wordmark { font-weight: 700; font-size: 1.375rem; text-decoration: none; letter-spacing: .04em; }
+.masthead nav ul { display: flex; gap: 36px; }
+.masthead nav a { font-size: 1rem; font-weight: 500; color: var(--bone-dim); text-decoration: none; }
+.masthead nav a:hover { color: var(--bone); }
+
+.hero {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding-block: 36px 64px;
+}
+.hero h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: .88;
+  letter-spacing: -0.005em;
+}
+.hero h1 .line { display: block; white-space: nowrap; }
+
+.foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 64px;
+  margin-top: 64px;
+  padding-top: 28px;
+  border-top: 2px solid var(--bone);
+}
+.foot p {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 1.25rem;
+  line-height: 1.55;
+}
+.actions { display: flex; align-items: center; gap: 32px; font-family: var(--display); text-transform: uppercase; letter-spacing: .05em; }
+.button {
+  display: inline-block;
+  padding: 20px 30px 19px;
+  background: var(--ink);
+  color: var(--bone);
+  font-weight: 600; font-size: 1.1875rem; line-height: 1;
+  text-decoration: none;
+}
+.button:hover { background: var(--bone); color: var(--ink); }
+.textlink { font-weight: 600; font-size: 1.1875rem; }
+.textlink:hover { text-decoration-thickness: 2px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="wrap masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top" class="wrap hero" aria-labelledby="hero-title">
+  <h1 id="hero-title"><span class="line">Websites for owner-run</span> <span class="line">local businesses.</span></h1>
+  <div class="foot">
+    <p>I’m Sam. I build and look after websites for clinics, studios, venues, and small shops, mostly in Colorado, and help people find them on Google and in AI search.</p>
+    <div class="actions">
+      <a class="button" href="#contact">Ask for a free website check</a>
+      <a class="textlink" href="#prices">See example prices</a>
+    </div>
+  </div>
+</main>
+
+</div>
+<script>
+(async () => {
+  await document.fonts.ready;
+  const h = document.querySelector('.hero h1');
+  const w = h.clientWidth;
+  for (const line of h.querySelectorAll('.line')) {
+    line.style.fontSize = '100px';
+    line.style.display = 'inline-block';
+    const size = 99.4 * w / line.getBoundingClientRect().width;
+    line.style.fontSize = size + 'px';
+    line.style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 9, hero only, designer 1, pitch A: "Red rock."
+  A full-screen field of iron-oxide red (Colorado sandstone), bone-white type.
+  Headline in Noto Serif Display at its narrowest width and a light weight, set very tall,
+  so the type is the texture. Intro in Noto Serif; wordmark, nav, and buttons in Oswald.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wdth,wght@62.5..100,300..500&family=Noto+Serif:wght@400;500&family=Oswald:wght@400..600&display=swap">
+<style>
+:root {
+  --field: #7a3020;
+  --field-deep: #66281a;
+  --bone: #f1e7d6;
+  --bone-dim: #dcc6ad;
+  --hair: rgba(241, 231, 214, .38);
+  --gutter: 72px;
+  --display: "Noto Serif Display", Georgia, serif;
+  --text: "Noto Serif", Georgia, serif;
+  --ui: "Oswald", "Arial Narrow", sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--field);
+  color: var(--bone);
+  font-family: var(--text);
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--bone); outline-offset: 4px; }
+.nobr { white-space: nowrap; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding-inline: var(--gutter);
+  background:
+    radial-gradient(120% 90% at 85% 10%, rgba(255, 190, 140, .10), transparent 60%),
+    linear-gradient(180deg, var(--field) 0%, var(--field-deep) 100%);
+}
+
+.masthead {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding-block: 26px 22px;
+  border-bottom: 1px solid var(--hair);
+  font-family: var(--ui);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+}
+.wordmark { font-weight: 600; font-size: 1.125rem; text-decoration: none; letter-spacing: .2em; }
+.masthead nav ul { display: flex; gap: 34px; }
+.masthead nav a { font-size: .8125rem; font-weight: 400; text-decoration: none; color: var(--bone-dim); }
+.masthead nav a:hover { color: var(--bone); }
+
+.hero {
+  display: grid;
+  position: relative;
+
+
+  padding-block: 28px 64px;
+}
+.hero h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-variation-settings: "wdth" 62.5;
+  font-weight: 300;
+  font-size: 13.5rem;
+  line-height: .86;
+  letter-spacing: -0.012em;
+  align-self: start;
+}
+.side {
+  position: absolute; right: 0; top: calc(28px + 1.72 * 13.5rem + 34px); width: 340px;
+  padding-bottom: 14px;
+  border-top: 1px solid var(--hair);
+  padding-top: 22px;
+}
+.side p {
+  margin: 0 0 34px;
+  font-size: 1.1875rem;
+  line-height: 1.55;
+  color: var(--bone);
+}
+.actions { display: grid; gap: 18px; justify-items: start; font-family: var(--ui); text-transform: uppercase; letter-spacing: .12em; }
+.button {
+  display: inline-block;
+  padding: 18px 26px 17px;
+  background: var(--bone);
+  color: var(--field-deep);
+  font-weight: 500; font-size: .9375rem; line-height: 1;
+  text-decoration: none;
+  border: 1.5px solid var(--bone);
+}
+.button:hover { background: transparent; color: var(--bone); }
+.textlink { font-size: .9375rem; font-weight: 400; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .35em; color: var(--bone); }
+.textlink:hover { text-decoration-thickness: 2px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top" class="hero" aria-labelledby="hero-title">
+  <h1 id="hero-title">Websites for<br> <span class="nobr">owner-run</span> local<br> businesses.</h1>
+  <div class="side">
+    <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google and in AI search. I keep a short client list on purpose.</p>
+    <div class="actions">
+      <a class="button" href="#contact">Ask for a free website check</a>
+      <a class="textlink" href="#prices">See example prices</a>
+    </div>
+  </div>
+</main>
+
+</div>
+</body>
+</html>

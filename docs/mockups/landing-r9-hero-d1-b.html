@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 9, hero only, designer 1, pitch B: "Said plainly."
+  No slogan: the headline is Sam saying what he does, one sentence in his own voice,
+  set as large as a headline in Oswald on an oat-coloured ground with dark walnut ink.
+  The second half of the sentence drops to a faded ink so it reads as one voice in two breaths.
+  Wordmark, nav, and buttons in Oswald; the small note in Noto Serif.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@300..600&family=Noto+Serif:wght@400;500&display=swap">
+<style>
+:root {
+  --oat: #e4dac6;
+  --walnut: #2b2219;
+  --faded: #8a7a64;
+  --hair: #b9ab93;
+  --moss: #3f4a2c;
+  --gutter: 72px;
+  --display: "Oswald", "Arial Narrow", sans-serif;
+  --text: "Noto Serif", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--oat);
+  color: var(--walnut);
+  font-family: var(--text);
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--walnut); outline-offset: 4px; }
+.nobr { white-space: nowrap; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+.page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding-inline: var(--gutter);
+}
+
+.masthead {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  align-items: baseline;
+  padding-block: 28px;
+  font-family: var(--display);
+}
+.wordmark { font-weight: 600; font-size: 1.25rem; letter-spacing: .01em; text-decoration: none; }
+.masthead nav ul { display: flex; gap: 32px; justify-content: flex-end; }
+.masthead nav a { font-size: .9375rem; font-weight: 400; letter-spacing: .03em; text-decoration: none; }
+.masthead nav a:hover { text-decoration: underline; text-underline-offset: .3em; }
+
+.hero {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-rows: 1fr auto;
+  padding-block: 20px 60px;
+}
+.place {
+  grid-column: 1; grid-row: 1;
+  align-self: start;
+  margin: 0;
+  padding-top: 22px;
+  font-family: var(--display);
+  font-size: .875rem; font-weight: 400;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--faded);
+}
+.hero h1 {
+  grid-column: 2; grid-row: 1;
+  align-self: start;
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 6.75rem;
+  line-height: 1.02;
+  letter-spacing: -0.006em;
+  max-width: 19ch;
+  text-wrap: pretty;
+}
+.hero h1 .then { color: var(--faded); font-weight: 300; }
+.foot {
+  grid-column: 2; grid-row: 2;
+  display: flex; align-items: center; gap: 40px;
+  margin-top: 56px;
+  padding-top: 26px;
+  border-top: 2px solid var(--walnut);
+}
+.button {
+  display: inline-block;
+  padding: 19px 28px 18px;
+  background: var(--moss);
+  color: var(--oat);
+  font-family: var(--display);
+  font-weight: 500; font-size: 1.125rem; line-height: 1; letter-spacing: .02em;
+  text-decoration: none;
+  border: 2px solid var(--moss);
+}
+.button:hover { background: transparent; color: var(--moss); }
+.textlink {
+  font-family: var(--display); font-weight: 400; font-size: 1.125rem; letter-spacing: .02em;
+  text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .3em;
+}
+.textlink:hover { text-decoration-thickness: 2.5px; }
+.note {
+  margin: 0 0 0 auto;
+  max-width: 30ch;
+  font-size: 1rem; line-height: 1.5;
+  color: var(--walnut);
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top" class="hero" aria-labelledby="hero-title">
+  <p class="place">Colorado</p>
+  <h1 id="hero-title">I’m Sam. I build and look after websites for <span class="nobr">owner-run</span> local businesses, <span class="then">and help people find them on Google and in AI search.</span></h1>
+  <div class="foot">
+    <a class="button" href="#contact">Ask for a free website check</a>
+    <a class="textlink" href="#prices">See example prices</a>
+    <p class="note">For owners who’d rather not learn web tools. I keep a short client list on purpose.</p>
+  </div>
+</main>
+
+</div>
+</body>
+</html>

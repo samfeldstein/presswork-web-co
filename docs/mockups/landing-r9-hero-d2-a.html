@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 9, hero only, designer 2, pitch A: "Spruce."
+  Leaves the paper behind: a deep spruce-green field with warm cream type and one rust accent.
+  The headline is first person and set very large in a light Fraunces, soft but crisp.
+  Fraunces for the headline; Instrument Sans for wordmark, nav, intro, and buttons.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..600,0..100,0..1&family=Instrument+Sans:wght@400..600&display=swap">
+<style>
+:root {
+  --field: #1f2b25;
+  --field-2: #26342d;
+  --cream: #ece4d2;
+  --cream-dim: #b9b4a3;
+  --rust: #c4652f;
+  --hair: #3d4c43;
+  --gutter: 72px;
+  --display: "Fraunces", Georgia, serif;
+  --text: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--field);
+  color: var(--cream);
+  font-family: var(--text);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .26em; }
+:focus-visible { outline: 2px solid var(--rust); outline-offset: 4px; }
+ul { list-style: none; margin: 0; padding: 0; }
+.wrap { padding-inline: var(--gutter); }
+
+.page {
+  min-height: 100svh;
+  display: flex; flex-direction: column;
+  background:
+    radial-gradient(120% 90% at 85% 110%, var(--field-2) 0%, transparent 60%),
+    var(--field);
+}
+
+.masthead {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding-block: 28px;
+}
+.wordmark { font-weight: 600; font-size: 1.25rem; letter-spacing: -0.01em; text-decoration: none; }
+.masthead nav ul { display: flex; gap: 34px; }
+.masthead nav a { font-size: .9375rem; color: var(--cream-dim); text-decoration: none; }
+.masthead nav a:hover { color: var(--cream); }
+
+.hero {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  grid-template-rows: 1fr auto;
+  column-gap: 96px;
+  padding-block: 24px 56px;
+}
+.hero h1 {
+  grid-column: 1 / -1;
+  align-self: center;
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 320;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+  font-size: 11rem;
+  line-height: .96;
+  letter-spacing: -0.026em;
+  max-width: 12.5ch;
+}
+
+.foot {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 64px;
+  padding-top: 32px;
+  border-top: 1px solid var(--hair);
+  margin-top: 40px;
+}
+.foot p {
+  margin: 0;
+  max-width: 40ch;
+  font-size: 1.3125rem;
+  line-height: 1.5;
+  color: var(--cream);
+}
+.foot p span { color: var(--cream-dim); }
+.actions { display: flex; align-items: center; gap: 32px; }
+.button {
+  display: inline-block;
+  padding: 19px 28px;
+  background: var(--rust);
+  color: #1a1410;
+  font-weight: 600; font-size: 1.0625rem; line-height: 1;
+  text-decoration: none;
+  border-radius: 2px;
+}
+.button:hover { background: var(--cream); }
+.textlink { font-weight: 500; font-size: 1.0625rem; color: var(--cream); }
+.textlink:hover { color: var(--rust); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="wrap masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top" class="wrap hero" aria-labelledby="hero-title">
+  <h1 id="hero-title">I build and look after websites for local businesses.</h1>
+  <div class="foot">
+    <p>I’m Sam. I work with owner-run clinics, studios, venues, and small shops, mostly in Colorado, <span>and help people find them on Google and in AI search. You don’t need to learn any web tools.</span></p>
+    <div class="actions">
+      <a class="button" href="#contact">Ask for a free website check</a>
+      <a class="textlink" href="#prices">See example prices</a>
+    </div>
+  </div>
+</main>
+
+</div>
+</body>
+</html>

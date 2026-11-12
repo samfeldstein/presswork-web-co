@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 8, hero only, designer 1, pitch B: "Hung from the rule."
+  Refines r7 d3-b. Same fonts (Inter Tight, Source Serif 4), same copy, the same rule and square button.
+  The rule moves up under the masthead and the headline hangs from it in four lines.
+  The intro and buttons sit in the headline's own rag, beside its last lines, so the
+  empty space is the ragged edge of the headline instead of a band above it.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400..700&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap">
+<style>
+:root {
+  --paper: #f2f1ed;
+  --ink: #262523;
+  --gutter: clamp(16px, 4.4vw, 72px);
+  --display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --text: "Source Serif 4", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .24em; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+ul { list-style: none; margin: 0; padding: 0; }
+.wrap { padding-inline: var(--gutter); }
+.nobr { white-space: nowrap; }
+.line { display: block; white-space: nowrap; }
+
+.page { display: flex; flex-direction: column; }
+
+.masthead {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding-block: 22px 18px;
+  font-family: var(--display);
+}
+.wordmark { font-weight: 700; font-size: 1.375rem; line-height: 1; letter-spacing: -0.02em; text-decoration: none; }
+.masthead nav ul { display: flex; gap: clamp(16px, 2.2vw, 34px); }
+.masthead nav a { font-size: .9375rem; font-weight: 500; text-decoration: none; }
+.masthead nav a:hover { text-decoration: underline; }
+
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.hero-inner {
+  flex: 1;
+  border-top: 1px solid var(--ink);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24rem;
+  align-items: end;
+  column-gap: 40px;
+  padding-block: 0 72px;
+}
+.hero h1 {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  align-self: end;
+  margin: 0 0 0 -0.045em;
+  padding-top: 0.06em;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 12.6vw;
+  line-height: .88;
+  letter-spacing: -0.042em;
+  word-spacing: 0.02em;
+}
+.hero-foot {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  position: relative; top: -14px;
+}
+.hero-foot p {
+  margin: 0 0 26px;
+  font-size: 1.1875rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+.actions { display: flex; flex-wrap: nowrap; white-space: nowrap; align-items: center; gap: 14px 20px; font-family: var(--display); }
+.button {
+  display: inline-block; font-weight: 600; font-size: 1.0625rem; line-height: 1; letter-spacing: -0.01em;
+  padding: 17px 20px; background: var(--ink); color: var(--paper); text-decoration: none;
+  border: 1.5px solid var(--ink);
+}
+.button:hover { background: transparent; color: var(--ink); }
+.textlink { font-weight: 600; font-size: 1.0625rem; letter-spacing: -0.01em; }
+.textlink:hover { text-decoration-thickness: 2px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="wrap masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top" class="wrap hero" aria-labelledby="hero-title">
+  <div class="hero-inner">
+    <h1 id="hero-title"><span class="line">Websites for</span> <span class="line"><span class="nobr">owner-run</span></span> <span class="line">local</span> <span class="line">businesses.</span></h1>
+    <div class="hero-foot">
+      <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+      <div class="actions">
+        <a class="button" href="#contact">Ask for a free check</a>
+        <a class="textlink" href="#prices">See example prices</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+</div>
+</body>
+</html>

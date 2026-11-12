@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 8, hero only, designer 2, pitch B: "Side rail."
+  No top bar: the wordmark and nav move into a narrow left column, so the headline starts at the very top of the page.
+  A hairline divides rail from field. The intro and buttons sit under the headline on a second rule.
+  Noto Serif Display for the headline; Geist for wordmark, nav, and buttons; Noto Serif for the intro.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..700&family=Noto+Serif+Display:wght@400..600&family=Noto+Serif:wght@400&display=swap">
+<style>
+:root {
+  --paper: #f2f1ed;
+  --ink: #262523;
+  --grey: #5d5b57;
+  --hair: #c8c6c0;
+  --rail: 268px;
+  --gutter: 56px;
+  --display: "Noto Serif Display", "Noto Serif", Georgia, serif;
+  --ui: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --text: "Noto Serif", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-kerning: normal;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .24em; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+.page {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+}
+
+.rail {
+  border-right: 1px solid var(--ink);
+  padding: 40px 32px 40px var(--gutter);
+  font-family: var(--ui);
+  display: flex; flex-direction: column; gap: 56px;
+}
+.wordmark { font-weight: 650; font-size: 1.375rem; line-height: 1; letter-spacing: -0.02em; text-decoration: none; }
+.rail nav li { border-top: 1px solid var(--hair); }
+.rail nav li:last-child { border-bottom: 1px solid var(--hair); }
+.rail nav a {
+  display: block; padding: 11px 0;
+  font-size: .9375rem; font-weight: 500; text-decoration: none;
+}
+.rail nav a:hover { text-decoration: underline; }
+
+.hero {
+  padding: 22px var(--gutter) 56px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 48px;
+}
+.hero h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 10.5rem;
+  line-height: .92;
+  letter-spacing: -0.022em;
+  max-width: 7.6em;
+}
+.nobr { white-space: nowrap; }
+
+.hero-foot {
+  border-top: 1px solid var(--ink);
+  padding-top: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 34ch) auto;
+  justify-content: space-between;
+  align-items: end;
+  gap: 48px;
+}
+.hero-foot p {
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+.actions { display: flex; align-items: center; gap: 28px; font-family: var(--ui); }
+.button {
+  display: inline-block; font-weight: 600; font-size: 1.0625rem; line-height: 1; letter-spacing: -0.01em;
+  padding: 18px 26px; background: var(--ink); color: var(--paper); text-decoration: none;
+  border: 1.5px solid var(--ink);
+}
+.button:hover { background: transparent; color: var(--ink); }
+.textlink { font-weight: 600; font-size: 1.0625rem; letter-spacing: -0.01em; }
+.textlink:hover { text-decoration-thickness: 2px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="rail">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top" class="hero" aria-labelledby="hero-title">
+  <h1 id="hero-title">Websites for <span class="nobr">owner-run</span> local businesses.</h1>
+  <div class="hero-foot">
+    <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+    <div class="actions">
+      <a class="button" href="#contact">Ask for a free check</a>
+      <a class="textlink" href="#prices">See example prices</a>
+    </div>
+  </div>
+</main>
+
+</div>
+</body>
+</html>
