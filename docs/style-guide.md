@@ -27,6 +27,8 @@ When a heading and a paragraph sit side by side, equal box tops are not equal le
 
 ## Motif
 
+**Dropped for the redesign (2026-11-11, session 5):** the printing-press motif no longer applies to Presswork design work (Sam). Kept below as history.
+
 Decided 2026-11-11: all Presswork design work uses the printing press as its motif: presswork, letterpress, and type, plus objects from that world (proofs, type cases, printed matter). Revised the same day after round 2: the motif is a theme, not a literal object. Don't make the page look like a physical thing (a sheet, book, or letter sitting over a backdrop); that reads as an outdated website. Use a modern full-width layout and borrow details from the print world, such as clear headings, drop caps, and a colophon. A designer may pick one object as inspiration for the theme, but never imitate it directly or digitally.
 
 ## Inspiration

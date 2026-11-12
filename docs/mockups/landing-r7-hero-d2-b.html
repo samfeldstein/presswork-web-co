@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 7, hero only, designer 2, pitch B: "Centre axis."
+  Headline in Bricolage Grotesque (bold, optical size 96, slightly narrowed), text in Newsreader.
+  Everything hangs on one centre line: headline, intro, buttons, like a title page.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400&display=swap">
+<style>
+:root {
+  --paper: #f2f1ed;
+  --ink: #262523;
+  --grey: #5d5b57;
+  --hair: #c8c6c0;
+  --gutter: clamp(16px, 4.4vw, 72px);
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --text: "Newsreader", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 1.125rem;
+  line-height: 1.55;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+p { margin: 0; }
+h1 { margin: 0; }
+ul { list-style: none; margin: 0; padding: 0; }
+.wrap { padding-inline: var(--gutter); }
+
+.masthead {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: 1rem;
+  padding-block: 24px;
+}
+.wordmark {
+  grid-column: 2; font-family: var(--display); font-weight: 750; font-variation-settings: "opsz" 48, "wdth" 90;
+  font-size: 1.625rem; line-height: 1; text-decoration: none; letter-spacing: -0.02em;
+}
+.masthead nav { display: contents; }
+.masthead nav li { font-family: var(--display); font-variation-settings: "opsz" 14; font-size: .9375rem; font-weight: 500; }
+.masthead nav a { text-decoration: none; }
+.masthead nav a:hover { text-decoration: underline; }
+.nav-l, .nav-r { display: flex; gap: clamp(16px, 2.2vw, 32px); }
+.nav-l { grid-column: 1; grid-row: 1; }
+.nav-r { grid-column: 3; grid-row: 1; justify-content: flex-end; }
+@media (max-width: 860px) {
+  .masthead { grid-template-columns: 1fr auto; }
+  .wordmark { grid-column: 1; }
+  .nav-l { display: none; }
+  .nav-r { grid-column: 2; }
+  .nav-r li:not(:last-child) { display: none; }
+}
+
+.hero {
+  text-align: center;
+  padding-block: clamp(48px, 6.5vw, 104px) clamp(72px, 9vw, 144px);
+  border-bottom: 1px solid var(--ink);
+}
+.hero h1 {
+  font-family: var(--display); font-weight: 720;
+  font-variation-settings: "opsz" 96, "wdth" 88;
+  font-size: clamp(2.875rem, .9rem + 9.4vw, 10.5rem);
+  line-height: .94; letter-spacing: -0.018em;
+  max-width: 12ch; margin-inline: auto; text-wrap: balance;
+}
+.nb { white-space: nowrap; }
+.hero p {
+  margin: clamp(32px, 4vw, 56px) auto 0;
+  font-size: clamp(1.25rem, 1.05rem + .7vw, 1.625rem); line-height: 1.38;
+  max-width: 32ch; text-wrap: balance;
+}
+.actions { margin-top: clamp(32px, 3.6vw, 48px); display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 28px; align-items: center; }
+.button, .textlink {
+  font-family: var(--display); font-variation-settings: "opsz" 14; font-weight: 600; font-size: 1.0625rem; line-height: 1;
+}
+.button {
+  display: inline-block; padding: 17px 26px; background: var(--ink); color: var(--paper); text-decoration: none;
+  border: 2px solid var(--ink);
+}
+.button:hover { background: transparent; color: var(--ink); }
+
+@media (max-width: 480px) {
+  .hero { text-align: left; }
+  .hero h1, .hero p { margin-inline: 0; }
+  .hero h1 { font-size: clamp(2.75rem, 14.2vw, 4rem); letter-spacing: -0.006em; word-spacing: .04em; font-variation-settings: "opsz" 72, "wdth" 88; }
+  .actions { justify-content: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<header class="wrap masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul class="nav-l">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+    </ul>
+    <ul class="nav-r">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <h1 id="hero-title">Websites for <span class="nb">owner-run</span> local businesses.</h1>
+    <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+    <div class="actions">
+      <a class="button" href="#contact">Ask for a free check</a>
+      <a class="textlink" href="#prices">See example prices</a>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

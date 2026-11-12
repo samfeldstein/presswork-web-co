@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 7, hero only, designer 1, pitch A: "Quiet serif."
+  Instrument Serif (one weight, set very large) for the headline and wordmark, Instrument Sans for everything else.
+  Headline left, the Sam line and buttons sit on one hairline row underneath.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+:root {
+  --paper: #f2f1ed;
+  --ink: #262523;
+  --grey: #5d5b57;
+  --hair: #c8c6c0;
+  --gutter: clamp(16px, 4.4vw, 72px);
+  --display: "Instrument Serif", Georgia, serif;
+  --text: "Instrument Sans", system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  font-kerning: normal;
+  font-optical-sizing: auto;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .24em; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+p { margin: 0; }
+h1 { margin: 0; }
+ul { list-style: none; margin: 0; padding: 0; }
+.wrap { padding-inline: var(--gutter); }
+
+.masthead { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-block: 22px; }
+.wordmark { font-family: var(--display); font-size: 1.875rem; line-height: 1; text-decoration: none; letter-spacing: -0.005em; }
+.masthead nav ul { display: flex; gap: clamp(16px, 2.2vw, 34px); }
+.masthead nav a { font-weight: 500; font-size: 1rem; text-decoration: none; }
+.masthead nav a:hover { text-decoration: underline; }
+@media (max-width: 860px) { .masthead nav li:not(:last-child) { display: none; } }
+
+.hero { padding-block: clamp(40px, 6vw, 96px) clamp(64px, 9vw, 140px); }
+.hero h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(3.6rem, 12.6vw, 15rem);
+  line-height: .94;
+  letter-spacing: -0.022em;
+  max-width: 5.75em;
+}
+.hero h1 em { font-style: italic; letter-spacing: -0.012em; }
+.hero-foot {
+  margin-top: clamp(36px, 4.4vw, 64px);
+  padding-top: 22px;
+  border-top: 1px solid var(--hair);
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px var(--gutter); align-items: start;
+}
+.hero-foot p { font-size: clamp(1.2rem, 1.05rem + .6vw, 1.6rem); line-height: 1.4; max-width: 34ch; letter-spacing: -0.005em; text-wrap: pretty; }
+.actions { display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; }
+.button {
+  display: inline-block; font-weight: 600; font-size: 1.0625rem; line-height: 1;
+  padding: 17px 26px; background: var(--ink); color: var(--paper); text-decoration: none;
+  border: 1.5px solid var(--ink); border-radius: 999px;
+}
+.button:hover { background: transparent; color: var(--ink); }
+.textlink { font-weight: 500; }
+@media (max-width: 860px) {
+  .hero-foot { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="wrap masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <h1 id="hero-title">Websites for <em>owner&#8209;run</em> local businesses.</h1>
+    <div class="hero-foot">
+      <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+      <div class="actions">
+        <a class="button" href="#contact">Ask for a free check</a>
+        <a class="textlink" href="#prices">See example prices</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
