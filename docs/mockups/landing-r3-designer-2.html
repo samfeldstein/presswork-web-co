@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork Web Co.</title>
+<!--
+  Landing page mockup, round 3, designer 2: "Four inks."
+  Print detail borrowed: process color. The hero is a halftone (cyan, magenta, yellow at their
+  real screen angles, overprinted), the three service groups are the three color plates, and a
+  press color bar closes the hero. Type: Futura (Bauer, 1927 metal type) for headings, Charter for text.
+  Fonts are macOS system fonts for this mockup only; a shipped version needs licensed web font files.
+  Client site scores and URLs come from the archived case studies (PageSpeed mobile, 2026-10-04).
+-->
+<style>
+:root {
+  --paper: #ffffff;
+  --ink: #000000;
+  --ink-2: #3b3b3b;
+  --cyan: #00a0dc;
+  --magenta: #e5007e;
+  --yellow: #ffe500;
+  --tint: #f2f6f8;
+  --rule: #d4d9dc;
+  --display: Futura, "Futura PT", "Century Gothic", "Avenir Next", sans-serif;
+  --text: Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
+  --gutter: clamp(16px, 5vw, 64px);
+  --max: 1280px;
+  --u: 8px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.125rem/1.62 var(--text);
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: 3px; text-decoration-color: var(--magenta); }
+a:hover { text-decoration-color: var(--ink); }
+:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0 0 1em; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+
+.btn {
+  display: inline-block;
+  font: 700 1rem/1 var(--display);
+  letter-spacing: 0.02em;
+  padding: 18px 26px;
+  border-radius: 3px;
+  background: var(--ink);
+  color: #fff;
+  text-decoration: none;
+  border: 2px solid var(--ink);
+}
+.btn:hover { background: var(--magenta); border-color: var(--magenta); }
+.btn-quiet { background: transparent; color: var(--ink); }
+.btn-quiet:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+.on-dark .btn { background: #fff; color: var(--ink); border-color: #fff; }
+.on-dark .btn:hover { background: var(--yellow); border-color: var(--yellow); }
+
+/* header */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 22px; padding-bottom: 22px; }
+.mark { font: 700 1.375rem/1 var(--display); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.mark i { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background:
+  radial-gradient(circle at 35% 40%, var(--cyan) 0 38%, transparent 39%),
+  radial-gradient(circle at 65% 40%, var(--magenta) 0 38%, transparent 39%),
+  radial-gradient(circle at 50% 68%, var(--yellow) 0 38%, transparent 39%); }
+.top nav { display: flex; gap: 28px; align-items: center; font: 500 1rem/1 var(--display); }
+.top nav a { text-decoration: none; }
+.top nav a:hover { text-decoration: underline; text-decoration-color: var(--magenta); }
+.top .btn { padding: 12px 18px; font-size: 0.9375rem; }
+
+/* hero */
+.hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); min-height: min(78vh, 720px); }
+.hero-copy { padding: clamp(40px, 7vw, 104px) var(--gutter) clamp(40px, 6vw, 88px); padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); align-self: center; }
+.hero h1 { font-size: clamp(2.5rem, 4.7vw, 4.5rem); line-height: 1.02; letter-spacing: -0.025em; max-width: 15ch; }
+.hero .lede { font-size: clamp(1.1875rem, 1.6vw, 1.375rem); color: var(--ink-2); max-width: 36ch; margin: 28px 0 36px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.plate { position: relative; background: var(--paper); }
+.plate canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.crop { position: absolute; width: 22px; height: 22px; pointer-events: none; z-index: 1; }
+.crop::before, .crop::after { content: ""; position: absolute; background: var(--ink); }
+.crop::before { width: 22px; height: 1px; }
+.crop::after { width: 1px; height: 22px; }
+.crop.tl { top: 14px; left: 14px; }
+.crop.bl { bottom: 14px; left: 14px; }
+.crop.bl::before { bottom: 0; } .crop.bl::after { bottom: 0; }
+.crop.tr { top: 14px; right: 14px; } .crop.tr::before { right: 0; } .crop.tr::after { right: 0; }
+.crop.br { bottom: 14px; right: 14px; } .crop.br::before { right: 0; bottom: 0; } .crop.br::after { right: 0; bottom: 0; }
+
+.colorbar { display: grid; grid-template-columns: repeat(12, 1fr); height: 18px; }
+.colorbar span:nth-child(1) { background: var(--cyan); }
+.colorbar span:nth-child(2) { background: var(--magenta); }
+.colorbar span:nth-child(3) { background: var(--yellow); }
+.colorbar span:nth-child(4) { background: var(--ink); }
+.colorbar span:nth-child(5) { background: #7fd0ee; }
+.colorbar span:nth-child(6) { background: #f27fbe; }
+.colorbar span:nth-child(7) { background: #fff27f; }
+.colorbar span:nth-child(8) { background: #7f7f7f; }
+.colorbar span:nth-child(9) { background: #2e3191; }
+.colorbar span:nth-child(10) { background: #00a650; }
+.colorbar span:nth-child(11) { background: #ed1c24; }
+.colorbar span:nth-child(12) { background: #bfbfbf; }
+
+/* sections */
+section { padding: clamp(64px, 9vw, 128px) 0; }
+.split { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(24px, 5vw, 80px); }
+.split > h2 { font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1.06; }
+.big h2 { font-size: clamp(2.25rem, 4.6vw, 4rem); line-height: 1.02; max-width: 24ch; margin-bottom: clamp(32px, 4vw, 56px); }
+.body { max-width: 62ch; }
+.body > p:first-child { font-size: 1.3125rem; line-height: 1.5; }
+.tinted { background: var(--tint); }
+
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 40px); margin-top: 36px; }
+.two h3 { font-size: 1.375rem; margin-bottom: 8px; }
+.two p { color: var(--ink-2); margin: 0; }
+
+/* plates: the three service groups */
+.groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 48px); }
+.group { border-top: 12px solid var(--c); padding-top: 24px; }
+.group h3 { font-size: clamp(1.625rem, 2.2vw, 2rem); line-height: 1.1; margin-bottom: 12px; }
+.group > p { color: var(--ink-2); margin-bottom: 20px; }
+.group li { padding: 12px 0; border-top: 1px solid var(--rule); line-height: 1.4; }
+.group li b { font-family: var(--display); font-weight: 500; display: block; font-size: 1.0625rem; }
+.group li span { font-size: 0.9375rem; color: var(--ink-2); }
+.g-site { --c: var(--cyan); }
+.g-found { --c: var(--magenta); }
+.g-market { --c: var(--yellow); }
+
+/* pricing */
+.on-dark { background: var(--ink); color: #fff; }
+.on-dark a { text-decoration-color: var(--yellow); }
+.pricing .split > h2 { color: #fff; }
+.method { counter-reset: m; margin: 0 0 8px; }
+.method li { counter-increment: m; display: grid; grid-template-columns: 48px 1fr; padding: 14px 0; border-top: 1px solid #333; }
+.method li::before { content: counter(m); font: 700 1.25rem/1.5 var(--display); color: var(--yellow); }
+.method li:last-child { border-bottom: 1px solid #333; }
+.prices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.5vw, 32px); margin: clamp(48px, 6vw, 80px) 0 40px; }
+.price { border-left: 6px solid var(--c); padding: 4px 0 4px 20px; }
+.price .amt { font: 700 clamp(2.75rem, 5vw, 4.25rem)/1 var(--display); letter-spacing: -0.03em; display: block; margin-bottom: 14px; }
+.price h3 { font-size: 1.125rem; font-weight: 500; margin-bottom: 4px; }
+.price p { font-size: 1rem; color: #c8c8c8; margin: 0; }
+.cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+.cta-row p { margin: 0; color: #c8c8c8; max-width: 44ch; font-size: 1rem; }
+
+/* steps */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); counter-reset: s; }
+.step { counter-increment: s; padding: 0 clamp(16px, 2.5vw, 36px) 0 0; position: relative; }
+.step + .step { padding-left: clamp(16px, 2.5vw, 36px); border-left: 1px solid var(--rule); }
+.step::before { content: counter(s); display: block; font: 700 clamp(3.5rem, 6vw, 5.5rem)/0.9 var(--display); color: var(--ink); margin-bottom: 18px; letter-spacing: -0.04em; }
+.step h3 { font-size: 1.5rem; margin-bottom: 6px; }
+.step .cost { font: 500 1rem/1.3 var(--display); display: inline-block; padding: 5px 10px; margin-bottom: 14px; background: var(--c, var(--tint)); }
+.step:nth-child(1) { --c: #d6f0fa; } .step:nth-child(2) { --c: #fbd9eb; } .step:nth-child(3) { --c: #fff6a8; }
+.step p { color: var(--ink-2); font-size: 1.0625rem; }
+
+/* intro */
+.intro { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+.photo { position: relative; aspect-ratio: 4 / 5; background: var(--tint); display: grid; place-items: end start; padding: 20px; overflow: hidden; }
+.photo canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.photo span { position: relative; font: 500 0.9375rem/1.3 var(--display); background: #fff; padding: 6px 10px; }
+.intro h2 { font-size: clamp(2rem, 3.4vw, 3rem); line-height: 1.06; margin-bottom: 28px; }
+.dropcap::first-letter {
+  float: left;
+  font: 700 5.6em/0.8 var(--display);
+  margin: 0.06em 0.09em 0 -0.02em;
+  color: var(--magenta);
+}
+.intro .dropcap { font-size: 1.3125rem; line-height: 1.55; }
+.intro p { max-width: 58ch; }
+
+/* proof */
+.sites li { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) auto; gap: 8px 32px; align-items: baseline; padding: 22px 0; border-top: 1px solid var(--rule); }
+.sites li:last-child { border-bottom: 1px solid var(--rule); }
+.sites h3 { font-size: clamp(1.375rem, 2.2vw, 1.875rem); line-height: 1.15; }
+.sites h3 a { text-decoration: none; }
+.sites h3 a:hover { text-decoration: underline; text-decoration-color: var(--magenta); }
+.sites .where { color: var(--ink-2); font-size: 1rem; }
+.scores { display: flex; gap: 6px; }
+.scores b { font: 700 1rem/1 var(--display); min-width: 46px; text-align: center; padding: 10px 6px; border: 2px solid var(--ink); border-radius: 3px; }
+.scores-key { margin-top: 20px; font-size: 0.9375rem; color: var(--ink-2); }
+.self-h { font-size: 1.375rem; margin-top: clamp(40px, 5vw, 64px); margin-bottom: 16px; }
+.self { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); background: var(--ink); color: #fff; }
+.self div { padding: clamp(20px, 3vw, 36px); border-left: 1px solid #333; }
+.self div:first-child { border-left: 0; }
+.self strong { display: block; font: 700 clamp(3rem, 6vw, 5rem)/1 var(--display); letter-spacing: -0.04em; }
+.self span { font: 500 1rem/1.3 var(--display); color: #c8c8c8; }
+.self div:nth-child(1) strong { color: var(--yellow); }
+
+/* faq */
+.faq details { border-top: 1px solid var(--rule); }
+.faq details:last-child { border-bottom: 1px solid var(--rule); }
+.faq summary { cursor: pointer; list-style: none; font: 500 1.25rem/1.35 var(--display); padding: 20px 40px 20px 0; position: relative; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 4px; top: 16px; font-size: 1.75rem; line-height: 1; }
+.faq details[open] summary::after { content: "\2013"; }
+.faq details p { color: var(--ink-2); max-width: 60ch; }
+
+/* contact */
+.contact { padding-bottom: clamp(56px, 8vw, 112px); }
+.contact h2 { font-size: clamp(2.25rem, 4.6vw, 4rem); line-height: 1.02; margin-bottom: 20px; }
+.contact .email { font: 700 clamp(1.5rem, 4.4vw, 3.5rem)/1.1 var(--display); letter-spacing: -0.02em; display: inline-block; margin: 12px 0 32px; overflow-wrap: anywhere; }
+.contact p { max-width: 52ch; color: #c8c8c8; }
+
+/* colophon */
+.colophon { border-top: 1px solid #333; padding: 40px 0 48px; font-size: 0.9375rem; color: #b4b4b4; }
+.colophon .wrap { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: clamp(24px, 5vw, 80px); }
+.colophon h2 { font-size: 1.125rem; font-weight: 500; color: #fff; }
+.colophon p { max-width: 70ch; }
+.inks { display: flex; gap: 6px; margin-top: 14px; }
+.inks i { width: 14px; height: 14px; border-radius: 50%; background: var(--c); }
+
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; min-height: 0; }
+  .hero-copy { padding-left: var(--gutter); padding-bottom: 40px; }
+  .plate { height: clamp(220px, 46vw, 380px); }
+  .split, .intro, .colophon .wrap { grid-template-columns: 1fr; }
+  .groups, .prices { grid-template-columns: 1fr; }
+  .group + .group { margin-top: 24px; }
+  .steps { grid-template-columns: 1fr; gap: 40px; }
+  .step, .step + .step { padding: 0; border-left: 0; }
+  .step + .step { border-top: 1px solid var(--rule); padding-top: 32px; }
+  .sites li { grid-template-columns: 1fr; }
+  .self { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .self div:nth-child(3) { border-left: 0; }
+  .self div:nth-child(n+3) { border-top: 1px solid #333; }
+  .photo { max-width: 420px; }
+}
+@media (max-width: 640px) {
+  .top nav a:not(.btn) { display: none; }
+  .two { grid-template-columns: 1fr; }
+  .dropcap::first-letter { font-size: 4.3em; }
+  .colorbar { height: 12px; }
+  .scores b { min-width: 42px; }
+}
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="mark" href="#"><i aria-hidden="true"></i>Presswork</a>
+  <nav aria-label="Main">
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#about">About</a>
+    <a class="btn" href="#contact">Get in touch</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="hero-copy">
+      <h1>I build and look after websites for local businesses.</h1>
+      <p class="lede">For owner-run practices, studios, venues, and small shops, mostly in Colorado. I also help you get found on Google and Maps, and you deal with me from the first call to every edit.</p>
+      <div class="actions">
+        <a class="btn" href="#start">Ask for a free website check</a>
+        <a class="btn btn-quiet" href="#pricing">See example prices</a>
+      </div>
+    </div>
+    <div class="plate" aria-hidden="true">
+      <canvas id="halftone"></canvas>
+      <span class="crop tl"></span><span class="crop tr"></span><span class="crop bl"></span><span class="crop br"></span>
+    </div>
+  </div>
+  <div class="colorbar" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+  <section aria-labelledby="h-over">
+    <div class="wrap split">
+      <h2 id="h-over">You don’t have to start over.</h2>
+      <div class="body">
+        <p>Plenty of sites need fixing, not replacing. I start with the site you have, whether it’s on Wix, Squarespace, or another platform, and tell you what’s worth doing first.</p>
+        <div class="two">
+          <div>
+            <h3>Fix what’s there</h3>
+            <p>Site fixes as a fixed-price list, or by the hour for small jobs. Help with getting found works on any platform.</p>
+          </div>
+          <div>
+            <h3>Rebuild when it pays</h3>
+            <p>A fast new site with free hosting, and you own it once the final payment is in. If a rebuild is the better deal, I’ll say why.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="tinted" aria-labelledby="h-services">
+    <div class="wrap big">
+      <h2 id="h-services">What I do, in three parts.</h2>
+      <div class="groups">
+        <div class="group g-site">
+          <h3>The website</h3>
+          <p>Designed and built for you, then kept in good shape.</p>
+          <ul>
+            <li><b>Design and build</b><span>New sites and rebuilds</span></li>
+            <li><b>Free hosting</b><span>For every site I build</span></li>
+            <li><b>Landing pages</b><span>For a campaign or a single offer</span></li>
+            <li><b>Online stores</b><span>Quoted on what the store is worth to you</span></li>
+            <li><b>Site care, monthly</b><span>Edits, backups, and updates</span></li>
+          </ul>
+        </div>
+        <div class="group g-found">
+          <h3>Getting found</h3>
+          <p>Showing up when someone nearby searches for what you do: on Google, on Maps, and in the newer tools that answer questions directly.</p>
+          <ul>
+            <li><b>Search basics, with every build</b><span>Technical and on-page SEO, Search Console, and analytics</span></li>
+            <li><b>Google Business Profile</b><span>Setup or cleanup, then posts, photos, and review-reply drafts</span></li>
+            <li><b>Listings beyond Google</b><span>Bing, Apple, Yelp, and directories, kept consistent</span></li>
+            <li><b>Ongoing SEO</b><span>Monthly work on the pages people search for</span></li>
+          </ul>
+        </div>
+        <div class="group g-market">
+          <h3>Ongoing marketing</h3>
+          <p>Steady monthly work, scoped to you, with a report you can read.</p>
+          <ul>
+            <li><b>Blog</b><span>Posts written for you; nothing goes up without your approval</span></li>
+            <li><b>Reviews</b><span>A simple way to ask every customer, plus monthly monitoring</span></li>
+            <li><b>Google Ads</b><span>Setup, then monthly management</span></li>
+            <li><b>Report and check-in</b><span>A monthly report and a call every quarter</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="on-dark pricing" aria-labelledby="h-price">
+    <div class="wrap">
+      <div class="split">
+        <h2 id="h-price">How I price</h2>
+        <div class="body">
+          <p>No packages or tiers. You get one fixed price for the work we agree on, worked out the same way every time.</p>
+          <ol class="method">
+            <li><span>I estimate the hours the work will take.</span></li>
+            <li><span>I add a quarter for the emails, calls, and questions around it.</span></li>
+            <li><span>I check the total against what the work is worth to you. If it’s more than the job is worth, I cut scope, not the rate.</span></li>
+          </ol>
+        </div>
+      </div>
+      <!-- PLACEHOLDER PRICES: Little Peaks $1,500, Prairie Rose $3,500, Postoley $4,000 are placeholders, not final numbers. -->
+      <div class="prices">
+        <div class="price" style="--c: var(--cyan)">
+          <span class="amt">$1,500</span>
+          <h3>Little Peaks</h3>
+          <p>One page with a custom contact form.</p>
+        </div>
+        <div class="price" style="--c: var(--magenta)">
+          <span class="amt">$3,500</span>
+          <h3>Prairie Rose</h3>
+          <p>A static site with a content editor for staff.</p>
+        </div>
+        <div class="price" style="--c: var(--yellow)">
+          <span class="amt">$4,000</span>
+          <h3>Postoley Dance Ensemble</h3>
+          <p>A WordPress rebuild with an events editor.</p>
+        </div>
+      </div>
+      <div class="cta-row">
+        <a class="btn" href="#contact">Contact for pricing</a>
+        <p>Half at signing, half at launch. Monthly work is scoped to you, with no set plans.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="start" aria-labelledby="h-start">
+    <div class="wrap big">
+      <h2 id="h-start">How it starts</h2>
+      <ol class="steps">
+        <li class="step">
+          <h3>A free website check</h3>
+          <span class="cost">Free, and optional</span>
+          <p>A short email with the three things I’d fix first on your site and Google Business Profile, and why each matters to your customers.</p>
+        </li>
+        <li class="step">
+          <h3>A free call</h3>
+          <span class="cost">Free, 20 to 30 minutes</span>
+          <p>We talk through what you need and whether I’m the right fit. If you had the check, I walk you through it.</p>
+        </li>
+        <li class="step">
+          <h3>An assessment and plan</h3>
+          <span class="cost">Fixed price, quoted up front</span>
+          <p>Only for work beyond a website, or a large site. I dig into your accounts, site, and local competitors, then write a plan and a proposal. The plan is yours to keep, and the fee counts toward the work if you sign within 60 days.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="about" class="tinted" aria-labelledby="h-about">
+    <div class="wrap intro">
+      <div class="photo">
+        <canvas id="photo-dots" aria-hidden="true"></canvas>
+        <span>Photo of Sam goes here</span>
+      </div>
+      <div>
+        <h2 id="h-about">Hi, I’m Sam.</h2>
+        <p class="dropcap">Presswork is just me, working from Colorado. You deal with me from the first call to every edit, with no hand-offs and no account managers.</p>
+        <p>I take a few clients at a time, and I’ll tell you when something is outside what I do.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-proof">
+    <div class="wrap big">
+      <h2 id="h-proof">Sites I’ve built, live now</h2>
+      <ul class="sites">
+        <li>
+          <h3><a href="https://littlepeakspediatrictherapy.com/">Little Peaks Pediatric Therapy</a></h3>
+          <span class="where">Firestone, Colorado</span>
+          <span class="scores" aria-label="Scores: performance 98, accessibility 100, best practices 100, SEO 100"><b>98</b><b>100</b><b>100</b><b>100</b></span>
+        </li>
+        <li>
+          <h3><a href="https://danceophile.com/">Postoley Dance Ensemble</a></h3>
+          <span class="where">Boulder, Colorado</span>
+          <span class="scores" aria-label="Scores: performance 98, accessibility 100, best practices 100, SEO 100"><b>98</b><b>100</b><b>100</b><b>100</b></span>
+        </li>
+        <li>
+          <h3><a href="https://prairierosearena.com/">Prairie Rose Arena</a></h3>
+          <span class="where">Elkhart, Iowa</span>
+          <span class="scores" aria-label="Scores: performance 98, accessibility 100, best practices 100, SEO 100"><b>98</b><b>100</b><b>100</b><b>100</b></span>
+        </li>
+      </ul>
+      <p class="scores-key">Google Lighthouse mobile scores, out of 100: performance, accessibility, best practices, and SEO.</p>
+      <h3 class="self-h">And this site, presswork.dev</h3>
+      <div class="self" aria-label="This site’s scores">
+        <div><strong>98</strong><span>Performance</span></div>
+        <div><strong>100</strong><span>Accessibility</span></div>
+        <div><strong>100</strong><span>Best practices</span></div>
+        <div><strong>100</strong><span>SEO</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq tinted" aria-labelledby="h-faq">
+    <div class="wrap split">
+      <h2 id="h-faq">Questions</h2>
+      <div>
+        <details>
+          <summary>Do you use AI?</summary>
+          <p>Yes, for drafts and routine work, which makes me faster. I edit everything myself, you approve blog posts before they go up, and every proposal and contract says where it’s used.</p>
+        </details>
+        <details>
+          <summary>Can you help me show up in AI search?</summary>
+          <p>The groundwork is the same as for Google: clear pages, accurate facts about your business, and listings that agree with each other. It comes with every build, and I don’t sell tricks for it.</p>
+        </details>
+        <details>
+          <summary>Who owns the site?</summary>
+          <p>You do, once the final payment is in. Hosting is free for sites I build.</p>
+        </details>
+        <details>
+          <summary>What don’t you do?</summary>
+          <p>Social media, photography, print, video, or paid social ads. I’ll point you elsewhere when that’s what you need.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="on-dark">
+  <section id="contact" class="contact" aria-labelledby="h-contact">
+    <div class="wrap">
+      <h2 id="h-contact">Tell me about your business.</h2>
+      <p>Ask for a free website check, a quote, or just a call. I reply myself.</p>
+      <a class="email" href="mailto:hello@presswork.dev">hello@presswork.dev</a>
+      <div><a class="btn" href="mailto:hello@presswork.dev">Email me</a></div>
+    </div>
+  </section>
+  <div class="colophon">
+    <div class="wrap">
+      <h2>Colophon</h2>
+      <div>
+        <p>Set in Futura, cut in metal in 1927, and Charter, drawn for laser printers in 1987. Printed in cyan, magenta, yellow, and black on whatever screen you’re reading this on. Hand-built in plain HTML, CSS, and JavaScript, and hosted on Cloudflare.</p>
+        <p>Presswork Web Co., Colorado.</p>
+        <div class="inks" aria-hidden="true"><i style="--c: var(--cyan)"></i><i style="--c: var(--magenta)"></i><i style="--c: var(--yellow)"></i><i style="--c: #fff"></i></div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var inks = [
+    { color: '#00a0dc', angle: 15, field: function (x, y) { return Math.max(0, 1.0 - Math.hypot(x - 1.0, y - 0.0) * 1.2); } },
+    { color: '#e5007e', angle: 75, field: function (x, y) { return Math.max(0, 1.0 - Math.hypot(x - 0.9, y - 1.0) * 1.35); } },
+    { color: '#ffe500', angle: 0, field: function (x, y) { return Math.max(0, 0.9 - Math.hypot(x - 0.35, y - 0.55) * 1.7); } }
+  ];
+  function draw(canvas, opts, t) {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) return;
+    if (canvas.width !== Math.round(w * dpr)) { canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr); }
+    var ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = opts.bg; ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'multiply';
+    var step = opts.step;
+    var reach = Math.hypot(w, h);
+    opts.inks.forEach(function (ink) {
+      var a = ink.angle * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+      ctx.fillStyle = ink.color;
+      ctx.beginPath();
+      for (var u = -reach; u < reach; u += step) {
+        for (var v = -reach; v < reach; v += step) {
+          var x = w / 2 + u * c - v * s, y = h / 2 + u * s + v * c;
+          if (x < -step || y < -step || x > w + step || y > h + step) continue;
+          var d = ink.field(x / w, y / h) * t;
+          if (d <= 0.02) continue;
+          var r = step * 0.62 * Math.sqrt(Math.min(d, 1));
+          ctx.moveTo(x + r, y); ctx.arc(x, y, r, 0, Math.PI * 2);
+        }
+      }
+      ctx.fill();
+    });
+  }
+  var hero = document.getElementById('halftone');
+  var photo = document.getElementById('photo-dots');
+  var heroOpts = { bg: '#ffffff', step: 11, inks: inks };
+  var photoOpts = { bg: '#f2f6f8', step: 7, inks: [
+    { color: '#9a9a9a', angle: 45, field: function (x, y) { return 0.18 + 0.5 * Math.max(0, 1 - Math.hypot(x - 0.5, y - 0.38) * 2.2); } }
+  ] };
+  function render(t) { draw(hero, heroOpts, t); draw(photo, photoOpts, 1); }
+  if (reduce) { render(1); }
+  else {
+    var start = null;
+    requestAnimationFrame(function tick(now) {
+      if (start === null) start = now;
+      var p = Math.min((now - start) / 1100, 1);
+      render(1 - Math.pow(1 - p, 3));
+      if (p < 1) requestAnimationFrame(tick);
+    });
+  }
+  var timer;
+  window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(function () { render(1); }, 120); });
+})();
+</script>
+</body>
+</html>

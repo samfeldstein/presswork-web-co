@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 6, designer 2, direction A: "Road signs."
+  Idea: getting found is wayfinding. The page borrows the plain, legible language of US road signs:
+  green guide signs for directions, a fork sign for "fix or rebuild", a blue services sign,
+  a rate sign shaped like a speed limit, a mileage sign for example prices, and exit tabs for the steps.
+  Overpass (derived from Highway Gothic) for everything. Soft concrete ground, sign green, services blue.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+  --ground: #eceee9;
+  --ink: #1a2420;
+  --grey: #4b5650;
+  --rule: #c6cbc4;
+  --green: #0f573c;
+  --blue: #1d4a87;
+  --white: #fbfbf7;
+  --gutter: clamp(16px, 4.5vw, 72px);
+  --font: "Overpass", "Highway Gothic", "Arial Narrow", sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font-family: var(--font); font-size: 1.125rem; line-height: 1.55; font-kerning: normal;
+  overflow-wrap: break-word;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+h1, h2, h3, p { margin: 0; }
+p { max-width: 58ch; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+.wrap { max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+.muted { color: var(--grey); }
+
+/* Sign plate: rounded panel with the inset white border real guide signs carry */
+.sign {
+  --bg: var(--green);
+  background: var(--bg); color: var(--white); border-radius: 16px;
+  box-shadow: inset 0 0 0 6px var(--bg), inset 0 0 0 9px var(--white);
+}
+.sign.blue { --bg: var(--blue); }
+.arrow { width: 1em; height: 1em; flex: none; fill: currentColor; }
+
+/* Header */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 20px; }
+.wordmark {
+  display: inline-block; text-decoration: none; font-weight: 800; font-size: 1.25rem; line-height: 1;
+  padding: 12px 18px 9px; border-radius: 9px;
+  box-shadow: inset 0 0 0 4px var(--green), inset 0 0 0 6px var(--white);
+}
+.top nav ul { display: flex; gap: clamp(14px, 2.2vw, 30px); font-weight: 600; }
+.top nav a { text-decoration: none; }
+.top nav a:hover { text-decoration: underline; }
+@media (max-width: 820px) { .top nav li:not(:last-child) { display: none; } }
+
+/* Hero sign */
+.hero { padding-block: clamp(20px, 4vw, 56px) clamp(64px, 8vw, 120px); }
+.hero .sign { padding: clamp(28px, 4.5vw, 64px) clamp(24px, 4.5vw, 72px); display: flex; gap: clamp(18px, 3vw, 48px); align-items: flex-start; }
+.hero h1 {
+  font-weight: 800; font-size: clamp(2.5rem, 1.2rem + 5.6vw, 6.25rem); line-height: 1.02; letter-spacing: -0.01em;
+  max-width: 13ch; text-wrap: balance;
+}
+.hero .arrow { font-size: clamp(2.5rem, 1.2rem + 5.6vw, 6.25rem); margin-top: .02em; }
+.hero-foot { margin-top: clamp(28px, 3.5vw, 44px); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 48px; align-items: end; }
+.hero-foot p { font-size: clamp(1.25rem, 1.05rem + .7vw, 1.625rem); line-height: 1.4; max-width: 34ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; }
+@media (max-width: 820px) { .hero-foot { grid-template-columns: 1fr; } }
+
+.button {
+  display: inline-block; font-weight: 700; font-size: 1.125rem; line-height: 1; text-decoration: none;
+  padding: 17px 24px 14px; border-radius: 8px; background: var(--green); color: var(--white); border: 2px solid var(--green);
+}
+.button:hover { background: transparent; color: var(--green); }
+.sign .button { background: var(--white); color: var(--green); border-color: var(--white); }
+.sign .button:hover { background: transparent; color: var(--white); }
+.textlink { font-weight: 700; }
+
+/* Sections */
+.sec { padding-block: clamp(56px, 7vw, 112px); border-top: 1px solid var(--rule); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 16px var(--gutter); align-items: end; margin-bottom: clamp(32px, 4vw, 56px); }
+.sec-head h2 { font-weight: 800; font-size: clamp(2rem, 1.3rem + 2.6vw, 3.5rem); line-height: 1.05; letter-spacing: -0.008em; max-width: 14ch; }
+.sec-head p { font-size: clamp(1.2rem, 1.05rem + .5vw, 1.5rem); line-height: 1.4; max-width: 36ch; }
+@media (max-width: 820px) { .sec-head { grid-template-columns: 1fr; } }
+h3 { font-weight: 700; font-size: 1.375rem; line-height: 1.2; }
+
+/* Fork sign */
+.fork { padding: clamp(24px, 3.5vw, 44px) clamp(22px, 3.5vw, 48px); display: grid; grid-template-columns: 1fr 1fr; gap: 28px clamp(24px, 4vw, 64px); }
+.fork li { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 18px; align-items: start; }
+.fork .arrow { font-size: clamp(2.25rem, 1.6rem + 2vw, 3.5rem); grid-row: 1 / span 2; }
+.fork li:first-child .arrow { transform: rotate(-45deg); }
+.fork li:last-child .arrow { transform: rotate(45deg); }
+.fork h3 { font-weight: 800; font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.5rem); line-height: 1.05; }
+.fork p { margin-top: 8px; font-size: 1.0625rem; color: #dfe9e3; }
+.note { margin-top: 28px; max-width: 52ch; font-size: 1.1875rem; }
+@media (max-width: 640px) { .fork { grid-template-columns: 1fr; } }
+
+/* Services sign */
+.services { padding: clamp(26px, 3.5vw, 48px) clamp(22px, 3.5vw, 48px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.services > div { padding-inline: clamp(16px, 2.4vw, 36px); }
+.services > div:first-child { padding-left: 0; }
+.services > div + div { border-left: 2px solid rgba(251, 251, 247, .55); }
+.services h3 { font-weight: 800; font-size: clamp(1.5rem, 1.25rem + .8vw, 2rem); }
+.services h3 + p { margin-top: 6px; color: #d9e2f0; font-size: 1rem; }
+.services ul { margin-top: 18px; }
+.services li { padding: 9px 0 7px; border-top: 1px solid rgba(251, 251, 247, .3); }
+@media (max-width: 900px) {
+  .services { grid-template-columns: 1fr; }
+  .services > div { padding: 22px 0 0; }
+  .services > div + div { border-left: 0; border-top: 2px solid rgba(251, 251, 247, .55); margin-top: 22px; }
+  .services > div:first-child { padding-top: 0; }
+}
+
+/* Prices: a rate sign and a mileage sign */
+.price-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 40px clamp(32px, 5vw, 88px); align-items: start; }
+.rate {
+  width: clamp(200px, 22vw, 260px); text-align: center; background: var(--white); color: var(--ink);
+  border-radius: 14px; padding: 26px 16px 22px;
+  box-shadow: inset 0 0 0 5px var(--white), inset 0 0 0 9px var(--ink);
+}
+.rate span { display: block; font-weight: 800; font-size: 1.5rem; line-height: 1.05; }
+.rate strong { display: block; font-weight: 800; font-size: clamp(4.5rem, 3.5rem + 3vw, 6.5rem); line-height: .95; letter-spacing: -0.02em; margin: 12px 0 6px; font-variant-numeric: lining-nums; }
+.formula { max-width: 560px; }
+.formula li { display: grid; grid-template-columns: 2.25rem minmax(0, 7rem) minmax(0, 1fr); column-gap: 16px; align-items: baseline; padding: 12px 0 10px; border-top: 1px solid var(--rule); }
+.formula li:last-child { border-top: 2px solid var(--ink); }
+.formula .op { font-weight: 500; font-size: 1.5rem; color: var(--grey); }
+.formula .fig { font-weight: 800; font-size: 1.75rem; line-height: 1.1; font-variant-numeric: lining-nums; }
+.formula .cap { color: var(--grey); }
+.cut { margin-top: 20px; font-size: 1.25rem; line-height: 1.45; max-width: 40ch; }
+@media (max-width: 720px) {
+  .price-grid { grid-template-columns: 1fr; }
+  .formula li { grid-template-columns: 1.75rem minmax(0, 1fr); }
+  .formula .cap { grid-column: 2; }
+}
+
+.mileage { margin-top: clamp(48px, 6vw, 80px); padding: clamp(22px, 3vw, 40px) clamp(22px, 3.5vw, 48px); }
+.mileage li { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; align-items: baseline; padding: 14px 0 12px; }
+.mileage li + li { border-top: 1px solid rgba(251, 251, 247, .3); }
+.mileage h3 { font-weight: 800; font-size: clamp(1.25rem, 1rem + 1vw, 2rem); }
+.mileage p { grid-column: 1; color: #dfe9e3; font-size: 1rem; }
+.mileage .price { grid-column: 2; grid-row: 1 / span 2; font-weight: 800; font-size: clamp(1.75rem, 1.3rem + 1.8vw, 3rem); line-height: 1; font-variant-numeric: lining-nums tabular-nums; }
+.mileage-cap { margin-top: 12px; font-size: .9375rem; }
+.terms { margin-top: clamp(40px, 5vw, 64px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 24px; }
+.terms li { padding: 14px 0; border-top: 2px solid var(--ink); font-weight: 600; }
+.price-cta { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; }
+@media (max-width: 900px) { .terms { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .terms { grid-template-columns: 1fr; } .terms li + li { border-top-width: 1px; } }
+
+/* How it starts: exits */
+.exits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px clamp(20px, 2.5vw, 36px); }
+.exits li { display: flex; flex-direction: column; }
+.tab {
+  align-self: flex-start; background: var(--green); color: var(--white); font-weight: 800; font-size: 1rem; line-height: 1;
+  padding: 9px 14px 6px; border-radius: 8px 8px 0 0; margin-left: 18px;
+}
+.exits .sign { padding: 22px 24px 26px; flex: 1; }
+.exits h3 { font-weight: 800; font-size: 1.5rem; }
+.exits .cost { font-weight: 600; margin: 4px 0 12px; color: #cfe1d6; }
+.exits .sign p:last-child { color: #e6eee9; font-size: 1.0625rem; }
+.after { margin-top: 28px; }
+@media (max-width: 900px) { .exits { grid-template-columns: 1fr; } }
+
+/* About */
+.about { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 32px clamp(32px, 5vw, 80px); align-items: start; }
+.photo {
+  width: clamp(180px, 20vw, 240px); aspect-ratio: 4 / 5; border-radius: 12px; background: #d7dcd5;
+  display: grid; place-items: center; color: var(--grey); font-weight: 600; font-size: .9375rem;
+}
+.about h2 { font-weight: 800; font-size: clamp(2rem, 1.3rem + 2.6vw, 3.5rem); line-height: 1.05; }
+.about-text { margin-top: 20px; font-size: clamp(1.25rem, 1.05rem + .7vw, 1.625rem); line-height: 1.4; max-width: 32ch; }
+.about-more { margin-top: 16px; max-width: 44ch; }
+@media (max-width: 640px) { .about { grid-template-columns: 1fr; } }
+
+/* Scores */
+.scores { width: 100%; border-collapse: collapse; }
+.scores caption { caption-side: bottom; text-align: left; padding-top: 12px; color: var(--grey); font-size: .9375rem; }
+.scores th, .scores td { text-align: left; padding: 16px 0 13px; border-bottom: 1px solid var(--rule); vertical-align: baseline; }
+.scores thead th { font-weight: 700; font-size: .9375rem; border-bottom: 2px solid var(--ink); padding-block: 8px 6px; }
+.scores thead th:not(:first-child), .scores td { text-align: right; width: 12%; }
+.scores tbody th { font-weight: 700; padding-right: 16px; line-height: 1.3; }
+.scores tbody th span { display: block; color: var(--grey); font-weight: 400; font-size: .9375rem; }
+.scores td { font-weight: 800; font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem); line-height: 1; color: var(--green); font-variant-numeric: lining-nums tabular-nums; }
+@media (max-width: 640px) {
+  .scores thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .scores tr { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 8px; border-bottom: 1px solid var(--rule); padding: 16px 0; }
+  .scores tbody th { grid-column: 1 / -1; border: 0; padding: 0 0 10px; }
+  .scores td { border: 0; padding: 0; text-align: left; width: auto; font-size: 1.75rem; }
+  .scores td::after { content: attr(data-label); display: block; font-weight: 500; font-size: .8125rem; color: var(--grey); margin-top: 4px; line-height: 1.2; }
+}
+
+/* FAQ */
+.faq { border-top: 2px solid var(--ink); max-width: 860px; }
+.faq details { border-bottom: 1px solid var(--rule); }
+.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 20px; align-items: baseline; padding: 20px 0 16px; font-weight: 700; font-size: clamp(1.2rem, 1.05rem + .5vw, 1.5rem); line-height: 1.2; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-weight: 500; font-size: 1.4em; line-height: .8; flex: none; color: var(--green); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin: 0 0 24px; }
+
+/* Contact sign */
+.contact { padding-block: clamp(56px, 7vw, 112px) clamp(48px, 6vw, 96px); border-top: 1px solid var(--rule); }
+.contact .sign { padding: clamp(32px, 5vw, 72px) clamp(24px, 4.5vw, 72px); }
+.contact h2 { font-weight: 800; font-size: clamp(2rem, 1.3rem + 2.6vw, 3.5rem); line-height: 1.05; }
+.contact p { margin-top: 12px; font-size: 1.25rem; color: #dfe9e3; }
+.email {
+  display: flex; align-items: center; gap: .3em; margin: clamp(28px, 4vw, 48px) 0 clamp(28px, 3.5vw, 40px);
+  font-weight: 800; font-size: clamp(1.3rem, .4rem + 4.4vw, 5rem); line-height: 1; letter-spacing: -0.01em;
+  text-decoration: none; overflow-wrap: anywhere;
+}
+.email .arrow { transform: rotate(90deg); }
+.email:hover span { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: .12em; }
+.foot { padding-block: 8px 48px; font-size: .9375rem; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="up" viewBox="0 0 100 100"><path d="M50 4 88 46H62v50H38V46H12z"/></symbol>
+</svg>
+
+<header class="wrap top">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <div class="sign">
+      <svg class="arrow" aria-hidden="true"><use href="#up"/></svg>
+      <h1 id="hero-title">Websites for owner&#8209;run local businesses.</h1>
+    </div>
+    <div class="hero-foot">
+      <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+      <div class="actions">
+        <a class="button" href="#contact">Ask for a free check</a>
+        <a class="textlink" href="#prices">See example prices</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="sec" aria-labelledby="start-over">
+      <div class="sec-head">
+        <h2 id="start-over">You don’t have to start over.</h2>
+        <p>Most sites need fixing, not replacing. I’ll tell you which yours is.</p>
+      </div>
+      <ul class="sign fork">
+        <li>
+          <svg class="arrow" aria-hidden="true"><use href="#up"/></svg>
+          <h3>Keep it and fix it</h3>
+          <p>Stay on Wix or Squarespace. I fix what the platform allows, at fixed prices.</p>
+        </li>
+        <li>
+          <svg class="arrow" aria-hidden="true"><use href="#up"/></svg>
+          <h3>Rebuild it</h3>
+          <p>When it’s slow, broken on phones, or hard to update.</p>
+        </li>
+      </ul>
+      <p class="note">Postoley Dance Ensemble had a WordPress site from 2004. Now they post their own events, and hosting is free.</p>
+    </section>
+
+    <section class="sec" id="services" aria-labelledby="services-title">
+      <div class="sec-head">
+        <h2 id="services-title">What I do</h2>
+        <p>Pick one group or all three. Every job gets its own quote.</p>
+      </div>
+      <div class="sign blue services">
+        <div>
+          <h3>The website</h3>
+          <p>Fast on every phone, built and hosted by me.</p>
+          <ul>
+            <li>Design and build</li>
+            <li>Free hosting</li>
+            <li>Search basics, built in</li>
+            <li>Landing pages and small stores</li>
+            <li>Monthly site care</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Getting found</h3>
+          <p>On Google, on Maps, and in AI answers.</p>
+          <ul>
+            <li>Google Business Profile</li>
+            <li>Bing, Apple, Yelp, and directories</li>
+            <li>A simple way to ask for reviews</li>
+            <li>Ongoing SEO</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Ongoing marketing</h3>
+          <p>Monthly, scoped to what you need.</p>
+          <ul>
+            <li>Blog posts you approve</li>
+            <li>Google Ads</li>
+            <li>A monthly report and a quarterly call</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="prices" aria-labelledby="prices-title">
+      <div class="sec-head">
+        <h2 id="prices-title">How I price</h2>
+        <p>No packages. One total for an agreed list of work.</p>
+      </div>
+      <div class="price-grid">
+        <div class="rate" role="img" aria-label="Rate: 65 dollars an hour"><span>Rate</span><strong>$65</strong><span>an hour</span></div>
+        <div>
+          <ul class="formula" aria-label="How a quote is worked out">
+            <li><span class="op" aria-hidden="true"></span><span class="fig">Hours</span><span class="cap">What the work will take</span></li>
+            <li><span class="op" aria-label="times">×</span><span class="fig">$65</span><span class="cap">An hour</span></li>
+            <li><span class="op" aria-label="plus">+</span><span class="fig">25%</span><span class="cap">For emails, calls, and questions</span></li>
+            <li><span class="op" aria-label="equals">=</span><span class="fig">Quote</span><span class="cap">Checked against what the work is worth to you</span></li>
+          </ul>
+          <p class="cut">If it’s worth less than that, I cut the scope, not the rate.</p>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER PRICES: Little Peaks $1,500, Prairie Rose $3,500, Postoley $4,000. Not real totals yet. -->
+      <ul class="sign mileage" aria-label="Example prices from real projects">
+        <li><h3>Little Peaks Pediatric Therapy</h3><p>One page, custom contact form</p><span class="price">$1,500</span></li>
+        <li><h3>Prairie Rose Arena</h3><p>Static site, editor for staff</p><span class="price">$3,500</span></li>
+        <li><h3>Postoley Dance Ensemble</h3><p>WordPress rebuild, events editor</p><span class="price">$4,000</span></li>
+      </ul>
+      <p class="mileage-cap muted">Example prices from real projects.</p>
+
+      <ul class="terms">
+        <li>Half at signing, half at launch</li>
+        <li>Unlimited feedback until launch</li>
+        <li>Free hosting</li>
+        <li>You own the site</li>
+      </ul>
+      <div class="price-cta">
+        <a class="button" href="#contact">Contact for pricing</a>
+        <span class="muted">Tell me what you need; I’ll send a quote.</span>
+      </div>
+    </section>
+
+    <section class="sec" id="start" aria-labelledby="start-title">
+      <div class="sec-head">
+        <h2 id="start-title">How it starts</h2>
+        <p>Two free steps first. You pay once we both know what the job is.</p>
+      </div>
+      <ol class="exits">
+        <li>
+          <span class="tab">Exit 1</span>
+          <div class="sign">
+            <h3>Free website check</h3>
+            <p class="cost">Free, optional</p>
+            <p>An email with the three things I’d fix first, and why.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tab">Exit 2</span>
+          <div class="sign">
+            <h3>Free call</h3>
+            <p class="cost">Free, 20 to 30 minutes</p>
+            <p>What you need, and whether I’m the right fit.</p>
+          </div>
+        </li>
+        <li>
+          <span class="tab">Exit 3</span>
+          <div class="sign">
+            <h3>Assessment and plan</h3>
+            <p class="cost">Fixed price, quoted up front</p>
+            <p>For bigger jobs. The plan is yours to keep, and the fee counts toward the work if you sign within 60 days.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="after muted">For a website on its own, the call goes straight to a proposal.</p>
+    </section>
+
+    <section class="sec" id="about" aria-labelledby="about-title">
+      <div class="about">
+        <div class="photo" role="img" aria-label="Photo of Sam (placeholder)">Photo of Sam</div>
+        <div>
+          <h2 id="about-title">Hi, I’m Sam.</h2>
+          <p class="about-text">Presswork is just me, in Colorado. You deal with me from the first call to every edit after launch.</p>
+          <p class="about-more">I take a few clients at a time, and I’ll tell you when something is outside what I do.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="work" aria-labelledby="work-title">
+      <div class="sec-head">
+        <h2 id="work-title">Live sites, real scores</h2>
+        <p>Google’s Lighthouse scores each site out of 100, on a phone.</p>
+      </div>
+      <table class="scores">
+        <caption>PageSpeed Insights, mobile.</caption>
+        <thead>
+          <tr><th scope="col">Site</th><th scope="col">Speed</th><th scope="col">Access</th><th scope="col">Practices</th><th scope="col">SEO</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><a href="https://littlepeakspediatrictherapy.com/">Little Peaks Pediatric Therapy</a><span>Firestone, Colorado</span></th>
+            <td data-label="Speed">98</td><td data-label="Access">100</td><td data-label="Practices">100</td><td data-label="SEO">100</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://danceophile.com/">Postoley Dance Ensemble</a><span>Boulder, Colorado</span></th>
+            <td data-label="Speed">98</td><td data-label="Access">100</td><td data-label="Practices">100</td><td data-label="SEO">100</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://prairierosearena.com/">Prairie Rose Arena</a><span>Elkhart, Iowa</span></th>
+            <td data-label="Speed">98</td><td data-label="Access">100</td><td data-label="Practices">100</td><td data-label="SEO">100</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://presswork.dev/">Presswork</a><span>This site</span></th>
+            <td data-label="Speed">98</td><td data-label="Access">100</td><td data-label="Practices">100</td><td data-label="SEO">100</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="sec" id="faq" aria-labelledby="faq-title">
+      <div class="sec-head"><h2 id="faq-title">Questions</h2></div>
+      <div class="faq">
+        <details>
+          <summary>Do you use AI?</summary>
+          <p>Yes, as a tool. I read and approve every change before it reaches you, and I never put your private data into one.</p>
+        </details>
+        <details>
+          <summary>Will my business show up in AI search?</summary>
+          <p>I make your site, Business Profile, and listings easy for AI tools to read. No one can promise a placement.</p>
+        </details>
+        <details>
+          <summary>Who owns the site?</summary>
+          <p>You do, once it’s paid for.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="sign">
+        <h2 id="contact-title">Tell me about your business.</h2>
+        <p>Ask for a free check, a call, or a quote.</p>
+        <a class="email" href="mailto:hello@presswork.dev"><svg class="arrow" aria-hidden="true"><use href="#up"/></svg><span>hello@presswork.dev</span></a>
+        <a class="button" href="mailto:hello@presswork.dev">Email me</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="wrap foot muted">Presswork Web Co., Colorado.</footer>
+
+</body>
+</html>

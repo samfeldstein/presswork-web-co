@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 4, designer 3: "Set in rows."
+  Strictly black and white. Headings in Helvetica Neue Condensed Black (macOS system font; Arial Narrow elsewhere),
+  text in Avenir Next. Every section is a poster heading, a one-line lead with a drop cap, then rows:
+  a name, one short line, and a figure or tag at the right edge, like a printer's job sheet read across.
+-->
+<style>
+@font-face { font-family: "PW Condensed"; font-weight: 900; src: local("HelveticaNeue-CondensedBlack"), local("Helvetica Neue Condensed Black"); }
+@font-face { font-family: "PW Condensed"; font-weight: 700 800; src: local("HelveticaNeue-CondensedBold"), local("Helvetica Neue Condensed Bold"); }
+:root {
+  --ink: #000000;
+  --paper: #ffffff;
+  --grey: #5a5a5a;
+  --hair: #000000;
+  --gutter: clamp(16px, 4.4vw, 64px);
+  --display: "PW Condensed", "Arial Narrow", Arial, sans-serif;
+  --text: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: clamp(1.4rem, 1.1rem + 1.1vw, 2rem);
+  --step-3: clamp(3rem, 1.4rem + 6.6vw, 8.5rem);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+p { margin: 0; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, .cond {
+  font-family: var(--display); font-stretch: condensed; font-weight: 900; margin: 0;
+}
+h3 { font-weight: 800; }
+
+.wrap { padding-inline: var(--gutter); }
+.muted { color: var(--grey); }
+
+/* Masthead */
+.masthead { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 20px; }
+.wordmark { font-family: var(--display); font-stretch: condensed; font-weight: 900; font-size: 1.75rem; line-height: 1; text-decoration: none; letter-spacing: -0.01em; }
+.masthead nav ul { display: flex; gap: clamp(14px, 2vw, 32px); }
+.masthead nav a { text-decoration: none; font-weight: 500; }
+.masthead nav a:hover { text-decoration: underline; }
+@media (max-width: 860px) { .masthead nav li:not(:last-child) { display: none; } }
+
+/* Hero */
+.hero { border-top: 8px solid var(--ink); padding-block: clamp(24px, 3vw, 44px) clamp(72px, 10vw, 160px); }
+.hero h1 {
+  font-size: clamp(4rem, 14.2vw, 15.5rem);
+  line-height: .84; letter-spacing: -0.02em;
+}
+.hero-foot {
+  margin-top: clamp(32px, 4.5vw, 64px);
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr); column-gap: var(--gutter); row-gap: 24px;
+  align-items: end;
+}
+.hero-foot p { grid-column: 2; font-size: var(--step-2); line-height: 1.3; max-width: 30ch; }
+.actions { grid-column: 3; justify-self: end; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+@media (max-width: 960px) {
+  .hero-foot { grid-template-columns: 1fr; }
+  .hero-foot p, .actions { grid-column: 1; }
+  .actions { justify-self: start; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+}
+
+.button {
+  display: inline-block; font-family: var(--display); font-stretch: condensed; font-weight: 800; font-size: 1.375rem; line-height: 1;
+  padding: 15px 24px 14px; background: var(--ink); color: var(--paper); text-decoration: none; border: 2px solid var(--ink);
+}
+.button:hover { background: var(--paper); color: var(--ink); }
+.textlink { font-weight: 600; }
+
+/* Section frame: thick rule, poster heading, drop-cap lead, then rows */
+.sec { border-top: 8px solid var(--ink); padding-block: clamp(20px, 2.4vw, 32px) clamp(72px, 9vw, 140px); }
+.sec h2 { font-size: var(--step-3); line-height: .86; letter-spacing: -0.015em; max-width: 14ch; }
+.sec-lead {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr); column-gap: var(--gutter);
+  margin: clamp(28px, 3.4vw, 48px) 0 clamp(28px, 3.4vw, 48px);
+}
+.lead { grid-column: 2; font-size: var(--step-2); line-height: 1.3; max-width: 32ch; }
+.lead::first-letter {
+  float: left; font-family: var(--display); font-stretch: condensed; font-weight: 900;
+  font-size: 2.95em; line-height: .78; margin: .08em .08em 0 -.03em;
+}
+@media (max-width: 960px) {
+  .sec-lead { grid-template-columns: 1fr; }
+  .lead { grid-column: 1; }
+}
+
+/* Rows */
+.rows { border-top: 2px solid var(--ink); }
+.row {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr); column-gap: var(--gutter);
+  align-items: baseline; padding: 18px 0 20px; border-bottom: 1px solid var(--hair);
+}
+.row h3 { font-size: var(--step-2); line-height: 1.02; letter-spacing: -0.005em; }
+.row .say { max-width: 44ch; font-size: var(--step-1); line-height: 1.4; }
+.row .tag { justify-self: end; text-align: right; font-weight: 600; font-size: var(--step-1); }
+.row .fig {
+  justify-self: end; font-family: var(--display); font-stretch: condensed; font-weight: 900;
+  font-size: clamp(2.6rem, 1.6rem + 3.6vw, 5.5rem); line-height: .8; letter-spacing: -0.01em; font-variant-numeric: lining-nums;
+}
+.row.fig-row { align-items: end; }
+.items { display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 12px; }
+.items li { border: 1px solid var(--ink); padding: 3px 10px 4px; font-size: .9375rem; line-height: 1.3; }
+@media (max-width: 760px) {
+  .row { grid-template-columns: minmax(0, 1fr) auto; row-gap: 6px; }
+  .row h3 { grid-column: 1; }
+  .row .tag, .row .fig, .row .op { grid-column: 2; grid-row: 1; justify-self: end; text-align: right; }
+  .row .say { grid-column: 1 / -1; }
+}
+
+/* Prices: the sum */
+.sum .row { align-items: baseline; }
+.sum .op { justify-self: end; text-align: right; font-family: var(--display); font-stretch: condensed; font-weight: 900; font-size: var(--step-2); line-height: 1; }
+.terms { display: flex; flex-wrap: wrap; gap: 10px 12px; margin-top: 28px; }
+.terms li { background: var(--ink); color: var(--paper); padding: 6px 12px 7px; font-weight: 500; font-size: .9375rem; line-height: 1.3; }
+.sub { font-family: var(--display); font-stretch: condensed; font-weight: 800; font-size: var(--step-2); line-height: 1; margin: clamp(44px, 5vw, 72px) 0 14px; }
+.cta { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; margin-top: 32px; }
+
+/* Steps */
+.steps { counter-reset: step; }
+.steps .row { counter-increment: step; }
+.steps h3::before { content: counter(step); display: inline-block; min-width: 1.1em; }
+.after { margin-top: 24px; font-size: var(--step-1); max-width: 44ch; }
+
+/* About */
+.about { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr); column-gap: var(--gutter); row-gap: 28px; margin-top: clamp(28px, 3.4vw, 48px); }
+.photo {
+  aspect-ratio: 1 / 1; border: 2px solid var(--ink);
+  background-image: radial-gradient(circle, var(--ink) 1.3px, transparent 1.6px);
+  background-size: 8px 8px;
+  display: grid; place-items: center;
+}
+.photo span { background: var(--paper); padding: 6px 12px; font-weight: 600; font-size: .9375rem; border: 2px solid var(--ink); }
+.lead-wrap { grid-column: 2 / -1; }
+.about .lead + p { margin-top: 16px; font-size: var(--step-1); max-width: 36ch; }
+@media (max-width: 960px) {
+  .about { grid-template-columns: 1fr; }
+  .lead-wrap { grid-column: 1; }
+  .photo { max-width: 300px; }
+}
+
+/* Scores */
+.figs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+.figs div { padding: 20px 12px 18px 0; }
+.figs div + div { padding-left: clamp(12px, 2vw, 28px); border-left: 1px solid var(--ink); }
+.figs b { display: block; font-family: var(--display); font-stretch: condensed; font-weight: 900; font-size: clamp(3.4rem, 1.8rem + 6vw, 9rem); line-height: .8; letter-spacing: -0.02em; }
+.figs span { display: block; margin-top: 10px; font-size: .9375rem; line-height: 1.25; }
+@media (max-width: 600px) {
+  .figs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .figs div:nth-child(3) { border-left: 0; padding-left: 0; }
+  .figs div:nth-child(n+3) { border-top: 1px solid var(--ink); }
+}
+.sites { margin-top: 0; }
+.sites .row h3 a { text-decoration: none; }
+.sites .row h3 a:hover { text-decoration: underline; }
+.caption { margin-top: 12px; font-size: .9375rem; }
+
+/* FAQ */
+.faq { border-top: 2px solid var(--ink); margin-top: clamp(28px, 3.4vw, 48px); }
+.faq details { border-bottom: 1px solid var(--ink); }
+.faq summary {
+  cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 24px; align-items: baseline;
+  padding: 18px 0; font-family: var(--display); font-stretch: condensed; font-weight: 800; font-size: var(--step-2); line-height: 1.05;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.3em; line-height: .7; flex: none; }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin: 0 0 22px; max-width: 56ch; }
+
+/* Contact */
+.contact { background: var(--ink); color: var(--paper); }
+.contact .sec { border-top: 0; padding-top: clamp(56px, 8vw, 120px); }
+.contact .muted { color: #bdbdbd; }
+.lead.plain::first-letter { float: none; font: inherit; margin: 0; color: inherit; }
+.email {
+  display: block; font-family: var(--display); font-stretch: condensed; font-weight: 900; text-decoration: none;
+  font-size: clamp(1.9rem, 8.4vw, 12rem); line-height: .9; letter-spacing: -0.02em; margin: 0 0 clamp(28px, 4vw, 56px);
+  overflow-wrap: anywhere;
+}
+.email:hover { text-decoration: underline; text-decoration-thickness: 6px; text-underline-offset: .08em; }
+.contact .button { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.contact .button:hover { background: var(--ink); color: var(--paper); }
+
+/* Colophon */
+.colophon {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr); column-gap: var(--gutter); row-gap: 12px;
+  padding-block: 32px 48px; font-size: .9375rem;
+}
+.colophon h2 { font-family: var(--display); font-stretch: condensed; font-weight: 900; font-size: 1.5rem; line-height: 1; margin: 0; }
+.colophon p { max-width: 54ch; }
+.colophon .end { justify-self: end; text-align: right; }
+@media (max-width: 960px) { .colophon { grid-template-columns: 1fr; } .colophon .end { justify-self: start; text-align: left; } }
+</style>
+</head>
+<body>
+
+<header class="wrap masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="wrap" aria-labelledby="hero-title">
+    <div class="hero">
+      <h1 id="hero-title">Websites for owner&#8209;run local businesses.</h1>
+      <div class="hero-foot">
+        <p>I’m Sam. I build and look after websites for small businesses, mostly in Colorado, and help people find them on Google.</p>
+        <div class="actions">
+          <a class="button" href="#contact">Ask for a free check</a>
+          <a class="textlink" href="#prices">See example prices</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" aria-labelledby="start-over">
+    <div class="sec">
+      <h2 id="start-over">You don’t have to start over.</h2>
+      <div class="sec-lead"><p class="lead">Most sites need fixing, not replacing. I’ll tell you which yours is.</p></div>
+      <div class="rows">
+        <div class="row">
+          <h3>Keep it, fix it</h3>
+          <p class="say">On Wix or Squarespace? I fix what the platform allows.</p>
+          <p class="tag">Fixed-price list</p>
+        </div>
+        <div class="row">
+          <h3>Rebuild it</h3>
+          <p class="say">Slow, broken on phones, or hard to update? I rebuild it, like Postoley Dance Ensemble’s 2004 WordPress site.</p>
+          <p class="tag">When it’s worth it</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="services" aria-labelledby="services-title">
+    <div class="sec">
+      <h2 id="services-title">What I do</h2>
+      <div class="sec-lead"><p class="lead">Pick one group or all three. Every job gets its own quote.</p></div>
+      <div class="rows">
+        <div class="row">
+          <h3>The website</h3>
+          <div class="say">
+            <p>Fast on every phone, built and hosted by me.</p>
+            <ul class="items">
+              <li>Design and build</li>
+              <li>Free hosting</li>
+              <li>Search basics</li>
+              <li>Landing pages</li>
+              <li>Small stores</li>
+              <li>Monthly site care</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <h3>Getting found</h3>
+          <div class="say">
+            <p>Showing up on Google, Maps, and AI answers.</p>
+            <ul class="items">
+              <li>Google Business Profile</li>
+              <li>Bing, Apple, Yelp</li>
+              <li>Reviews</li>
+              <li>Ongoing SEO</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <h3>Ongoing marketing</h3>
+          <div class="say">
+            <p>Steady monthly work, only what you need.</p>
+            <ul class="items">
+              <li>Blog posts</li>
+              <li>Google Ads</li>
+              <li>Monthly report</li>
+              <li>Quarterly call</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="prices" aria-labelledby="prices-title">
+    <div class="sec">
+      <h2 id="prices-title">How I price</h2>
+      <div class="sec-lead"><p class="lead">No packages. One total for an agreed list of work.</p></div>
+      <div class="rows sum" role="list" aria-label="How a quote is worked out">
+        <div class="row" role="listitem">
+          <h3>Hours</h3>
+          <p class="say">The time the work will take</p>
+          <p class="op">× $65</p>
+        </div>
+        <div class="row" role="listitem">
+          <h3>Plus a quarter</h3>
+          <p class="say">For the emails, calls, and questions every project needs</p>
+          <p class="op">+ 25%</p>
+        </div>
+        <div class="row" role="listitem">
+          <h3>Checked</h3>
+          <p class="say">Against what the work is worth to you. Too high? I cut the scope, not the rate.</p>
+          <p class="op">= Quote</p>
+        </div>
+      </div>
+      <ul class="terms" aria-label="Terms">
+        <li>Half at signing, half at launch</li>
+        <li>Unlimited feedback until launch</li>
+        <li>Free hosting</li>
+        <li>You own the site once it’s paid for</li>
+      </ul>
+
+      <p class="sub">Real projects</p>
+      <!-- PLACEHOLDER PRICES: Little Peaks $1,500, Prairie Rose $3,500, Postoley $4,000. Not real totals yet. -->
+      <div class="rows" role="list" aria-label="Example prices from real projects">
+        <div class="row fig-row" role="listitem">
+          <h3>Little Peaks Pediatric Therapy</h3>
+          <p class="say muted">One page, custom contact form</p>
+          <p class="fig">$1,500</p>
+        </div>
+        <div class="row fig-row" role="listitem">
+          <h3>Prairie Rose Arena</h3>
+          <p class="say muted">Static site, content editor for staff</p>
+          <p class="fig">$3,500</p>
+        </div>
+        <div class="row fig-row" role="listitem">
+          <h3>Postoley Dance Ensemble</h3>
+          <p class="say muted">WordPress rebuild, events editor</p>
+          <p class="fig">$4,000</p>
+        </div>
+      </div>
+      <div class="cta">
+        <a class="button" href="#contact">Contact for pricing</a>
+        <p class="muted">Tell me what you need; I’ll send a quote.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="start" aria-labelledby="start-title">
+    <div class="sec">
+      <h2 id="start-title">How it starts</h2>
+      <div class="sec-lead"><p class="lead">Two free steps first. You pay once we both know the job.</p></div>
+      <ol class="rows steps">
+        <li class="row">
+          <h3>Free website check</h3>
+          <p class="say">The three things I’d fix first, by email.</p>
+          <p class="tag">Free, optional</p>
+        </li>
+        <li class="row">
+          <h3>Free call</h3>
+          <p class="say">What you need, and whether I’m the right fit.</p>
+          <p class="tag">Free, 20 to 30 min</p>
+        </li>
+        <li class="row">
+          <h3>Assessment and plan</h3>
+          <p class="say">For bigger jobs. The plan is yours to keep, and the fee counts toward the work if you sign within 60 days.</p>
+          <p class="tag">Fixed price, up front</p>
+        </li>
+      </ol>
+      <p class="after">A website on its own goes straight from the call to a proposal.</p>
+    </div>
+  </section>
+
+  <section class="wrap" id="about" aria-labelledby="about-title">
+    <div class="sec">
+      <h2 id="about-title">Hi, I’m Sam.</h2>
+      <div class="about">
+        <div class="photo" role="img" aria-label="Photo of Sam (placeholder)"><span>Photo of Sam</span></div>
+        <div class="lead-wrap">
+          <p class="lead">Presswork is just me, in Colorado. You deal with me from the first call to every edit after launch.</p>
+          <p>I take a few clients at a time, and I’ll say when something is outside what I do.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="work" aria-labelledby="work-title">
+    <div class="sec">
+      <h2 id="work-title">Live sites, real scores</h2>
+      <div class="sec-lead"><p class="lead">Google’s Lighthouse scores each site out of 100, on a phone.</p></div>
+      <div class="figs" role="list" aria-label="Scores, the same for every site below">
+        <div role="listitem"><b>98</b><span>Performance</span></div>
+        <div role="listitem"><b>100</b><span>Accessibility</span></div>
+        <div role="listitem"><b>100</b><span>Best practices</span></div>
+        <div role="listitem"><b>100</b><span>SEO</span></div>
+      </div>
+      <p class="sub">Every site here scores the same</p>
+      <div class="rows sites" role="list">
+        <div class="row" role="listitem"><h3><a href="https://littlepeakspediatrictherapy.com/">Little Peaks Pediatric Therapy</a></h3><p class="say muted">Firestone, Colorado</p></div>
+        <div class="row" role="listitem"><h3><a href="https://danceophile.com/">Postoley Dance Ensemble</a></h3><p class="say muted">Boulder, Colorado</p></div>
+        <div class="row" role="listitem"><h3><a href="https://prairierosearena.com/">Prairie Rose Arena</a></h3><p class="say muted">Elkhart, Iowa</p></div>
+        <div class="row" role="listitem"><h3><a href="https://presswork.dev/">Presswork</a></h3><p class="say muted">This site</p></div>
+      </div>
+      <p class="caption muted">PageSpeed Insights, mobile.</p>
+    </div>
+  </section>
+
+  <section class="wrap" id="faq" aria-labelledby="faq-title">
+    <div class="sec">
+      <h2 id="faq-title">Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Do you use AI?</summary>
+          <p>Yes, as a tool. I read and approve every sentence and change before it reaches you, and you approve anything that goes live. Your private data never goes into an AI tool.</p>
+        </details>
+        <details>
+          <summary>Will my business show up in AI search?</summary>
+          <p>I make your site, Business Profile, and listings easy for search tools, AI ones included, to read. No one can promise a placement.</p>
+        </details>
+        <details>
+          <summary>Who owns the site?</summary>
+          <p>You do, once it’s paid for.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="sec">
+        <h2 id="contact-title">Tell me about your business.</h2>
+        <div class="sec-lead"><p class="lead plain muted">Ask for a free check, a call, or a quote.</p></div>
+        <a class="email" href="mailto:hello@presswork.dev">hello@presswork.dev</a>
+        <a class="button" href="mailto:hello@presswork.dev">Email me</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap colophon">
+  <h2>Colophon</h2>
+  <p>Headings in Helvetica Neue Condensed, text in Avenir Next. Written by hand in HTML and CSS, with no trackers, and hosted on Cloudflare.</p>
+  <p class="end muted">Presswork Web Co., Colorado<br><a href="mailto:hello@presswork.dev">hello@presswork.dev</a></p>
+</footer>
+
+</body>
+</html>

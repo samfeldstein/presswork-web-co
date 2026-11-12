@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 3, designer 4: "Wood type and reversed plates."
+  Strictly black and white. One type family in two widths: Avenir Next Condensed (heavy, poster scale)
+  for headings and figures, Avenir Next for reading text. System fonts on macOS; Arial Narrow / Arial elsewhere.
+  Print borrowings: wood-type poster headings, reversed (white-on-black) plates, thick-and-thin press rules.
+-->
+<style>
+:root {
+  --ink: #000000;
+  --paper: #ffffff;
+  --grey: #5c5c5c;
+  --grey-on-ink: #b3b3b3;
+  --rule-thick: 10px;
+  --rule-thin: 2px;
+  --gutter: clamp(16px, 4.4vw, 64px);
+  --display: "Avenir Next Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --text: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  --step-0: 1.0625rem;
+  --step-1: 1.25rem;
+  --step-2: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  --step-3: clamp(2.5rem, 1.6rem + 4.2vw, 5.5rem);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  overflow-wrap: break-word;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+a:hover { text-decoration-thickness: 3px; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+p { margin: 0 0 1em; max-width: 62ch; }
+h1, h2, h3 { font-family: var(--display); font-weight: 800; margin: 0; letter-spacing: -0.01em; }
+
+.wrap { padding-inline: var(--gutter); }
+
+/* Press rules: a thick bar over a thin one */
+.press-rule {
+  border: 0; margin: 0; height: calc(var(--rule-thick) + 6px + var(--rule-thin));
+  background:
+    linear-gradient(var(--ink), var(--ink)) top / 100% var(--rule-thick) no-repeat,
+    linear-gradient(var(--ink), var(--ink)) bottom / 100% var(--rule-thin) no-repeat;
+}
+.plate .press-rule {
+  background:
+    linear-gradient(var(--paper), var(--paper)) top / 100% var(--rule-thick) no-repeat,
+    linear-gradient(var(--paper), var(--paper)) bottom / 100% var(--rule-thin) no-repeat;
+}
+
+/* Masthead */
+.masthead {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding-block: 18px;
+}
+.wordmark { font-family: var(--display); font-weight: 800; font-size: 1.75rem; line-height: 1; text-decoration: none; }
+.masthead nav ul { display: flex; gap: clamp(14px, 2vw, 32px); list-style: none; margin: 0; padding: 0; }
+.masthead nav a { text-decoration: none; font-weight: 500; }
+.masthead nav a:hover { text-decoration: underline; }
+@media (max-width: 860px) { .masthead nav li:not(:last-child) { display: none; } }
+
+/* Hero: the one loud thing */
+.hero { padding-block: clamp(28px, 5vw, 72px) clamp(40px, 6vw, 96px); }
+.hero h1 {
+  font-size: clamp(3.6rem, 12.6vw, 13.5rem);
+  line-height: .86;
+  letter-spacing: -0.025em;
+  margin-bottom: clamp(28px, 4vw, 56px);
+}
+.hero-foot {
+  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--gutter);
+  align-items: end;
+}
+.hero-foot p { font-size: var(--step-2); line-height: 1.35; margin: 0; max-width: 34ch; }
+.hero-foot .actions { justify-self: end; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; }
+@media (max-width: 760px) {
+  .hero-foot { grid-template-columns: 1fr; }
+  .hero-foot .actions { justify-self: start; }
+}
+
+.button {
+  display: inline-block; font-family: var(--display); font-weight: 800; font-size: 1.375rem; line-height: 1;
+  padding: 16px 26px 15px; background: var(--ink); color: var(--paper); text-decoration: none;
+  border: 3px solid var(--ink);
+}
+.button:hover { background: var(--paper); color: var(--ink); }
+.plate .button { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.plate .button:hover { background: var(--ink); color: var(--paper); }
+.textlink { font-weight: 600; }
+
+/* Sections */
+.section { padding-block: clamp(56px, 8vw, 128px); }
+.section > .press-rule { margin-bottom: clamp(20px, 2.4vw, 32px); }
+.section-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; margin-bottom: clamp(32px, 4.5vw, 64px); }
+.section-head h2 { font-size: var(--step-3); line-height: .92; max-width: 15ch; }
+.section-head p { font-size: var(--step-1); max-width: 46ch; margin: 0; }
+@media (min-width: 1000px) {
+  .section-head { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; column-gap: var(--gutter); }
+}
+
+.plate { background: var(--ink); color: var(--paper); }
+.plate .muted { color: var(--grey-on-ink); }
+.plate .wrap > .press-rule { margin-bottom: clamp(20px, 2.4vw, 32px); }
+.muted { color: var(--grey); }
+
+/* Start over */
+.two-up { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gutter); }
+.two-up > div { border-top: var(--rule-thin) solid var(--ink); padding-top: 20px; }
+.two-up h3 { font-size: var(--step-2); line-height: 1.05; margin-bottom: 12px; }
+@media (max-width: 760px) { .two-up { grid-template-columns: 1fr; gap: 36px; } }
+
+/* Three groups */
+.groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: var(--rule-thin) solid var(--ink); border-bottom: var(--rule-thin) solid var(--ink); }
+.group { padding: 28px clamp(16px, 2.4vw, 40px) 36px; }
+.group + .group { border-left: var(--rule-thin) solid var(--ink); }
+.group:first-child { padding-left: 0; }
+.group:last-child { padding-right: 0; }
+.group h3 { font-size: clamp(2rem, 1.4rem + 2vw, 3.25rem); line-height: .95; margin-bottom: 14px; }
+.group > p { margin-bottom: 22px; }
+.group ul { list-style: none; margin: 0; padding: 0; }
+.group li { padding: 11px 0; border-top: 1px solid var(--ink); line-height: 1.4; }
+.group li b { font-weight: 600; }
+.group li span { display: block; color: var(--grey); font-size: .9375rem; margin-top: 2px; }
+@media (max-width: 960px) {
+  .groups { grid-template-columns: 1fr; border-bottom: 0; }
+  .group, .group:first-child, .group:last-child { padding: 28px 0 36px; }
+  .group + .group { border-left: 0; border-top: var(--rule-thin) solid var(--ink); }
+}
+
+/* Prices: reversed plate */
+.price-body { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--gutter); }
+.method { font-size: var(--step-1); }
+.method p { max-width: 40ch; }
+.terms { list-style: none; padding: 0; margin: 28px 0 0; border-top: 1px solid var(--paper); max-width: 40ch; }
+.terms li { padding: 10px 0; border-bottom: 1px solid var(--paper); font-size: var(--step-0); }
+.examples { list-style: none; margin: 0; padding: 0; border-top: var(--rule-thin) solid var(--paper); }
+.examples li {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; align-items: baseline;
+  padding: 18px 0 20px; border-bottom: 1px solid var(--paper);
+}
+.examples h3 { font-size: var(--step-2); line-height: 1.05; }
+.examples p { grid-column: 1; margin: 6px 0 0; }
+.examples .fig {
+  grid-column: 2; grid-row: 1 / span 2; align-self: center;
+  font-family: var(--display); font-weight: 800; font-size: clamp(3rem, 2rem + 4vw, 6.5rem); line-height: .9;
+  font-variant-numeric: lining-nums tabular-nums; letter-spacing: -0.02em;
+}
+.price-cta { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; }
+.price-cta p { margin: 0; max-width: 32ch; }
+@media (max-width: 960px) { .price-body { grid-template-columns: 1fr; gap: 48px; } }
+@media (max-width: 480px) {
+  .examples li { grid-template-columns: 1fr; }
+  .examples .fig { grid-column: 1; grid-row: auto; margin-top: 10px; }
+}
+
+/* How it starts: a real sequence, so numbered */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); counter-reset: step; }
+.steps li { counter-increment: step; border-top: var(--rule-thin) solid var(--ink); padding-top: 16px; }
+.steps li::before {
+  content: counter(step); display: block;
+  font-family: var(--display); font-weight: 800; font-size: clamp(5rem, 3rem + 7vw, 11rem); line-height: .8; margin-bottom: 18px;
+}
+.steps h3 { font-size: var(--step-2); line-height: 1.05; margin-bottom: 6px; }
+.steps .cost { font-weight: 600; margin-bottom: 12px; }
+.after-steps { margin-top: 40px; font-size: var(--step-1); max-width: 56ch; }
+@media (max-width: 860px) {
+  .steps { grid-template-columns: 1fr; gap: 40px; }
+  .steps li { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; }
+  .steps li::before { grid-row: 1 / span 4; font-size: 5.5rem; margin: 0; }
+}
+
+/* Intro */
+.intro { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: var(--gutter); align-items: start; }
+.photo {
+  aspect-ratio: 1 / 1; border: var(--rule-thin) solid var(--ink);
+  background-color: var(--paper);
+  background-image: radial-gradient(circle, var(--ink) 1.4px, transparent 1.6px);
+  background-size: 9px 9px;
+  display: grid; place-items: center;
+}
+.photo span { background: var(--paper); padding: 8px 14px; font-weight: 600; border: var(--rule-thin) solid var(--ink); }
+.intro h2 { font-size: var(--step-3); line-height: .92; margin-bottom: 28px; }
+.intro p { font-size: var(--step-1); max-width: 40ch; }
+@media (max-width: 860px) { .intro { grid-template-columns: 1fr; } .photo { max-width: 420px; } }
+
+/* Proof */
+.scores { width: 100%; border-collapse: collapse; }
+.scores caption { text-align: left; margin-bottom: 14px; color: var(--grey); caption-side: bottom; padding-top: 14px; }
+.scores th, .scores td { text-align: left; padding: 18px 0; border-bottom: 1px solid var(--ink); vertical-align: baseline; }
+.scores thead th { font-weight: 600; font-size: .9375rem; border-bottom: var(--rule-thin) solid var(--ink); padding-block: 10px; }
+.scores thead th:not(:first-child), .scores td { text-align: right; width: 12%; }
+.scores tbody th { font-weight: 400; padding-right: 16px; }
+.scores tbody th a { font-family: var(--display); font-weight: 800; font-size: var(--step-2); line-height: 1.05; text-decoration: none; display: inline-block; }
+.scores tbody th a:hover { text-decoration: underline; }
+.scores tbody th span { display: block; color: var(--grey); font-size: .9375rem; margin-top: 2px; }
+.scores td { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 1.4rem + 2vw, 3.5rem); line-height: 1; font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) {
+  .scores thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .scores tr { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 10px; border-bottom: 1px solid var(--ink); padding: 18px 0; }
+  .scores tbody th { grid-column: 1 / -1; border: 0; padding: 0 0 12px; }
+  .scores td { border: 0; padding: 0; text-align: left; width: auto; font-size: 2.25rem; }
+  .scores td::after { content: attr(data-label); display: block; font-family: var(--text); font-weight: 400; font-size: .75rem; color: var(--grey); margin-top: 4px; line-height: 1.2; }
+}
+
+/* FAQ */
+.faq { border-top: var(--rule-thin) solid var(--ink); max-width: 980px; }
+.faq details { border-bottom: 1px solid var(--ink); }
+.faq summary {
+  cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 24px; align-items: baseline;
+  padding: 20px 0; font-family: var(--display); font-weight: 800; font-size: var(--step-2); line-height: 1.1;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.4em; line-height: .7; flex: none; }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin: 0 0 22px; }
+
+/* Contact plate */
+.contact h2 { font-size: var(--step-3); line-height: .92; margin-bottom: 24px; max-width: 14ch; }
+.email {
+  display: block; font-family: var(--display); font-weight: 800; text-decoration: none;
+  font-size: clamp(1.9rem, 9.2vw, 10rem); line-height: .9; letter-spacing: -0.02em; margin: clamp(28px, 4vw, 56px) 0;
+  overflow-wrap: anywhere;
+}
+.email:hover { text-decoration: underline; text-decoration-thickness: 6px; text-underline-offset: .08em; }
+
+footer { padding-block: 28px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: .9375rem; }
+footer p { margin: 0; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="wrap masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <hr class="press-rule">
+    <h1 id="hero-title" style="margin-top: clamp(20px, 2.4vw, 36px)">Websites for owner&#8209;run local businesses.</h1>
+    <div class="hero-foot">
+      <p>I’m Sam. I build and look after websites for practices, studios, venues, and small shops, mostly in Colorado, and I help people find them on Google.</p>
+      <div class="actions">
+        <a class="button" href="#contact">Ask for a free check</a>
+        <a class="textlink" href="#prices">See example prices</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="start-over" style="padding-top: 0">
+    <hr class="press-rule">
+    <div class="section-head">
+      <h2 id="start-over">You don’t have to start over.</h2>
+      <p>Most sites need fixing, not replacing. I’ll tell you which yours is.</p>
+    </div>
+    <div class="two-up">
+      <div>
+        <h3>Keep your site and fix it</h3>
+        <p>If your site runs on Wix, Squarespace, or another platform, I can keep it there. I fix what that platform allows, from a fixed-price list, and look after your search and Business Profile around it.</p>
+      </div>
+      <div>
+        <h3>Rebuild it when it’s worth it</h3>
+        <p>When a site is slow, broken on phones, or hard to update, I rebuild it. Postoley Dance Ensemble came to me with a WordPress site from 2004; now they post their own events, and hosting is free.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="services" aria-labelledby="services-title" style="padding-top: 0">
+    <hr class="press-rule">
+    <div class="section-head">
+      <h2 id="services-title">What I do</h2>
+      <p>Pick one group or all three. Every job gets its own quote.</p>
+    </div>
+    <div class="groups">
+      <div class="group">
+        <h3>The website</h3>
+        <p>A fast site that works on every phone, built and hosted by me.</p>
+        <ul>
+          <li><b>Design and build</b><span>New sites and rebuilds</span></li>
+          <li><b>Free hosting</b><span>On my Cloudflare account</span></li>
+          <li><b>Search basics, built in</b><span>Technical SEO, Search Console, and analytics</span></li>
+          <li><b>Landing pages and small stores</b></li>
+          <li><b>Site care, monthly</b><span>Edits, backups, and updates</span></li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>Getting found</h3>
+        <p>Showing up when someone nearby searches for what you do, on Google, on Maps, and in the tools people now ask for answers.</p>
+        <ul>
+          <li><b>Google Business Profile</b><span>Setup or cleanup, then posts, photos, and review replies for your approval. You stay the owner.</span></li>
+          <li><b>Listings beyond Google</b><span>Bing Places, Apple Business Connect, Yelp, and directories, kept consistent</span></li>
+          <li><b>Reviews</b><span>A simple way for staff to ask every customer</span></li>
+          <li><b>Ongoing SEO</b></li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>Ongoing marketing</h3>
+        <p>Steady work each month, scoped to what you need and nothing more.</p>
+        <ul>
+          <li><b>Blog</b><span>Posts I write and you approve</span></li>
+          <li><b>Google Ads</b><span>Setup, then monthly management</span></li>
+          <li><b>A monthly report</b><span>And a call every quarter</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="plate section" id="prices" aria-labelledby="prices-title">
+    <div class="wrap">
+      <hr class="press-rule">
+      <div class="section-head">
+        <h2 id="prices-title">How I price</h2>
+        <p>No packages. You get one total for an agreed list of work.</p>
+      </div>
+      <div class="price-body">
+        <div class="method">
+          <p>I estimate the hours the work will take, at $65 an hour, and add a quarter for the emails, calls, and questions every project needs. Then I check that number against what the work is worth to you. If it comes to more than the work is worth, I cut the scope, not the rate.</p>
+          <ul class="terms">
+            <li>Half at signing, half at launch</li>
+            <li>Unlimited feedback until launch</li>
+            <li>Free hosting</li>
+            <li>You own the site once it’s paid for</li>
+          </ul>
+        </div>
+        <div>
+          <!-- PLACEHOLDER PRICES: Little Peaks $1,500, Prairie Rose $3,500, Postoley $4,000. Not real totals yet. -->
+          <ul class="examples" aria-label="Example prices from real projects">
+            <li>
+              <h3>Little Peaks Pediatric Therapy</h3>
+              <p class="muted">One page with a custom contact form</p>
+              <span class="fig">$1,500</span>
+            </li>
+            <li>
+              <h3>Prairie Rose Arena</h3>
+              <p class="muted">A static site with a content editor for staff</p>
+              <span class="fig">$3,500</span>
+            </li>
+            <li>
+              <h3>Postoley Dance Ensemble</h3>
+              <p class="muted">A rebuild of an old WordPress site, with an events editor</p>
+              <span class="fig">$4,000</span>
+            </li>
+          </ul>
+          <div class="price-cta">
+            <a class="button" href="#contact">Contact for pricing</a>
+            <p class="muted">Tell me what you need and I’ll send a quote.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="start" aria-labelledby="start-title">
+    <hr class="press-rule">
+    <div class="section-head">
+      <h2 id="start-title">How it starts</h2>
+      <p>Two free steps first. You pay only once we both know what the job is.</p>
+    </div>
+    <ol class="steps">
+      <li>
+        <h3>Free website check</h3>
+        <p class="cost">Free, and optional</p>
+        <p>A short email with the three things I’d fix first on your website and Business Profile, and why each matters to your customers.</p>
+      </li>
+      <li>
+        <h3>Free call</h3>
+        <p class="cost">Free, 20 to 30 minutes</p>
+        <p>We talk about what you need and whether I’m the right fit. If you had a check, we go through it.</p>
+      </li>
+      <li>
+        <h3>Assessment and plan</h3>
+        <p class="cost">A fixed price, quoted up front</p>
+        <p>For anything beyond a website, or a large site: I look closely at your site, your search, and your competitors, then write a plan and a proposal. The plan is yours to keep, hired or not, and the fee counts toward the work if you sign within 60 days.</p>
+      </li>
+    </ol>
+    <p class="after-steps">For a website on its own, the call goes straight to a proposal.</p>
+  </section>
+
+  <section class="wrap section" id="about" aria-labelledby="about-title" style="padding-top: 0">
+    <hr class="press-rule" style="margin-bottom: clamp(32px, 4.5vw, 64px)">
+    <div class="intro">
+      <div class="photo" role="img" aria-label="Photo of Sam (placeholder)"><span>Photo of Sam</span></div>
+      <div>
+        <h2 id="about-title">Hi, I’m Sam.</h2>
+        <p>Presswork is just me, in Colorado. You deal with me from the first call to every edit after launch.</p>
+        <p>I take a few clients at a time, and I’ll tell you when something is outside what I do.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" id="work" aria-labelledby="work-title" style="padding-top: 0">
+    <hr class="press-rule">
+    <div class="section-head">
+      <h2 id="work-title">Live sites, real scores</h2>
+      <p>Google’s Lighthouse scores each site out of 100 on a phone.</p>
+    </div>
+    <table class="scores">
+      <caption>PageSpeed Insights, mobile.</caption>
+      <thead>
+        <tr><th scope="col">Site</th><th scope="col">Performance</th><th scope="col">Accessibility</th><th scope="col">Best practices</th><th scope="col">SEO</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row"><a href="https://littlepeakspediatrictherapy.com/">Little Peaks Pediatric Therapy</a><span>Firestone, Colorado</span></th>
+          <td data-label="Performance">98</td><td data-label="Accessibility">100</td><td data-label="Best practices">100</td><td data-label="SEO">100</td>
+        </tr>
+        <tr>
+          <th scope="row"><a href="https://danceophile.com/">Postoley Dance Ensemble</a><span>Boulder, Colorado</span></th>
+          <td data-label="Performance">98</td><td data-label="Accessibility">100</td><td data-label="Best practices">100</td><td data-label="SEO">100</td>
+        </tr>
+        <tr>
+          <th scope="row"><a href="https://prairierosearena.com/">Prairie Rose Arena</a><span>Elkhart, Iowa</span></th>
+          <td data-label="Performance">98</td><td data-label="Accessibility">100</td><td data-label="Best practices">100</td><td data-label="SEO">100</td>
+        </tr>
+        <tr>
+          <th scope="row"><a href="https://presswork.dev/">Presswork</a><span>This site</span></th>
+          <td data-label="Performance">98</td><td data-label="Accessibility">100</td><td data-label="Best practices">100</td><td data-label="SEO">100</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="wrap section" id="faq" aria-labelledby="faq-title" style="padding-top: 0">
+    <hr class="press-rule">
+    <div class="section-head">
+      <h2 id="faq-title">Questions</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>Do you use AI?</summary>
+        <p>Yes, as a tool. It helps me draft and check work faster. I read and approve every sentence and every change before it reaches you, and you approve anything that goes live. I never put your private data into an AI tool.</p>
+      </details>
+      <details>
+        <summary>Will my business show up in AI search?</summary>
+        <p>It’s part of getting found. I work on your site, Business Profile, and listings so search tools, AI ones included, can read them clearly. No one can promise a placement.</p>
+      </details>
+      <details>
+        <summary>Who owns the site?</summary>
+        <p>You do, once it’s paid for.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="plate section contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <hr class="press-rule">
+      <h2 id="contact-title">Tell me about your business.</h2>
+      <p class="muted" style="font-size: var(--step-1)">Ask for a free check, a call, or a quote.</p>
+      <a class="email" href="mailto:hello@presswork.dev">hello@presswork.dev</a>
+      <a class="button" href="mailto:hello@presswork.dev">Email me</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p>Presswork Web Co., Colorado</p>
+  <p><a href="mailto:hello@presswork.dev">hello@presswork.dev</a></p>
+</footer>
+
+</body>
+</html>

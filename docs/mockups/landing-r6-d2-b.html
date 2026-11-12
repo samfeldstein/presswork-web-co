@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 6, designer 2, direction B: "Repair order."
+  Idea: a repair shop's order form, because most sites need fixing, not replacing.
+  Two inks, as on a printed form: the form itself in brick red, everything filled in by Sam in ballpoint blue.
+  The tick boxes work: choose fix or rebuild, pick the services you want. The price is the order's total box.
+  Schibsted Grotesk for the printed form, Noto Serif for the filled-in text, on soft yellow order paper.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;500;600&family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+  --paper: #f6efcb;
+  --paper-2: #efe5b6;
+  --form: #a8361f;
+  --form-soft: #d9a58f;
+  --pen: #1f3a86;
+  --ink: #2a2620;
+  --gutter: clamp(16px, 4.5vw, 72px);
+  --print: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --fill: "Noto Serif", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--paper); color: var(--pen);
+  font-family: var(--fill); font-size: 1.0625rem; line-height: 1.62; font-kerning: normal;
+  overflow-wrap: break-word;
+}
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--pen); outline-offset: 3px; }
+h1, h2, h3, p { margin: 0; }
+p { max-width: 58ch; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+.wrap { max-width: 1240px; margin-inline: auto; padding-inline: var(--gutter); }
+
+/* Printed form parts */
+h1, h2, h3, .h3, .label, .print { font-family: var(--print); color: var(--form); font-kerning: normal; }
+.label { display: block; font-size: .875rem; font-weight: 600; line-height: 1.2; letter-spacing: .005em; }
+.box { border: 1.5px solid var(--form); }
+.field { padding: 12px 16px 16px; }
+.field + .field { border-top: 1.5px solid var(--form); }
+
+/* Header */
+.top { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-block: 22px; border-bottom: 3px solid var(--form); }
+.wordmark { font-family: var(--print); color: var(--form); font-weight: 800; font-size: 1.5rem; line-height: 1; letter-spacing: -0.015em; text-decoration: none; }
+.top nav ul { display: flex; gap: clamp(14px, 2.2vw, 30px); font-family: var(--print); font-weight: 600; color: var(--form); }
+.top nav a { text-decoration: none; }
+.top nav a:hover { text-decoration: underline; }
+@media (max-width: 820px) { .top nav li:not(:last-child) { display: none; } }
+
+/* Hero */
+.hero { padding-block: clamp(44px, 6vw, 96px) clamp(64px, 8vw, 128px); }
+.hero h1 { font-weight: 800; font-size: clamp(2.6rem, 1.2rem + 6vw, 7rem); line-height: .98; letter-spacing: -0.03em; max-width: 12ch; text-wrap: balance; }
+.hero-form { margin-top: clamp(32px, 4vw, 56px); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+.hero-form .field { border: 0; }
+.hero-form .field + .field { border-left: 1.5px solid var(--form); }
+.hero-form p { margin-top: 6px; font-size: clamp(1.2rem, 1.02rem + .6vw, 1.5rem); line-height: 1.45; max-width: 34ch; }
+.actions { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; }
+@media (max-width: 760px) {
+  .hero-form { grid-template-columns: 1fr; }
+  .hero-form .field + .field { border-left: 0; border-top: 1.5px solid var(--form); }
+}
+
+.button {
+  display: inline-block; font-family: var(--print); font-weight: 700; font-size: 1.0625rem; line-height: 1; text-decoration: none;
+  padding: 16px 22px; background: var(--form); color: var(--paper); border: 1.5px solid var(--form); border-radius: 3px;
+}
+.button:hover { background: transparent; color: var(--form); }
+.textlink { font-family: var(--print); font-weight: 700; color: var(--form); }
+
+/* Sections */
+.sec { padding-block: clamp(56px, 7vw, 112px); border-top: 3px solid var(--form); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 14px var(--gutter); align-items: baseline; margin-bottom: clamp(28px, 3.5vw, 48px); }
+.sec-head h2 { font-weight: 800; font-size: clamp(2rem, 1.3rem + 2.4vw, 3.5rem); line-height: 1.02; letter-spacing: -0.022em; max-width: 13ch; }
+.sec-head p { font-size: clamp(1.2rem, 1.05rem + .5vw, 1.45rem); line-height: 1.45; max-width: 36ch; }
+@media (max-width: 820px) { .sec-head { grid-template-columns: 1fr; } }
+h3, .h3 { display: block; font-weight: 700; font-size: 1.3125rem; line-height: 1.2; letter-spacing: -0.008em; }
+
+/* Tick boxes */
+.tick { position: relative; display: grid; grid-template-columns: 30px minmax(0, 1fr); column-gap: 14px; align-items: start; cursor: pointer; }
+.tick input { position: absolute; opacity: 0; width: 30px; height: 30px; margin: 0; cursor: pointer; }
+.tick .sq { width: 30px; height: 30px; border: 1.5px solid var(--form); background: var(--paper); display: grid; place-items: center; margin-top: -2px; }
+.tick .sq svg { width: 28px; height: 28px; fill: none; stroke: var(--pen); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transform: scale(.7) rotate(-8deg); transition: opacity .12s, transform .16s; }
+.tick input:checked + .sq svg { opacity: 1; transform: none; }
+.tick input:focus-visible + .sq { outline: 3px solid var(--pen); outline-offset: 3px; }
+.tick:hover .sq { background: var(--paper-2); }
+
+/* Start over */
+.choice { display: grid; grid-template-columns: 1fr 1fr; }
+.choice .field { border: 0; padding: 20px 22px 24px; }
+.choice .field + .field { border-left: 1.5px solid var(--form); }
+.choice .h3 { font-size: clamp(1.4rem, 1.15rem + .8vw, 1.875rem); }
+.choice .desc { display: block; margin-top: 6px; }
+.note { margin-top: 24px; max-width: 54ch; font-size: 1.125rem; }
+.note .label { margin-bottom: 4px; }
+@media (max-width: 640px) {
+  .choice { grid-template-columns: 1fr; }
+  .choice .field + .field { border-left: 0; border-top: 1.5px solid var(--form); }
+}
+
+/* Services */
+.services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.services .group { padding: 18px 22px 22px; }
+.services .group + .group { border-left: 1.5px solid var(--form); }
+.services .h3 { font-size: clamp(1.35rem, 1.15rem + .6vw, 1.75rem); }
+.services .tick + p { margin: 6px 0 14px 44px; font-size: 1rem; }
+.services ul { margin-left: 44px; }
+.services li { padding: 7px 0 6px; border-top: 1px solid var(--form-soft); }
+@media (max-width: 900px) {
+  .services { grid-template-columns: 1fr; }
+  .services .group + .group { border-left: 0; border-top: 1.5px solid var(--form); }
+}
+
+/* Prices: the totals box */
+.price-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 40px var(--gutter); align-items: start; }
+.totals { width: 100%; border-collapse: collapse; }
+.totals th, .totals td { padding: 14px 16px 12px; border-top: 1.5px solid var(--form); vertical-align: baseline; }
+.totals tr:first-child th, .totals tr:first-child td { border-top: 0; }
+.totals th { text-align: left; font-family: var(--print); color: var(--form); font-weight: 500; font-size: 1rem; line-height: 1.35; width: 58%; }
+.totals th span { display: block; font-weight: 400; font-size: .875rem; }
+.totals td { text-align: right; white-space: nowrap; font-family: var(--fill); font-weight: 600; font-size: clamp(1.6rem, 1.3rem + 1vw, 2.25rem); line-height: 1; font-variant-numeric: lining-nums tabular-nums; }
+.totals .op { display: inline-block; width: 1.4em; text-align: left; font-family: var(--print); color: var(--form); font-weight: 500; }
+.totals tr.sum th, .totals tr.sum td { border-top: 3px double var(--form); background: var(--paper-2); }
+.cut { margin-top: 18px; font-size: 1.25rem; line-height: 1.45; max-width: 36ch; }
+
+.orders { width: 100%; border-collapse: collapse; }
+.orders caption { text-align: left; padding: 12px 16px 10px; font-family: var(--print); color: var(--form); font-weight: 600; font-size: .875rem; border-bottom: 1.5px solid var(--form); }
+.orders th, .orders td { padding: 14px 16px 12px; vertical-align: baseline; }
+.orders tr + tr th, .orders tr + tr td { border-top: 1px solid var(--form-soft); }
+.orders th { text-align: left; font-weight: 400; }
+.orders th strong { display: block; font-family: var(--print); color: var(--form); font-weight: 700; font-size: 1.1875rem; line-height: 1.25; }
+.orders td { text-align: right; font-weight: 600; font-size: clamp(1.4rem, 1.2rem + .8vw, 2rem); line-height: 1; white-space: nowrap; font-variant-numeric: lining-nums tabular-nums; }
+@media (max-width: 860px) { .price-grid { grid-template-columns: 1fr; } }
+
+.terms { margin-top: clamp(36px, 4.5vw, 56px); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 24px; font-family: var(--print); color: var(--form); font-weight: 500; }
+.terms li { padding-top: 12px; border-top: 1.5px solid var(--form); }
+.price-cta { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+@media (max-width: 900px) { .terms { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .terms { grid-template-columns: 1fr; gap: 0; } .terms li { padding-block: 10px; } }
+
+/* How it starts: lines on the order */
+.steps li { display: grid; grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 15rem); column-gap: 20px; padding: 18px 22px 20px 0; }
+.steps li + li { border-top: 1.5px solid var(--form); }
+.steps .n { grid-row: 1 / span 2; justify-self: center; font-family: var(--print); color: var(--form); font-weight: 800; font-size: 2.25rem; line-height: 1; }
+.steps h3 { grid-column: 2; font-size: clamp(1.3rem, 1.15rem + .5vw, 1.625rem); }
+.steps .desc { grid-column: 2; margin-top: 4px; }
+.steps .cost { grid-column: 3; grid-row: 1 / span 2; text-align: right; font-weight: 600; }
+.after { margin-top: 20px; }
+@media (max-width: 720px) {
+  .steps li { grid-template-columns: 3rem minmax(0, 1fr); padding-right: 16px; }
+  .steps .cost { grid-column: 2; grid-row: auto; text-align: left; margin-top: 6px; }
+}
+
+/* About */
+.about { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px clamp(28px, 4.5vw, 72px); align-items: start; }
+.photo { width: clamp(170px, 19vw, 230px); aspect-ratio: 4 / 5; border: 1.5px dashed var(--form); display: grid; place-items: center; font-family: var(--print); color: var(--form); font-weight: 600; font-size: .9375rem; }
+.about h2 { font-weight: 800; font-size: clamp(2rem, 1.3rem + 2.4vw, 3.5rem); line-height: 1.02; letter-spacing: -0.022em; }
+.about-text { margin-top: 18px; font-size: clamp(1.25rem, 1.05rem + .7vw, 1.625rem); line-height: 1.45; max-width: 32ch; }
+.about-more { margin-top: 14px; max-width: 44ch; }
+.sig { margin-top: 26px; max-width: 280px; border-top: 1.5px solid var(--form); padding-top: 6px; }
+@media (max-width: 640px) { .about { grid-template-columns: 1fr; } }
+
+/* Scores */
+.scores { width: 100%; border-collapse: collapse; }
+.scores caption { caption-side: bottom; text-align: left; padding: 10px 16px; font-family: var(--print); color: var(--form); font-size: .875rem; border-top: 1.5px solid var(--form); }
+.scores th, .scores td { padding: 14px 16px 12px; vertical-align: baseline; }
+.scores tbody tr + tr th, .scores tbody tr + tr td { border-top: 1px solid var(--form-soft); }
+.scores thead th { font-family: var(--print); color: var(--form); font-weight: 600; font-size: .875rem; text-align: right; border-bottom: 1.5px solid var(--form); padding-block: 10px 8px; }
+.scores thead th:first-child { text-align: left; }
+.scores tbody th { text-align: left; font-weight: 400; line-height: 1.3; }
+.scores tbody th a { font-family: var(--print); color: var(--form); font-weight: 700; font-size: 1.125rem; }
+.scores tbody th span { display: block; font-size: .9375rem; }
+.scores td { text-align: right; width: 12%; font-weight: 600; font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem); line-height: 1; font-variant-numeric: lining-nums tabular-nums; }
+@media (max-width: 640px) {
+  .scores thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .scores tr { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 8px; padding: 14px 16px; }
+  .scores tbody tr + tr { border-top: 1px solid var(--form-soft); }
+  .scores tbody tr + tr th, .scores tbody tr + tr td { border-top: 0; }
+  .scores tbody th { grid-column: 1 / -1; padding: 0 0 10px; }
+  .scores td { padding: 0; text-align: left; width: auto; font-size: 1.6rem; }
+  .scores td::after { content: attr(data-label); display: block; font-family: var(--print); color: var(--form); font-weight: 500; font-size: .8125rem; margin-top: 4px; line-height: 1.2; }
+}
+
+/* FAQ */
+.faq details + details { border-top: 1.5px solid var(--form); }
+.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 20px; align-items: baseline; padding: 18px 20px 16px; font-family: var(--print); color: var(--form); font-weight: 700; font-size: clamp(1.2rem, 1.05rem + .5vw, 1.45rem); line-height: 1.2; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-weight: 500; font-size: 1.4em; line-height: .8; flex: none; }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { padding: 0 20px 22px; }
+
+/* Contact */
+.contact { padding-block: clamp(56px, 7vw, 112px) clamp(40px, 5vw, 72px); border-top: 3px solid var(--form); }
+.contact h2 { font-weight: 800; font-size: clamp(2.2rem, 1.2rem + 4vw, 5rem); line-height: 1; letter-spacing: -0.028em; max-width: 14ch; }
+.contact .lead { margin-top: 14px; font-size: 1.25rem; }
+.email-field { margin-top: clamp(28px, 4vw, 48px); }
+.email { display: block; margin-top: 4px; font-weight: 500; font-size: clamp(1.6rem, .7rem + 4.8vw, 4.75rem); line-height: 1.1; letter-spacing: -0.01em; text-decoration: none; overflow-wrap: anywhere; }
+.email:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .14em; }
+.contact .actions { margin-top: 28px; }
+.foot { padding-block: 0 48px; font-family: var(--print); color: var(--form); font-size: .9375rem; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="check" viewBox="0 0 28 28"><path d="M5 15.5c2.2 1.6 4 3.6 5.4 6.2C13.6 13.8 18 7.6 24 3.5"/></symbol>
+</svg>
+
+<header class="wrap top">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <h1 id="hero-title">Websites for owner&#8209;run local businesses.</h1>
+    <div class="box hero-form">
+      <div class="field">
+        <span class="label">Who you’ll work with</span>
+        <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+      </div>
+      <div class="field">
+        <span class="label">Start here</span>
+        <div class="actions">
+          <a class="button" href="#contact">Ask for a free check</a>
+          <a class="textlink" href="#prices">See example prices</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="sec" aria-labelledby="start-over">
+      <div class="sec-head">
+        <h2 id="start-over">You don’t have to start over.</h2>
+        <p>Most sites need fixing, not replacing. I’ll tell you which yours is.</p>
+      </div>
+      <fieldset class="box choice" style="margin:0;padding:0;min-width:0">
+        <legend class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Fix or rebuild</legend>
+        <div class="field">
+          <label class="tick">
+            <input type="radio" name="path">
+            <span class="sq"><svg aria-hidden="true"><use href="#check"/></svg></span>
+            <span><span class="h3">Keep it and fix it</span><span class="desc">Stay on Wix or Squarespace. I fix what the platform allows, at fixed prices.</span></span>
+          </label>
+        </div>
+        <div class="field">
+          <label class="tick">
+            <input type="radio" name="path">
+            <span class="sq"><svg aria-hidden="true"><use href="#check"/></svg></span>
+            <span><span class="h3">Rebuild it</span><span class="desc">When it’s slow, broken on phones, or hard to update.</span></span>
+          </label>
+        </div>
+      </fieldset>
+      <p class="note">Postoley Dance Ensemble had a WordPress site from 2004. Now they post their own events, and hosting is free.</p>
+    </section>
+
+    <section class="sec" id="services" aria-labelledby="services-title">
+      <div class="sec-head">
+        <h2 id="services-title">What I do</h2>
+        <p>Pick one group or all three. Every job gets its own quote.</p>
+      </div>
+      <div class="box services">
+        <div class="group">
+          <label class="tick">
+            <input type="checkbox">
+            <span class="sq"><svg aria-hidden="true"><use href="#check"/></svg></span>
+            <span class="h3">The website</span>
+          </label>
+          <p>Fast on every phone, built and hosted by me.</p>
+          <ul>
+            <li>Design and build</li>
+            <li>Free hosting</li>
+            <li>Search basics, built in</li>
+            <li>Landing pages and small stores</li>
+            <li>Monthly site care</li>
+          </ul>
+        </div>
+        <div class="group">
+          <label class="tick">
+            <input type="checkbox">
+            <span class="sq"><svg aria-hidden="true"><use href="#check"/></svg></span>
+            <span class="h3">Getting found</span>
+          </label>
+          <p>On Google, on Maps, and in AI answers.</p>
+          <ul>
+            <li>Google Business Profile</li>
+            <li>Bing, Apple, Yelp, and directories</li>
+            <li>A simple way to ask for reviews</li>
+            <li>Ongoing SEO</li>
+          </ul>
+        </div>
+        <div class="group">
+          <label class="tick">
+            <input type="checkbox">
+            <span class="sq"><svg aria-hidden="true"><use href="#check"/></svg></span>
+            <span class="h3">Ongoing marketing</span>
+          </label>
+          <p>Monthly, scoped to what you need.</p>
+          <ul>
+            <li>Blog posts you approve</li>
+            <li>Google Ads</li>
+            <li>A monthly report and a quarterly call</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="prices" aria-labelledby="prices-title">
+      <div class="sec-head">
+        <h2 id="prices-title">How I price</h2>
+        <p>No packages. One total for an agreed list of work.</p>
+      </div>
+      <div class="price-grid">
+        <div>
+          <table class="box totals" aria-label="How a quote is worked out">
+            <tr><th scope="row">What the work will take</th><td>Hours</td></tr>
+            <tr><th scope="row">An hour</th><td><span class="op" aria-label="times">×</span>$65</td></tr>
+            <tr><th scope="row">For emails, calls, and questions</th><td><span class="op" aria-label="plus">+</span>25%</td></tr>
+            <tr class="sum"><th scope="row">Checked against what the work is worth to you</th><td><span class="op" aria-label="equals">=</span>Quote</td></tr>
+          </table>
+          <p class="cut">If it’s worth less than that, I cut the scope, not the rate.</p>
+        </div>
+        <!-- PLACEHOLDER PRICES: Little Peaks $1,500, Prairie Rose $3,500, Postoley $4,000. Not real totals yet. -->
+        <table class="box orders">
+          <caption>Example prices from real projects</caption>
+          <tr><th scope="row"><strong>Little Peaks Pediatric Therapy</strong>One page, custom contact form</th><td>$1,500</td></tr>
+          <tr><th scope="row"><strong>Prairie Rose Arena</strong>Static site, editor for staff</th><td>$3,500</td></tr>
+          <tr><th scope="row"><strong>Postoley Dance Ensemble</strong>WordPress rebuild, events editor</th><td>$4,000</td></tr>
+        </table>
+      </div>
+      <ul class="terms">
+        <li>Half at signing, half at launch</li>
+        <li>Unlimited feedback until launch</li>
+        <li>Free hosting</li>
+        <li>You own the site</li>
+      </ul>
+      <div class="price-cta">
+        <a class="button" href="#contact">Contact for pricing</a>
+        <span>Tell me what you need; I’ll send a quote.</span>
+      </div>
+    </section>
+
+    <section class="sec" id="start" aria-labelledby="start-title">
+      <div class="sec-head">
+        <h2 id="start-title">How it starts</h2>
+        <p>Two free steps first. You pay once we both know what the job is.</p>
+      </div>
+      <ol class="box steps">
+        <li><span class="n" aria-hidden="true">1</span><h3>Free website check</h3><p class="desc">An email with the three things I’d fix first, and why.</p><p class="cost">Free, optional</p></li>
+        <li><span class="n" aria-hidden="true">2</span><h3>Free call</h3><p class="desc">What you need, and whether I’m the right fit.</p><p class="cost">Free, 20 to 30 minutes</p></li>
+        <li><span class="n" aria-hidden="true">3</span><h3>Assessment and plan</h3><p class="desc">For bigger jobs. The plan is yours to keep, and the fee counts toward the work if you sign within 60 days.</p><p class="cost">Fixed price, quoted up front</p></li>
+      </ol>
+      <p class="after">For a website on its own, the call goes straight to a proposal.</p>
+    </section>
+
+    <section class="sec" id="about" aria-labelledby="about-title">
+      <div class="about">
+        <div class="photo" role="img" aria-label="Photo of Sam (placeholder)">Photo of Sam</div>
+        <div>
+          <h2 id="about-title">Hi, I’m Sam.</h2>
+          <p class="about-text">Presswork is just me, in Colorado. You deal with me from the first call to every edit after launch.</p>
+          <p class="about-more">I take a few clients at a time, and I’ll tell you when something is outside what I do.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec" id="work" aria-labelledby="work-title">
+      <div class="sec-head">
+        <h2 id="work-title">Live sites, real scores</h2>
+        <p>Google’s Lighthouse scores each site out of 100, on a phone.</p>
+      </div>
+      <table class="box scores">
+        <caption>PageSpeed Insights, mobile.</caption>
+        <thead>
+          <tr><th scope="col">Site</th><th scope="col">Speed</th><th scope="col">Access</th><th scope="col">Practices</th><th scope="col">SEO</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row"><a href="https://littlepeakspediatrictherapy.com/">Little Peaks Pediatric Therapy</a><span>Firestone, Colorado</span></th>
+            <td data-label="Speed">98</td><td data-label="Access">100</td><td data-label="Practices">100</td><td data-label="SEO">100</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://danceophile.com/">Postoley Dance Ensemble</a><span>Boulder, Colorado</span></th>
+            <td data-label="Speed">98</td><td data-label="Access">100</td><td data-label="Practices">100</td><td data-label="SEO">100</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://prairierosearena.com/">Prairie Rose Arena</a><span>Elkhart, Iowa</span></th>
+            <td data-label="Speed">98</td><td data-label="Access">100</td><td data-label="Practices">100</td><td data-label="SEO">100</td>
+          </tr>
+          <tr>
+            <th scope="row"><a href="https://presswork.dev/">Presswork</a><span>This site</span></th>
+            <td data-label="Speed">98</td><td data-label="Access">100</td><td data-label="Practices">100</td><td data-label="SEO">100</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="sec" id="faq" aria-labelledby="faq-title">
+      <div class="sec-head"><h2 id="faq-title">Questions</h2></div>
+      <div class="box faq">
+        <details>
+          <summary>Do you use AI?</summary>
+          <p>Yes, as a tool. I read and approve every change before it reaches you, and I never put your private data into one.</p>
+        </details>
+        <details>
+          <summary>Will my business show up in AI search?</summary>
+          <p>I make your site, Business Profile, and listings easy for AI tools to read. No one can promise a placement.</p>
+        </details>
+        <details>
+          <summary>Who owns the site?</summary>
+          <p>You do, once it’s paid for.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Tell me about your business.</h2>
+      <p class="lead">Ask for a free check, a call, or a quote.</p>
+      <div class="email-field">
+        <span class="label">Email</span>
+        <a class="email" href="mailto:hello@presswork.dev">hello@presswork.dev</a>
+      </div>
+      <div class="actions"><a class="button" href="mailto:hello@presswork.dev">Email me</a></div>
+    </section>
+  </div>
+</main>
+
+<footer class="wrap foot">Presswork Web Co., Colorado.</footer>
+
+</body>
+</html>
