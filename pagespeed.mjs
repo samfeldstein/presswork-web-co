@@ -67,16 +67,21 @@ const run = async (url) => {
 };
 
 if (repeat) {
-  const median = (list) => [...list].sort((a, b) => a - b)[Math.floor(list.length / 2)];
   const results = [];
-  console.log(`${base}${only}: ${repeat} runs\nrun  perf  host  firstPaint  FCP     LCP     SI`);
+  bar(0, repeat + 1, "warm-up run (not counted)...");
+  await run(`${base}${only}?psi=${Date.now()}-0`).catch(() => {});
+  clearBar();
+  console.log(`${base}${only}: ${repeat} runs after one warm-up\nrun  perf  a11y  best  seo   host  firstPaint  FCP     LCP     SI`);
   for (let i = 1; i <= repeat; i++) {
-    bar(i - 1, repeat, `running ${i}...`);
+    bar(i, repeat + 1, `running ${i}...`);
     try {
-      const { lighthouseResult: lh } = await run(`${base}${only}?psi=${Date.now()}-${i}`);
+      const result = await run(`${base}${only}?psi=${Date.now()}-${i}`);
+      const lh = result.lighthouseResult;
       const m = lh.audits.metrics.details.items[0];
+      const [perf, a11y, best, seo] = categories.map((c) => Math.round(lh.categories[c].score * 100));
       const row = {
-        perf: Math.round(lh.categories.performance.score * 100),
+        result,
+        perf, a11y, best, seo,
         host: Math.round(lh.environment.benchmarkIndex ?? 0),
         paint: m.observedFirstContentfulPaint,
         fcp: lh.audits["first-contentful-paint"].numericValue,
@@ -85,14 +90,34 @@ if (repeat) {
       };
       results.push(row);
       clearBar();
-      console.log(`${String(i).padEnd(5)}${String(row.perf).padEnd(6)}${String(row.host).padEnd(6)}${String(row.paint).padEnd(12)}${String(Math.round(row.fcp)).padEnd(8)}${String(Math.round(row.lcp)).padEnd(8)}${Math.round(row.si)}`);
+      console.log(`${String(i).padEnd(5)}${[perf, a11y, best, seo, row.host].map((n) => String(n).padEnd(6)).join("")}${String(row.paint).padEnd(12)}${String(Math.round(row.fcp)).padEnd(8)}${String(Math.round(row.lcp)).padEnd(8)}${Math.round(row.si)}`);
     } catch (error) {
       clearBar();
       console.log(`${i}  failed: ${error.message}`);
     }
   }
   clearBar();
-  if (results.length) console.log(`median perf ${median(results.map((r) => r.perf))}, min ${Math.min(...results.map((r) => r.perf))}, max ${Math.max(...results.map((r) => r.perf))}`);
+  if (!results.length) process.exit(1);
+  const perfs = results.map((r) => r.perf);
+  const mid = [...results].sort((a, b) => a.perf - b.perf)[Math.floor(results.length / 2)];
+  const lh = mid.result.lighthouseResult;
+  const weight = lh.audits["total-byte-weight"];
+  const largest = weight?.details?.items?.[0];
+  const field = mid.result.loadingExperience?.metrics;
+  console.log(`\nmedian run (by perf): perf ${mid.perf}, a11y ${mid.a11y}, best ${mid.best}, seo ${mid.seo}`);
+  console.log(`perf min ${Math.min(...perfs)}, max ${Math.max(...perfs)}${Math.max(...perfs) - Math.min(...perfs) > 10 ? "  (spread over 10 points: rerun)" : ""}`);
+  console.log(["first-contentful-paint", "largest-contentful-paint", "total-blocking-time", "cumulative-layout-shift", "speed-index"]
+    .map((id) => `${id}: ${lh.audits[id]?.displayValue ?? "n/a"}`).join(", "));
+  console.log(`page weight: ${weight?.numericValue ? `${(weight.numericValue / 1048576).toFixed(1)} MB` : "n/a"}`);
+  if (largest) console.log(`largest file: ${largest.url} (${(largest.totalBytes / 1048576).toFixed(1)} MB)`);
+  console.log(`field data: ${field ? Object.entries(field).map(([k, v]) => `${k} ${v.category}`).join(", ") : "none"}`);
+  console.log(`Lighthouse ${lh.lighthouseVersion}, ${lh.fetchTime}`);
+  const name = only === "/" ? "home" : only.replace(/^\/|\/$/g, "").replace(/\//g, "-");
+  const dir = join(outDir, new URL(base).hostname);
+  mkdirSync(dir, { recursive: true });
+  const file = join(dir, `${lh.fetchTime.slice(0, 10)}-${name}.json`);
+  writeFileSync(file, JSON.stringify(mid.result, null, 1));
+  console.log(`saved the median run to ${file}`);
   process.exit(0);
 }
 
