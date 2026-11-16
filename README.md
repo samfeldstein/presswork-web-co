@@ -24,7 +24,7 @@ Styling is plain CSS. Colors, type, and spacing are tokens in one file, and each
 - the color pairs in the design pass WCAG AA contrast;
 - every script file loads as a module, and no page loads from a host that isn't on an allowlist (which keeps third-party scripts out; the one exception is Cloudflare's cookieless Web Analytics beacon, which loads after the page does).
 
-`test/` holds tests for the contact form and the Worker, and tests that `check.mjs` itself catches broken CSS and dangling ids. Before any commit or deploy, I run `node sync.mjs && node check.mjs && node --test test/`.
+`test/` holds tests for the contact form and the Worker, and tests that `check.mjs` itself catches broken CSS and dangling ids. Before any commit or deploy, I run `node sync.mjs && node check.mjs && node --test test/*.test.mjs`.
 
 ## The contact form
 

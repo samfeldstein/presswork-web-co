@@ -7,7 +7,7 @@
   "scripts": {
     "sync": "node sync.mjs",
     "check": "node check.mjs",
-    "test": "node --test test/",
+    "test": "node --test test/*.test.mjs",
     "dev": "wrangler dev",
     "dev:phone": "wrangler dev --ip 0.0.0.0",
     "followups": "node followups.mjs",

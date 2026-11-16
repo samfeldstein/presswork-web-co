@@ -10,8 +10,10 @@
       skip a level, unique ids, <img> alt text, a title and description
     - every link and asset path resolves to a real file (in pages and CSS),
       page links end in "/", and #fragments point at a real id
-    - label for / aria-labelledby / aria-describedby / aria-controls values
+    - label for, popovertarget, list, headers and the aria-* id references
       point at ids that exist on the same page
+    - every indexed page (not noindex, not 404.html) has a canonical link
+      equal to the site URL plus its path
     - CSS (files and inline <style>) has balanced braces and no unterminated
       comments or strings
     - prices and emails: every $ amount on the site must be listed in
@@ -193,7 +195,7 @@ export function hostProblems(text, allowed) {
   return [...new Set(problems)];
 }
 
-const ID_REFERENCES = ["for", "aria-labelledby", "aria-describedby", "aria-controls", "aria-owns"];
+const ID_REFERENCES = ["for", "aria-labelledby", "aria-describedby", "aria-controls", "aria-owns", "aria-activedescendant", "aria-errormessage", "popovertarget", "list", "headers"];
 
 /** Resolve a custom property from tokens.css, following var() references, to a #rrggbb value. */
 function tokenColor(tokens, name, seen = new Set()) {
@@ -305,6 +307,12 @@ export function check({ root, shared, copy, showFacts = false }) {
 
     if (!/<html[^>]*\slang="en"/i.test(markup)) fail(label, `<html> needs lang="en"`);
     if (!page.description) fail(label, "missing description");
+    if (label !== "404.html" && !/<meta\b[^>]*name="robots"[^>]*noindex/i.test(markup)) {
+      const canonical = [...tags(markup)].find((t) => t.name === "link" && (t.attrs.rel ?? "").split(/\s+/).includes("canonical"));
+      const expected = facts.site.url + page.path;
+      if (!canonical) fail(label, `missing canonical link (expected ${expected})`);
+      else if (canonical.attrs.href !== expected) fail(label, `canonical is ${canonical.attrs.href}, expected ${expected}`);
+    }
 
     let h1 = 0, mains = 0, prevLevel = 0;
     const seenIds = new Set();

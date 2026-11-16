@@ -145,3 +145,23 @@ test("check reports a non-module script file, an unwrapped inline script, and th
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test("check reports popovertarget, list and headers that name missing ids, and a wrong canonical link", () => {
+  const dir = copyOfSite();
+  try {
+    const page = join(dir, "site/about/index.html");
+    const html = readFileSync(page, "utf8");
+    writeFileSync(
+      page,
+      html
+        .replace(/<link rel="canonical" href="[^"]*">/, '<link rel="canonical" href="https://presswork.dev/">')
+        .replace(/<main\b[^>]*>/, (open) => `${open}<button popovertarget="no-pop">x</button><input list="no-list" aria-label="x"><table><tr><td headers="no-head">1</td></tr></table>`),
+    );
+    const problems = check({ root: join(dir, "site"), shared: join(dir, "shared") });
+    for (const re of [/popovertarget="no-pop"/, /list="no-list"/, /headers="no-head"/, /about\/index\.html: canonical is https:\/\/presswork\.dev\/, expected https:\/\/presswork\.dev\/about\//]) {
+      assert.ok(problems.some((p) => re.test(p)), `${re}\n${problems.join("\n")}`);
+    }
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
