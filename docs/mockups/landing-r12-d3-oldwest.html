@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 12, designer 3: Old West.
+  A frontier print shop's sheet: Ultra (wood-type slab) over Courier Prime (typewriter),
+  sun-faded cream paper with a fine grain, warm ink, rust as the second ink, one rubber stamp.
+  Left-aligned; field-notes slug on the right. Light (default) and dark via data-theme on <html>.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ultra&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+:root {
+  --paper: #ede4d0;
+  --paper-2: #e4d9c1;
+  --ink: #2b241d;
+  --dust: #7d705d;
+  --rule: #2b241d;
+  --mark: #a5462a;
+  --stamp: #a5462a;
+  --grain-op: .32;
+  --press: 0 1px 0 rgba(255,250,235,.55);
+  --gutter: 64px;
+  --display: "Ultra", "Rockwell Extra Bold", "Rockwell", Georgia, serif;
+  --text: "Courier Prime", "Courier New", monospace;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --paper: #231e19;
+  --paper-2: #2a241e;
+  --ink: #e5dac4;
+  --dust: #a3967f;
+  --rule: #b8ab93;
+  --mark: #d47a55;
+  --stamp: #cf7651;
+  --grain-op: .18;
+  --press: 0 -1px 0 rgba(0,0,0,.5);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 1.125rem;
+  line-height: 1.55;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--grain-op);
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .28 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] body::before { mix-blend-mode: screen; }
+.page, .sheet { position: relative; z-index: 1; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--mark); outline-offset: 4px; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+
+.page {
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+/* Masthead */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  gap: 48px;
+  padding: 32px 0 20px;
+  border-bottom: 2px solid var(--rule);
+}
+.wordmark {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: .005em;
+}
+.masthead nav { margin-left: auto; }
+.masthead nav ul { display: flex; gap: 34px; }
+.masthead nav a {
+  font-size: 1rem;
+  line-height: 1;
+  letter-spacing: 0;
+}
+.masthead nav a:hover { text-decoration: underline; text-decoration-color: var(--mark); text-decoration-thickness: 2px; text-underline-offset: .28em; }
+.theme {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 6px 9px 7px;
+  border: 1px solid var(--dust);
+  border-radius: 0;
+  background: transparent;
+  color: var(--dust);
+  font: 400 .8125rem/1 var(--text);
+  cursor: pointer;
+}
+.theme:hover { border-color: var(--ink); }
+.theme [data-opt] { color: var(--dust); }
+:root[data-theme="light"] .theme [data-opt="light"],
+:root[data-theme="dark"] .theme [data-opt="dark"] { color: var(--ink); font-weight: 700; }
+
+/* Hero */
+.hero {
+  align-self: end;
+  min-width: 0;
+  padding-top: 40px;
+}
+.hero h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  color: var(--ink);
+  text-shadow: var(--press);
+  font-feature-settings: "kern" 1;
+}
+.hero h1 .big, .hero h1 .line { display: block; }
+.hero h1 .big {
+  font-size: min(14.75rem, calc((100vw - 2 * var(--gutter)) / 5.6));
+  line-height: .9;
+  letter-spacing: -0.012em;
+  margin-left: -0.035em;
+}
+.hero h1 .hero-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 40px;
+  margin-top: 18px;
+}
+.hero h1 .rest {
+  display: block;
+  font-size: 5.25rem;
+  line-height: 1.02;
+  letter-spacing: -0.004em;
+  margin-left: -0.02em;
+}
+
+.hero h1 .stop { display: inline; color: var(--mark); }
+.hero h1 .slug {
+  display: block;
+  font-family: var(--text);
+  text-shadow: none;
+  margin: 0 0 10px;
+  font-size: .875rem;
+  line-height: 1.6;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--dust);
+  text-align: left;
+  white-space: nowrap;
+}
+.hero h1 .slug b { color: var(--ink); font-weight: 700; }
+
+/* Under the rule */
+.foot {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
+  gap: 40px;
+  margin-top: 30px;
+  border-top: 2px solid var(--rule);
+  padding: 26px 0 56px;
+  align-items: start;
+}
+.foot p {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  max-width: 34ch;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 28px;
+  padding-top: 4px;
+}
+.button {
+  display: inline-block;
+  font-family: var(--text);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1;
+  letter-spacing: 0;
+  padding: 18px 24px 19px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+}
+.button:hover { background: var(--mark); border-color: var(--mark); color: #fff8ec; }
+.textlink {
+  font-weight: 700;
+  font-size: 1.0625rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .28em;
+}
+.textlink:hover { text-decoration-color: var(--mark); text-decoration-thickness: 2px; }
+
+.stamp {
+  justify-self: end;
+  align-self: start;
+  width: 216px;
+  height: 216px;
+  margin-top: -22px;
+  margin-right: -6px;
+  transform: rotate(-11deg);
+  color: var(--stamp);
+  opacity: .88;
+}
+:root[data-theme="dark"] .stamp { opacity: .8; }
+.stamp svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.stamp text { font-family: var(--text); font-weight: 700; fill: currentColor; }
+.stamp .ring-text { font-size: 15.5px; letter-spacing: 3.2px; }
+.stamp .p { font-family: var(--display); font-size: 64px; font-weight: 400; }
+.stamp .small { font-size: 10.5px; letter-spacing: 2.6px; }
+
+/* Sheets below the fold */
+.sheet {
+  padding: 0 var(--gutter);
+}
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+  gap: 40px;
+  padding: 72px 0 80px;
+  border-top: 2px solid var(--rule);
+}
+.label {
+  margin: 0;
+  padding-top: 14px;
+  font-size: .875rem;
+  line-height: 1.6;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--dust);
+}
+.label b { display: block; color: var(--mark); font-weight: 700; }
+.section h2 {
+  margin: 0 0 36px;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 4.5rem;
+  line-height: .98;
+  letter-spacing: -0.006em;
+  margin-left: -0.025em;
+  text-shadow: var(--press);
+}
+.section h2 .stop { color: var(--mark); }
+.body-text { margin: 0 0 24px; max-width: 46ch; font-size: 1.1875rem; }
+
+.services {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 48px;
+  counter-reset: s;
+  max-width: 900px;
+}
+.services li {
+  counter-increment: s;
+  display: grid;
+  grid-template-columns: 3.2ch 1fr;
+  padding: 14px 0 15px;
+  border-bottom: 1px dashed var(--dust);
+  font-size: 1.1875rem;
+  line-height: 1.4;
+}
+.services li::before {
+  content: counter(s, decimal-leading-zero);
+  color: var(--mark);
+  font-weight: 700;
+}
+
+.projects { max-width: 900px; }
+.projects li {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 16px 0 17px;
+  border-bottom: 1px dashed var(--dust);
+  font-family: var(--display);
+  font-size: 1.875rem;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+.projects li::after {
+  content: "Contact for pricing";
+  margin-left: auto;
+  font-family: var(--text);
+  font-size: .875rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--dust);
+  white-space: nowrap;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  max-width: 1000px;
+}
+.steps li { border-top: 2px solid var(--ink); padding-top: 18px; }
+.steps .n {
+  display: block;
+  font-family: var(--display);
+  font-size: 3.5rem;
+  line-height: 1;
+  color: var(--mark);
+  margin-bottom: 14px;
+}
+.steps .t { display: block; font-weight: 700; font-size: 1.25rem; line-height: 1.35; }
+.steps .s { display: block; margin-top: 6px; color: var(--dust); font-size: 1rem; letter-spacing: .04em; text-transform: uppercase; }
+
+.contact h2 { margin-bottom: 28px; }
+.email {
+  display: inline-block;
+  font-family: var(--display);
+  font-size: 3.25rem;
+  line-height: 1.1;
+  letter-spacing: -0.004em;
+  text-decoration: underline;
+  text-decoration-color: var(--mark);
+  text-decoration-thickness: 4px;
+  text-underline-offset: .2em;
+  overflow-wrap: anywhere;
+}
+.email:hover { color: var(--mark); }
+
+.colophon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  padding: 22px 0 40px;
+  border-top: 2px solid var(--rule);
+  font-size: .8125rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--dust);
+}
+
+/* Narrower screens */
+@media (max-width: 1200px) {
+
+  .hero h1 .rest { font-size: 4.25rem; }
+}
+@media (max-width: 960px) {
+  :root { --gutter: 32px; }
+
+  .hero h1 .rest { font-size: 8.4vw; }
+  .hero h1 .hero-row { grid-template-columns: 1fr; gap: 20px; }
+  .foot { grid-template-columns: 1fr 1fr; }
+  .stamp { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; width: 170px; height: 170px; }
+  .section { grid-template-columns: 1fr; gap: 12px; padding: 48px 0 56px; }
+  .section h2 { font-size: 3.25rem; }
+  .services { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr; gap: 28px; }
+}
+@media (max-width: 640px) {
+  :root { --gutter: 16px; }
+  body { font-size: 1rem; }
+  .masthead { flex-wrap: wrap; gap: 14px 16px; padding: 20px 0 14px; }
+  .wordmark { font-size: 1.3125rem; }
+  .masthead nav { order: 3; width: 100%; margin-left: 0; }
+  .masthead nav ul { gap: 6px 15px; flex-wrap: wrap; }
+  .masthead nav a { font-size: .875rem; letter-spacing: -0.02em; }
+  .theme { margin-left: auto; }
+  .hero { padding-top: 40px; }
+
+  .hero h1 .rest { font-size: calc((100vw - 32px) / 11.3); line-height: 1.06; }
+  .hero h1 .hero-row { margin-top: 12px; }
+  .hero h1 .slug { font-size: .75rem; white-space: normal; }
+  .foot { grid-template-columns: 1fr; gap: 24px; padding-bottom: 40px; }
+  .foot p { font-size: 1.0625rem; }
+  .stamp { grid-column: 1; grid-row: auto; justify-self: start; width: 140px; height: 140px; margin: 4px 0 0 4px; }
+  .section h2 { font-size: 2.5rem; }
+  .body-text, .services li { font-size: 1.0625rem; }
+  .projects li { flex-wrap: wrap; font-size: 1.375rem; gap: 4px 18px; }
+  .projects li::after { margin-left: 0; width: 100%; }
+  .email { font-size: 1.625rem; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="rubber" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="7" result="speck"/>
+      <feColorMatrix in="speck" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.55" result="holes"/>
+      <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="blot"/>
+      <feColorMatrix in="blot" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 2.1" result="fade"/>
+      <feComposite in="holes" in2="fade" operator="arithmetic" k1="1" result="mask"/>
+      <feDisplacementMap in="SourceGraphic" in2="speck" scale="1.2" result="edge"/>
+      <feComposite in="edge" in2="mask" operator="in"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#prices">Prices</a></li>
+      <li><a href="#start">How it starts</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <button class="theme" type="button" aria-label="Dark theme" aria-pressed="false">
+    <span data-opt="light" aria-hidden="true">Light</span><span aria-hidden="true">/</span><span data-opt="dark" aria-hidden="true">Dark</span>
+  </button>
+</header>
+
+<main id="top" class="hero" aria-labelledby="hero-title">
+  <h1 id="hero-title"><span class="big">Websites</span> <span class="hero-row"><span class="rest"><span class="line">for owner-run</span> <span class="line">local businesses<span class="stop">.</span></span></span><span class="slug" aria-hidden="true"><b>Field notes</b><br>Presswork Web Co.<br>Colorado</span></span></h1>
+</main>
+
+<footer class="foot">
+  <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+  <div class="actions">
+    <a class="button" href="#contact">Ask for a free check</a>
+    <a class="textlink" href="#prices">See example prices</a>
+  </div>
+  <div class="stamp" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <g filter="url(#rubber)">
+        <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" stroke-width="4"/>
+        <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="56" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <path id="ring" d="M100,100 m-71,0 a71,71 0 1,1 142,0 a71,71 0 1,1 -142,0" fill="none"/>
+        <text class="ring-text"><textPath href="#ring" startOffset="0" textLength="440" lengthAdjust="spacing">PRESSWORK · COLORADO · PRESSWORK · COLORADO ·</textPath></text>
+        <text class="p" x="100" y="117" text-anchor="middle">P</text>
+        <text class="small" x="101" y="138" text-anchor="middle">WEB CO.</text>
+      </g>
+    </svg>
+  </div>
+</footer>
+
+</div>
+
+<div class="sheet">
+
+<section class="section" id="services" aria-labelledby="services-title">
+  <p class="label"><b>No. 01</b>Services</p>
+  <div>
+    <h2 id="services-title">What I do<span class="stop">.</span></h2>
+    <ol class="services">
+      <li>Website design and build</li>
+      <li>Care and edits after launch</li>
+      <li>Search (SEO) and Google Business Profile</li>
+      <li>Listings and reviews</li>
+      <li>Blog management</li>
+      <li>Google Ads</li>
+      <li>Online stores</li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="prices" aria-labelledby="prices-title">
+  <p class="label"><b>No. 02</b>Prices</p>
+  <div>
+    <h2 id="prices-title">Example prices<span class="stop">.</span></h2>
+    <p class="body-text">Contact me for pricing. A few jobs off the press:</p>
+    <ul class="projects">
+      <li>Little Peaks Pediatric Therapy</li>
+      <li>Prairie Rose Arena</li>
+      <li>Postoley Dance Ensemble</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="start" aria-labelledby="start-title">
+  <p class="label"><b>No. 03</b>How it starts</p>
+  <div>
+    <h2 id="start-title">How it starts<span class="stop">.</span></h2>
+    <ol class="steps">
+      <li><span class="n">1</span><span class="t">A website check</span><span class="s">Free</span></li>
+      <li><span class="n">2</span><span class="t">A call</span><span class="s">Free</span></li>
+      <li><span class="n">3</span><span class="t">An assessment</span><span class="s">Paid</span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section contact" id="contact" aria-labelledby="contact-title">
+  <p class="label"><b>No. 04</b>Contact</p>
+  <div>
+    <h2 id="contact-title">Write to me<span class="stop">.</span></h2>
+    <a class="email" href="mailto:hello@presswork.dev">hello@presswork.dev</a>
+  </div>
+</section>
+
+<footer class="colophon">
+  <span>Presswork Web Co.</span>
+  <span>Colorado</span>
+  <span>Set in Ultra &amp; Courier Prime</span>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.querySelector(".theme");
+  function set(t) {
+    root.setAttribute("data-theme", t);
+    btn.setAttribute("aria-pressed", t === "dark" ? "true" : "false");
+  }
+  try { var saved = localStorage.getItem("pw-theme"); if (saved === "dark" || saved === "light") set(saved); } catch (e) {}
+  btn.addEventListener("click", function () {
+    var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    set(next);
+    try { localStorage.setItem("pw-theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

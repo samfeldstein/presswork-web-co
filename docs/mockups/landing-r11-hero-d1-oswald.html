@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses (Oswald)</title>
+<!--
+  Round 11, hero only, designer 1: faithful refine of r10 d1.
+  Kept: three-line Inter Tight headline, full-width rule under it, lead and buttons below, red second ink.
+  Removed: crop marks, registration targets, slug, nav glosses, wordmark gloss.
+  Masthead is one ruled line (wordmark, numbered nav, theme toggle); the headline grows to fill the measure.
+  The lead hangs from the same left edge as the wordmark and headline; the buttons hang from the nav's left edge.
+  Light (default) and dark themes via data-theme on <html>.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400..700&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap">
+<style>
+:root {
+  --paper: #f3f2ee;
+  --ink: #1d1c1a;
+  --grey: #6b6862;
+  --mark: #c4371d;
+  --rule: #1d1c1a;
+  --press: 0 1px 0 rgba(255,255,255,.7), 0 -1px 0 rgba(0,0,0,.08);
+  --gutter: 64px;
+  --col-gap: 24px;
+  --display: "Oswald", "Arial Narrow", sans-serif;
+  --text: "Source Serif 4", Georgia, serif;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --paper: #1b1917;
+  --ink: #ebe7df;
+  --grey: #9d978d;
+  --mark: #e2553a;
+  --rule: #ebe7df;
+  --press: 0 -1px 0 rgba(0,0,0,.55);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--paper); }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--mark); outline-offset: 4px; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+.page {
+  min-height: 100vh;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+}
+
+/* Masthead */
+.masthead {
+  padding: 34px 0 22px;
+  border-bottom: 1px solid var(--rule);
+  align-items: baseline;
+}
+.wordmark {
+  grid-column: 1 / span 6;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  justify-self: start;
+}
+.masthead-right {
+  grid-column: 7 / span 6;
+  display: flex;
+  align-items: baseline;
+  font-family: var(--display);
+}
+.masthead nav ul { display: flex; gap: 38px; }
+.masthead nav a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1;
+  letter-spacing: -0.012em;
+}
+.masthead nav .num {
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--mark);
+  position: relative;
+  top: -0.42em;
+}
+.masthead nav a:hover .label { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .24em; }
+
+.theme {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 6px 9px 7px;
+  border: 1px solid var(--grey);
+  border-radius: 0;
+  background: transparent;
+  color: var(--grey);
+  font: 500 .75rem/1 var(--display);
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+.theme:hover { border-color: var(--ink); }
+.theme [data-opt] { color: var(--grey); }
+:root[data-theme="light"] .theme [data-opt="light"],
+:root[data-theme="dark"] .theme [data-opt="dark"] { color: var(--ink); }
+.theme .slash { color: var(--grey); opacity: .6; }
+
+/* Headline */
+.hero {
+  align-self: end;
+  min-width: 0;
+  padding-top: 36px;
+}
+.hero h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 12.4rem;
+  line-height: .94;
+  letter-spacing: -0.008em;
+  font-feature-settings: "kern" 1;
+  color: var(--ink);
+  text-shadow: var(--press);
+}
+.hero h1 > span { display: block; }
+:root[data-theme="dark"] .hero h1 { font-weight: 570; }
+/* Optical left edge: each line's first glyph ink sits on the wordmark's and lead's edge */
+.hero h1 .l1 { margin-left: 0; }
+.hero h1 .l2 { margin-left: -0.019em; letter-spacing: -0.012em; }
+.hero h1 .l3 { margin-left: -0.043em; }
+.hero h1 .stop { display: inline; color: var(--mark); letter-spacing: 0; }
+
+/* Under the rule */
+.foot {
+  margin-top: 34px;
+  border-top: 1px solid var(--rule);
+  padding: 26px 0 60px;
+  align-items: start;
+}
+.foot p {
+  grid-column: 1 / span 5;
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.42;
+  letter-spacing: -0.003em;
+  font-variation-settings: "opsz" 24;
+  text-wrap: balance;
+}
+.actions {
+  grid-column: 7 / span 6;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-top: 3px;
+  font-family: var(--display);
+}
+.button {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  padding: 18px 26px 19px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+}
+.button:hover { background: var(--mark); border-color: var(--mark); color: #fff; }
+.textlink {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .26em;
+}
+.textlink:hover { text-decoration-color: var(--mark); text-decoration-thickness: 2px; }
+@media (max-width: 700px) {
+  :root { --gutter: 20px; }
+  .masthead { padding: 22px 0 16px; row-gap: 16px; }
+  .wordmark, .masthead-right, .foot p, .actions { grid-column: 1 / -1; }
+  .masthead-right { flex-wrap: wrap; row-gap: 14px; }
+  .masthead nav ul { flex-wrap: wrap; gap: 10px 18px; }
+  .theme { margin-left: 0; }
+  .hero { padding-top: 28px; }
+  .hero h1 { font-size: 14.2vw; }
+  .foot { margin-top: 24px; padding: 20px 0 40px; row-gap: 24px; }
+  .foot p { font-size: 1.125rem; }
+  .actions { flex-wrap: wrap; gap: 18px 24px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="grid masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <div class="masthead-right">
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#services"><span class="num">01</span><span class="label">Services</span></a></li>
+        <li><a href="#prices"><span class="num">02</span><span class="label">Prices</span></a></li>
+        <li><a href="#start"><span class="num">03</span><span class="label">How it starts</span></a></li>
+        <li><a href="#contact"><span class="num">04</span><span class="label">Contact</span></a></li>
+      </ul>
+    </nav>
+    <button class="theme" type="button" aria-label="Dark theme" aria-pressed="false">
+      <span data-opt="light" aria-hidden="true">Light</span><span class="slash" aria-hidden="true">/</span><span data-opt="dark" aria-hidden="true">Dark</span>
+    </button>
+  </div>
+</header>
+
+<main id="top" class="hero" aria-labelledby="hero-title">
+  <h1 id="hero-title"><span class="l1">Websites for</span> <span class="l2">owner-run local</span> <span class="l3">businesses<span class="stop">.</span></span></h1>
+</main>
+
+<footer class="grid foot">
+  <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+  <div class="actions">
+    <a class="button" href="#contact">Ask for a free check</a>
+    <a class="textlink" href="#prices">See example prices</a>
+  </div>
+</footer>
+
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.querySelector(".theme");
+  function set(t) {
+    root.setAttribute("data-theme", t);
+    btn.setAttribute("aria-pressed", t === "dark" ? "true" : "false");
+  }
+  try { var saved = localStorage.getItem("pw-theme"); if (saved === "dark" || saved === "light") set(saved); } catch (e) {}
+  btn.addEventListener("click", function () {
+    var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    set(next);
+    try { localStorage.setItem("pw-theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

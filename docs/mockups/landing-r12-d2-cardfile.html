@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 12, designer 2: card-file tabs.
+  The landing page is a card file. Each section is an index card with a staggered tab; the tabs are the navigation.
+  Clicking a tab folds the open card's tab down and the chosen card rises to the front.
+  Tabs: role=tablist/tab/tabpanel, arrows + Home/End move focus, Enter/Space opens. Hash per card.
+  Reduced motion: instant switch with a short fade. Base: r11 d1 (Inter Tight + Source Serif 4, red second ink).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400..700&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap">
+<style>
+:root {
+  --desk: #e6e2d9;
+  --card: #f6f4ef;
+  --card-back: #ece9e1;
+  --ink: #1d1c1a;
+  --grey: #6b6862;
+  --mark: #c4371d;
+  --line: rgba(29, 28, 26, .14);
+  --edge: #1d1c1a;
+  --press: 0 1px 0 rgba(255,255,255,.7), 0 -1px 0 rgba(0,0,0,.08);
+  --gutter: 64px;
+  --head: 76px;
+  --step: 11px;
+  --tab-h: 40px;
+  --tab-w: 232px;
+  --pad: 52px;
+  --fold: 200ms;
+  --rise: 360ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --text: "Source Serif 4", Georgia, serif;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --desk: #141311;
+  --card: #1f1d1a;
+  --card-back: #191816;
+  --ink: #e8e4dc;
+  --grey: #9a948a;
+  --mark: #e2553a;
+  --line: rgba(232, 228, 220, .12);
+  --edge: #6a645b;
+  --press: 0 -1px 0 rgba(0,0,0,.55);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--desk); }
+body {
+  margin: 0;
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--text);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--mark); outline-offset: 3px; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, p { margin: 0; }
+
+.page { padding: 0 var(--gutter) 28px; }
+
+/* Masthead */
+.masthead {
+  height: var(--head);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--display);
+}
+.wordmark {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.masthead-right { display: flex; align-items: center; gap: 28px; }
+.slug-top {
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+.theme {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 6px 9px 7px;
+  border: 1px solid var(--grey);
+  border-radius: 0;
+  background: transparent;
+  color: var(--grey);
+  font: 500 .75rem/1 var(--display);
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+.theme:hover { border-color: var(--ink); }
+:root[data-theme="light"] .theme [data-opt="light"],
+:root[data-theme="dark"] .theme [data-opt="dark"] { color: var(--ink); }
+.theme .slash { opacity: .6; }
+
+/* The file: back-card edges, tabs, and the open card */
+.file {
+  position: relative;
+  padding-top: calc(var(--step) * 4 + var(--tab-h) - 1px);
+  perspective: 900px;
+}
+.edge {
+  position: absolute;
+  top: calc(var(--row) * var(--step) + var(--tab-h) - 1px);
+  left: calc((4 - var(--row)) * 5px);
+  right: calc((4 - var(--row)) * 5px);
+  height: calc((4 - var(--row)) * var(--step) + 2px);
+  background: var(--card-back);
+  border: 1px solid var(--edge);
+  border-bottom: 0;
+  z-index: calc(var(--row) + 1);
+  transition: top var(--rise) var(--ease), left var(--rise) var(--ease), right var(--rise) var(--ease), height var(--rise) var(--ease);
+}
+.edge[data-row="4"] { visibility: hidden; }
+
+.tabs { position: absolute; inset: 0 0 auto 0; height: calc(var(--step) * 4 + var(--tab-h)); }
+.tab {
+  position: absolute;
+  top: 0;
+  left: calc(var(--slot) * (100% - var(--tab-w)) / 4);
+  width: var(--tab-w);
+  height: calc(var(--tab-h) + 1px);
+  z-index: calc(var(--row) + 1);
+  margin: 0;
+  padding: 0 18px 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 0;
+  background: var(--edge);
+  color: var(--grey);
+  font: 600 .9375rem/1 var(--display);
+  letter-spacing: -0.008em;
+  text-align: left;
+  cursor: pointer;
+  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%, 0 10px);
+  transform-origin: 50% 100%;
+  transform: translateY(calc(var(--row) * var(--step))) rotateX(0deg);
+  transition: transform var(--rise) var(--ease), left var(--rise) var(--ease), opacity var(--rise) var(--ease), color .15s;
+}
+.tab::before {
+  content: "";
+  position: absolute;
+  inset: 1px 1px 0 1px;
+  background: var(--card-back);
+  clip-path: polygon(9.6px 0, calc(100% - 9.6px) 0, 100% 9.6px, 100% 100%, 0 100%, 0 9.6px);
+  z-index: -1;
+}
+.tab { isolation: isolate; }
+.tab .num {
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--grey);
+}
+.tab:hover { color: var(--ink); }
+.tab[aria-selected="true"] { color: var(--ink); cursor: default; z-index: 7; }
+.tab[aria-selected="true"]::before { background: var(--card); inset: 1px 1px 0 1px; }
+.tab[aria-selected="true"] .num { color: var(--mark); }
+.tab:focus-visible { outline: none; }
+.tab:focus-visible .label {
+  outline: 2px solid var(--mark);
+  outline-offset: 4px;
+}
+.tab.fold {
+  transition: transform var(--fold) cubic-bezier(.5, 0, .9, .5), color .15s;
+  transform: translateY(calc(var(--row) * var(--step))) rotateX(-88deg);
+}
+.tab.rise-from {
+  transition: none;
+  opacity: 0;
+  transform: translateY(calc(var(--row) * var(--step) + 44px)) rotateX(0deg);
+}
+
+.card {
+  position: relative;
+  z-index: 6;
+  background: var(--card);
+  border: 1px solid var(--edge);
+  min-height: calc(100vh - var(--head) - var(--step) * 4 - var(--tab-h) - 28px);
+  min-height: calc(100svh - var(--head) - var(--step) * 4 - var(--tab-h) - 28px);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--rise) var(--ease);
+}
+.card-inner { flex: 1; display: flex; flex-direction: column; transition: opacity var(--rise) var(--ease); }
+.file.folding .card { transform: translateY(16px); transition: transform var(--fold) cubic-bezier(.5, 0, .9, .5); }
+.file.folding .card-inner { opacity: 0; transition: opacity var(--fold) linear; }
+.file.rise-start .card { transform: translateY(44px); transition: none; }
+.file.rise-start .card-inner { opacity: 0; transition: none; }
+
+/* A card */
+.panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--pad);
+}
+.panel[hidden] { display: none; }
+.panel:focus-visible { outline: 2px solid var(--mark); outline-offset: -8px; }
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 20px 0 14px;
+  border-bottom: 1.5px solid var(--mark);
+  font-family: var(--display);
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+.card-head .no { color: var(--mark); font-variant-numeric: tabular-nums; }
+.sep { margin: 0 .55em; opacity: .5; }
+.card-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 14px 0 18px;
+  margin-top: 36px;
+  border-top: 1px solid var(--line);
+  font-family: var(--display);
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+.card-foot .pr { color: var(--mark); }
+
+/* Front card */
+.front .hero { margin-top: auto; padding-top: 28px; }
+.front h1 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: min(10.6vw, 17.6vh);
+  line-height: .87;
+  letter-spacing: -0.048em;
+  color: var(--ink);
+  text-shadow: var(--press);
+}
+.front h1 > span { display: block; }
+.front h1 .l2 { margin-left: -0.019em; letter-spacing: -0.052em; }
+.front h1 .l3 { margin-left: -0.043em; }
+.front h1 .stop { color: var(--mark); letter-spacing: 0; }
+:root[data-theme="dark"] .front h1 { font-weight: 570; }
+.front .under {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ink);
+  align-items: start;
+}
+.front .under p {
+  grid-column: 1 / span 5;
+  font-size: 1.3125rem;
+  line-height: 1.42;
+  letter-spacing: -0.003em;
+  font-variation-settings: "opsz" 24;
+  text-wrap: balance;
+}
+.actions {
+  grid-column: 7 / span 6;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 30px;
+  padding-top: 3px;
+  font-family: var(--display);
+}
+.button {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  padding: 18px 26px 19px;
+  background: var(--ink);
+  color: var(--card);
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+}
+.button:hover { background: var(--mark); border-color: var(--mark); color: #fff; }
+.textlink {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .26em;
+}
+.textlink:hover { text-decoration-color: var(--mark); text-decoration-thickness: 2px; }
+
+/* Section cards */
+.body {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 24px;
+  padding-top: 44px;
+  padding-bottom: 40px;
+  align-items: start;
+}
+.body h2 {
+  grid-column: 1 / span 5;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(3rem, 6.4vw, 6.5rem);
+  line-height: .9;
+  letter-spacing: -0.045em;
+  text-shadow: var(--press);
+}
+.body h2 .stop { color: var(--mark); letter-spacing: 0; }
+.body .col { grid-column: 6 / span 7; }
+.note {
+  font-size: 1.3125rem;
+  line-height: 1.42;
+  font-variation-settings: "opsz" 24;
+  margin-bottom: 26px;
+  max-width: 30ch;
+}
+.ruled li {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 14px 0 11px;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.3125rem;
+  line-height: 1.3;
+  font-variation-settings: "opsz" 24;
+}
+.ruled li:first-child { border-top: 1px solid var(--line); }
+.ruled .n {
+  flex: none;
+  width: 2.2em;
+  font: 500 .75rem/1 var(--display);
+  letter-spacing: .05em;
+  font-variant-numeric: tabular-nums;
+  color: var(--mark);
+}
+.ruled .tag {
+  margin-left: auto;
+  font: 500 .6875rem/1 var(--display);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+.sublabel {
+  font: 500 .75rem/1 var(--display);
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin: 0 0 12px;
+}
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; }
+.steps li { border-top: 1px solid var(--ink); padding-top: 16px; }
+.steps .big {
+  display: block;
+  font: 600 4.5rem/.9 var(--display);
+  letter-spacing: -0.04em;
+  color: var(--mark);
+  margin-bottom: 18px;
+  font-variant-numeric: tabular-nums;
+}
+.steps h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.steps .cost {
+  margin-top: 8px;
+  font-size: 1.0625rem;
+  color: var(--grey);
+}
+.mail {
+  display: inline-block;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 4.2vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: .14em;
+  text-decoration-color: var(--mark);
+  margin-bottom: 30px;
+  overflow-wrap: anywhere;
+}
+.mail:hover { color: var(--mark); }
+.body .actions { grid-column: auto; padding-top: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tab, .edge, .card, .card-inner { transition: none !important; }
+  .panel:not([hidden]) { animation: fade 140ms linear; }
+}
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Narrow screens: tabs alternate in two columns, cards grow to fit */
+@media (max-width: 900px) {
+  :root { --gutter: 16px; --pad: 20px; --step: 17px; --tab-h: 32px; --tab-w: calc(50% - 3px); }
+  .slug-top { display: none; }
+  .wordmark { font-size: 1.3rem; }
+  .tab {
+    left: calc(var(--col) * (100% - var(--tab-w)));
+    padding: 0 12px 1px;
+    gap: 8px;
+    font-size: .875rem;
+  }
+  .card { min-height: 0; }
+  .card-head { padding: 16px 0 11px; font-size: .6875rem; }
+  .card-head .extra { display: none; }
+  .front .hero { padding-top: 34px; }
+  .front h1 { font-size: clamp(2.6rem, 14vw, 5.5rem); line-height: .92; }
+  .front h1 > span { display: inline; }
+  .front .under { display: block; margin-top: 24px; padding-top: 20px; }
+  .front .under p { font-size: 1.125rem; }
+  .actions { margin-top: 24px; gap: 16px 22px; }
+  .body { display: block; padding-top: 30px; }
+  .body h2 { font-size: clamp(2.6rem, 13vw, 4rem); margin-bottom: 26px; }
+  .note, .ruled li { font-size: 1.125rem; }
+  .steps { grid-template-columns: 1fr; row-gap: 26px; }
+  .steps .big { font-size: 3.25rem; margin-bottom: 10px; }
+  .card-foot { flex-direction: column; gap: 6px; margin-top: 30px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="#front" data-goto="0">Presswork</a>
+  <div class="masthead-right">
+    <span class="slug-top">Websites, Colorado</span>
+    <button class="theme" type="button" aria-label="Dark theme" aria-pressed="false">
+      <span data-opt="light" aria-hidden="true">Light</span><span class="slash" aria-hidden="true">/</span><span data-opt="dark" aria-hidden="true">Dark</span>
+    </button>
+  </div>
+</header>
+
+<main class="file" id="file">
+  <div class="edge" aria-hidden="true"></div>
+  <div class="edge" aria-hidden="true"></div>
+  <div class="edge" aria-hidden="true"></div>
+  <div class="edge" aria-hidden="true"></div>
+  <div class="edge" aria-hidden="true"></div>
+
+  <div class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="tab-front" aria-controls="panel-front" aria-selected="true" tabindex="0" style="--slot:0"><span class="num">00</span><span class="label">Front</span></button>
+    <button class="tab" role="tab" id="tab-services" aria-controls="panel-services" aria-selected="false" tabindex="-1" style="--slot:1"><span class="num">01</span><span class="label">Services</span></button>
+    <button class="tab" role="tab" id="tab-prices" aria-controls="panel-prices" aria-selected="false" tabindex="-1" style="--slot:2"><span class="num">02</span><span class="label">Prices</span></button>
+    <button class="tab" role="tab" id="tab-how" aria-controls="panel-how" aria-selected="false" tabindex="-1" style="--slot:3"><span class="num">03</span><span class="label">How it starts</span></button>
+    <button class="tab" role="tab" id="tab-contact" aria-controls="panel-contact" aria-selected="false" tabindex="-1" style="--slot:4"><span class="num">04</span><span class="label">Contact</span></button>
+  </div>
+
+  <div class="card">
+    <div class="card-inner">
+
+      <section class="panel front" role="tabpanel" id="panel-front" aria-labelledby="tab-front" tabindex="0">
+        <div class="card-head"><span><span class="no">No. 00</span><span class="sep">/</span>Front</span><span class="extra">Presswork card file<span class="sep">/</span>5 cards</span></div>
+        <div class="hero">
+          <h1><span class="l1">Websites for</span> <span class="l2">owner-run local</span> <span class="l3">businesses<span class="stop">.</span></span></h1>
+          <div class="under">
+            <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+            <div class="actions">
+              <a class="button" href="#contact" data-goto="4">Ask for a free check</a>
+              <a class="textlink" href="#prices" data-goto="2">See example prices</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-foot"><span>Card 00 of 04<span class="sep">/</span>Front</span><span><span class="pr">Proof</span><span class="sep">/</span>Set in Inter Tight and Source Serif 4</span></div>
+      </section>
+
+      <section class="panel" role="tabpanel" id="panel-services" aria-labelledby="tab-services" tabindex="0" hidden>
+        <div class="card-head"><span><span class="no">No. 01</span><span class="sep">/</span>Services</span><span class="extra">Seven lines of work</span></div>
+        <div class="body">
+          <h2>Services<span class="stop">.</span></h2>
+          <ol class="ruled col">
+            <li><span class="n">01</span>Website design and build</li>
+            <li><span class="n">02</span>Care and edits after launch</li>
+            <li><span class="n">03</span>Search (SEO) and Google Business Profile</li>
+            <li><span class="n">04</span>Listings and reviews</li>
+            <li><span class="n">05</span>Blog management</li>
+            <li><span class="n">06</span>Google Ads</li>
+            <li><span class="n">07</span>Online stores</li>
+          </ol>
+        </div>
+        <div class="card-foot" style="margin-top:auto"><span>Card 01 of 04<span class="sep">/</span>Services</span><span><span class="pr">Proof</span><span class="sep">/</span>Presswork</span></div>
+      </section>
+
+      <section class="panel" role="tabpanel" id="panel-prices" aria-labelledby="tab-prices" tabindex="0" hidden>
+        <div class="card-head"><span><span class="no">No. 02</span><span class="sep">/</span>Prices</span><span class="extra">Example projects</span></div>
+        <div class="body">
+          <h2>Prices<span class="stop">.</span></h2>
+          <div class="col">
+            <p class="note">Contact me for pricing. Some example projects:</p>
+            <ol class="ruled">
+              <li><span class="n">A</span>Little Peaks Pediatric Therapy<span class="tag">Example</span></li>
+              <li><span class="n">B</span>Prairie Rose Arena<span class="tag">Example</span></li>
+              <li><span class="n">C</span>Postoley Dance Ensemble<span class="tag">Example</span></li>
+            </ol>
+            <div class="actions" style="margin-top:30px">
+              <a class="button" href="#contact" data-goto="4">Ask about prices</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-foot" style="margin-top:auto"><span>Card 02 of 04<span class="sep">/</span>Prices</span><span><span class="pr">Proof</span><span class="sep">/</span>Presswork</span></div>
+      </section>
+
+      <section class="panel" role="tabpanel" id="panel-how" aria-labelledby="tab-how" tabindex="0" hidden>
+        <div class="card-head"><span><span class="no">No. 03</span><span class="sep">/</span>How it starts</span><span class="extra">Three steps</span></div>
+        <div class="body">
+          <h2>How it starts<span class="stop">.</span></h2>
+          <ol class="steps col">
+            <li><span class="big">1</span><h3>A free website check</h3><p class="cost">Free</p></li>
+            <li><span class="big">2</span><h3>A free call</h3><p class="cost">Free</p></li>
+            <li><span class="big">3</span><h3>A paid assessment</h3><p class="cost">Paid</p></li>
+          </ol>
+        </div>
+        <div class="card-foot" style="margin-top:auto"><span>Card 03 of 04<span class="sep">/</span>How it starts</span><span><span class="pr">Proof</span><span class="sep">/</span>Presswork</span></div>
+      </section>
+
+      <section class="panel" role="tabpanel" id="panel-contact" aria-labelledby="tab-contact" tabindex="0" hidden>
+        <div class="card-head"><span><span class="no">No. 04</span><span class="sep">/</span>Contact</span><span class="extra">Write any time</span></div>
+        <div class="body">
+          <h2>Contact<span class="stop">.</span></h2>
+          <div class="col">
+            <p class="sublabel">Email</p>
+            <a class="mail" href="mailto:hello@presswork.dev">hello@presswork.dev</a>
+            <div class="actions">
+              <a class="button" href="mailto:hello@presswork.dev?subject=Free%20website%20check">Ask for a free check</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-foot" style="margin-top:auto"><span>Card 04 of 04<span class="sep">/</span>Contact</span><span><span class="pr">Proof</span><span class="sep">/</span>Presswork</span></div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.querySelector(".theme");
+  function set(t) {
+    root.setAttribute("data-theme", t);
+    btn.setAttribute("aria-pressed", t === "dark" ? "true" : "false");
+  }
+  try { var saved = localStorage.getItem("pw-theme"); if (saved === "dark" || saved === "light") set(saved); } catch (e) {}
+  btn.addEventListener("click", function () {
+    var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    set(next);
+    try { localStorage.setItem("pw-theme", next); } catch (e) {}
+  });
+})();
+
+(function () {
+  var file = document.getElementById("file");
+  var list = file.querySelector("[role=tablist]");
+  var tabs = [].slice.call(list.querySelectorAll("[role=tab]"));
+  var edges = [].slice.call(file.querySelectorAll(".edge"));
+  var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute("aria-controls")); });
+  var hashes = ["front", "services", "prices", "how-it-starts", "contact"];
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var css = getComputedStyle(root());
+  var current = 0;
+  var timer = null;
+  var finish = null;
+
+  function root() { return document.documentElement; }
+  function ms(name) { return parseFloat(css.getPropertyValue(name)) || 0; }
+
+  function layout(active) {
+    var r = 0;
+    tabs.forEach(function (t, i) {
+      var row = i === active ? 4 : r++;
+      t.style.setProperty("--row", row);
+      t.style.setProperty("--col", row % 2);
+      edges[i].style.setProperty("--row", row);
+      edges[i].setAttribute("data-row", row);
+    });
+  }
+
+  function show(i) {
+    panels.forEach(function (p, k) { p.hidden = k !== i; });
+  }
+
+  function mark(i) {
+    tabs.forEach(function (t, k) {
+      t.setAttribute("aria-selected", k === i ? "true" : "false");
+      t.tabIndex = k === i ? 0 : -1;
+    });
+  }
+
+  function select(i, opts) {
+    opts = opts || {};
+    if (finish) finish();
+    if (opts.push) {
+      var url = i === 0 ? location.pathname + location.search : "#" + hashes[i];
+      if (("#" + hashes[i]) !== location.hash || i === 0) history.pushState(null, "", url);
+    }
+    if (i === current) {
+      if (opts.focusPanel) panels[i].focus();
+      return;
+    }
+    var prev = current;
+    current = i;
+    mark(i);
+
+    if (reduce.matches || !opts.animate) {
+      show(i);
+      layout(i);
+      if (opts.focusPanel) panels[i].focus();
+      return;
+    }
+
+    file.classList.add("folding");
+    tabs[prev].classList.add("fold");
+    finish = function () {
+      clearTimeout(timer);
+      finish = null;
+      tabs[prev].classList.remove("fold");
+      show(i);
+      tabs[i].classList.add("rise-from");
+      file.classList.remove("folding");
+      file.classList.add("rise-start");
+      layout(i);
+      void file.offsetWidth;
+      tabs[i].classList.remove("rise-from");
+      file.classList.remove("rise-start");
+      if (opts.focusPanel) panels[i].focus({ preventScroll: true });
+    };
+    timer = setTimeout(finish, ms("--fold"));
+  }
+
+  function fromHash() {
+    var h = location.hash.replace("#", "");
+    var i = hashes.indexOf(h);
+    return i < 0 ? 0 : i;
+  }
+
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { select(i, { push: true, animate: true }); });
+  });
+
+  list.addEventListener("keydown", function (e) {
+    var i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    var n = tabs.length, to = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") to = (i + 1) % n;
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") to = (i - 1 + n) % n;
+    else if (e.key === "Home") to = 0;
+    else if (e.key === "End") to = n - 1;
+    if (to === null) return;
+    e.preventDefault();
+    tabs.forEach(function (t, k) { t.tabIndex = k === to || k === current ? 0 : -1; });
+    tabs[to].focus();
+  });
+  list.addEventListener("focusout", function (e) {
+    if (!list.contains(e.relatedTarget)) mark(current);
+  });
+
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest("a[data-goto]");
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    var i = +a.getAttribute("data-goto");
+    select(i, { push: true, animate: true, focusPanel: i !== 0 });
+    if (i !== 0 && file.getBoundingClientRect().top < 0) file.scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth" });
+  });
+
+  window.addEventListener("popstate", function () { select(fromHash(), { animate: true }); });
+  window.addEventListener("hashchange", function () { select(fromHash(), { animate: true }); });
+
+  var start = fromHash();
+  current = start;
+  mark(start);
+  show(start);
+  layout(start);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 11, hero only, designer 3: "Imprint." Same base type as r10 d1, new composition.
+  The headline is set low and left in four lines, like type locked up at the foot of a sheet.
+  The lead and buttons stand in a side column to its right, bottom-aligned with the headline's last line,
+  under a short red rule. Red is the second ink: the rule, the full stop, and the primary button.
+  One thick-and-thin rule under the masthead; no grid lines, no marks, nothing crossing type.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400..700&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap">
+<style>
+:root {
+  --paper: #f3f2ee;
+  --ink: #1d1c1a;
+  --head: #1a1917;
+  --grey: #6b6862;
+  --red: #c4371d;
+  --red-btn: #c4371d;
+  --on-red: #f7f5f0;
+  --press-hi: rgba(255,255,255,.7);
+  --press-lo: rgba(0,0,0,.08);
+  --gutter: 64px;
+  --col-gap: 24px;
+  --display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --text: "Source Serif 4", Georgia, serif;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --paper: #191715;
+  --ink: #ebe7df;
+  --head: #efebe3;
+  --grey: #9a958c;
+  --red: #e0533a;
+  --red-btn: #c4371d;
+  --on-red: #f7f5f0;
+  --press-hi: rgba(0,0,0,.55);
+  --press-lo: rgba(255,255,255,.04);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { background: var(--paper); }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--text);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+.page {
+  min-height: 100vh;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+}
+
+/* Masthead */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 34px 0 20px;
+  border-bottom: 3px solid var(--ink);
+  position: relative;
+}
+.masthead::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -8px;
+  height: 1px;
+  background: var(--ink);
+}
+.wordmark {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.right {
+  display: flex;
+  align-items: baseline;
+  gap: 48px;
+  font-family: var(--display);
+}
+nav ul { display: flex; gap: 34px; }
+nav a {
+  font-weight: 500;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
+nav a:hover { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .24em; }
+.theme {
+  font: inherit;
+  font-size: .8125rem;
+  font-weight: 500;
+  letter-spacing: .02em;
+  color: var(--grey);
+  background: none;
+  border: 1px solid currentColor;
+  border-radius: 0;
+  padding: 6px 10px 7px;
+  cursor: pointer;
+}
+.theme span { color: var(--grey); }
+.theme span[aria-current="true"] { color: var(--ink); }
+.theme:hover { color: var(--ink); }
+
+/* Hero */
+.hero {
+  align-self: end;
+  align-items: end;
+  padding: 56px 0 60px;
+}
+.hero h1 {
+  grid-column: 1 / span 9;
+  margin: 0 0 0 -0.06em;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 11rem;
+  line-height: .87;
+  letter-spacing: -0.048em;
+  font-feature-settings: "kern" 1, "ss02" 1;
+  color: var(--head);
+  text-shadow: 0 1px 0 var(--press-hi), 0 -1px 0 var(--press-lo);
+}
+.hero h1 span { display: block; }
+.hero h1 .stop { display: inline; color: var(--red); }
+
+.side {
+  grid-column: 10 / span 3;
+  padding-bottom: 13px;
+}
+.side .rule {
+  display: block;
+  width: 56px;
+  height: 6px;
+  background: var(--red);
+  margin-bottom: 26px;
+}
+.side p {
+  margin: 0 0 34px;
+  font-size: 1.5rem;
+  line-height: 1.36;
+  letter-spacing: -0.006em;
+  font-variation-settings: "opsz" 28;
+  text-wrap: pretty;
+  hanging-punctuation: first;
+}
+.side p strong { font-weight: 600; }
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  font-family: var(--display);
+}
+.button {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  padding: 19px 28px 20px;
+  background: var(--red-btn);
+  color: var(--on-red);
+  border: 1.5px solid var(--red-btn);
+}
+.button:hover { background: transparent; color: var(--red); border-color: var(--red); }
+.textlink {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .26em;
+  margin-left: 2px;
+}
+.textlink:hover { text-decoration-thickness: 2px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <div class="right">
+    <nav aria-label="Sections">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#prices">Prices</a></li>
+        <li><a href="#start">How it starts</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="theme" type="button" aria-label="Switch colour theme"><span data-t="light" aria-current="true">Light</span> / <span data-t="dark">Dark</span></button>
+  </div>
+</header>
+
+<main id="top" class="grid hero" aria-labelledby="hero-title">
+  <h1 id="hero-title"><span>Websites for</span> <span>owner-run</span> <span>local</span> <span>businesses<span class="stop">.</span></span></h1>
+  <div class="side">
+    <span class="rule" aria-hidden="true"></span>
+    <p><strong>I’m Sam.</strong> I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+    <div class="actions">
+      <a class="button" href="#contact">Ask for a free check</a>
+      <a class="textlink" href="#prices">See example prices</a>
+    </div>
+  </div>
+</main>
+
+</div>
+<script>
+const root = document.documentElement;
+const btn = document.querySelector(".theme");
+function set(t) {
+  root.dataset.theme = t;
+  btn.querySelectorAll("span").forEach(s => s.setAttribute("aria-current", String(s.dataset.t === t)));
+}
+btn.addEventListener("click", () => set(root.dataset.theme === "dark" ? "light" : "dark"));
+const q = new URLSearchParams(location.search).get("theme");
+if (q === "dark" || q === "light") set(q);
+</script>
+</body>
+</html>

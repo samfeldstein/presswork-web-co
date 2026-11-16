@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 11, hero only, designer 2: "Two sizes of type." From r10 d1.
+  The headline is set in two sizes, as a printer would set a display line over a
+  smaller line: "Websites" as big as the measure allows, then the rest of the
+  headline at about a quarter of that size. The big word sets the width of the
+  block; the smaller line, the lead, and the buttons all sit inside that width.
+  Red is the second ink: nav numbers, the full stop, the slug, and the button hover.
+  No crop marks, registration targets, nav notes, grid lines, or lines through type.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400..700&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap">
+<style>
+:root {
+  --paper: #f3f2ee;
+  --ink: #1d1c1a;
+  --ink-deep: #1a1917;
+  --grey: #6b6862;
+  --mark: #c4371d;
+  --press-hi: rgba(255,255,255,.7);
+  --press-lo: rgba(0,0,0,.08);
+  --gutter: 64px;
+  --big: 320px;
+  --small: 88px;
+  --display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --text: "Source Serif 4", Georgia, serif;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --paper: #1b1916;
+  --ink: #ebe7df;
+  --ink-deep: #efebe3;
+  --grey: #a19c92;
+  --mark: #e2583c;
+  --press-hi: rgba(0,0,0,.55);
+  --press-lo: rgba(255,255,255,.04);
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { background: var(--paper); }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--text);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+.page {
+  min-height: 100vh;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+/* Masthead: one ink rule across the top, wordmark, nav, theme toggle */
+.masthead {
+  margin-top: 30px;
+  border-top: 1px solid var(--ink);
+  padding-top: 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 48px;
+  font-family: var(--display);
+}
+.wordmark {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-right: auto;
+}
+.masthead nav ul { display: flex; gap: 40px; }
+.masthead nav a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.012em;
+}
+.masthead .num {
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--mark);
+}
+.masthead nav a:hover .label { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .22em; }
+
+.theme {
+  margin-left: 16px;
+  padding: 6px 9px 7px;
+  border: 1px solid var(--grey);
+  border-radius: 0;
+  background: transparent;
+  color: var(--grey);
+  font: 500 .75rem/1 var(--display);
+  letter-spacing: .04em;
+  cursor: pointer;
+  align-self: center;
+}
+.theme span[aria-current="true"] { color: var(--ink); }
+.theme .sep { padding: 0 .3em; }
+.theme:hover { border-color: var(--ink); }
+
+/* The block: the big word sets its width; everything below sits inside it */
+.hero {
+  align-self: end;
+  padding: 48px 0 0;
+}
+.block {
+  position: relative;
+  width: max-content;
+}
+.hero h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  color: var(--ink-deep);
+  font-feature-settings: "kern" 1;
+  text-shadow: 0 1px 0 var(--press-hi), 0 -1px 0 var(--press-lo);
+}
+.hero h1 .big {
+  display: block;
+  font-size: var(--big);
+  line-height: .8;
+  letter-spacing: -0.035em;
+  margin-left: 0;
+}
+.hero h1 .small {
+  display: block;
+  margin-top: 30px;
+  font-size: var(--small);
+  line-height: .98;
+  letter-spacing: -0.035em;
+  margin-left: 0;
+}
+.hero h1 .small > span { display: block; }
+.stop { color: var(--mark); }
+
+.aside {
+  position: absolute;
+  right: 0;
+  left: calc(var(--big) * 2.469);
+  /* the aside hangs from the stem of the i in "Websites", level with the cap height of the smaller line */
+  top: calc(var(--big) * .8 + 30px + var(--small) * .2);
+}
+.aside p {
+  margin: 0;
+  font-size: 1.3125rem;
+  line-height: 1.42;
+  letter-spacing: -0.003em;
+  font-variation-settings: "opsz" 22;
+  text-wrap: pretty;
+}
+.actions {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  white-space: nowrap;
+  font-family: var(--display);
+}
+.button {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  padding: 18px 24px 19px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1.5px solid var(--ink);
+}
+.button:hover { background: var(--mark); border-color: var(--mark); color: #fff; }
+.textlink {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .26em;
+}
+.textlink:hover { text-decoration-thickness: 2px; }
+
+/* Foot: one rule and a short slug */
+.foot {
+  margin: 80px 0 0;
+  border-top: 1px solid var(--ink);
+  padding: 12px 0 26px;
+  font-family: var(--display);
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--mark);
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="masthead">
+  <a class="wordmark" href="#top">Presswork</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services"><span class="num">01</span><span class="label">Services</span></a></li>
+      <li><a href="#prices"><span class="num">02</span><span class="label">Prices</span></a></li>
+      <li><a href="#start"><span class="num">03</span><span class="label">How it starts</span></a></li>
+      <li><a href="#contact"><span class="num">04</span><span class="label">Contact</span></a></li>
+    </ul>
+  </nav>
+  <button class="theme" type="button" aria-label="Switch to dark theme"><span data-t="light" aria-current="true">Light</span><span class="sep" aria-hidden="true">/</span><span data-t="dark">Dark</span></button>
+</header>
+
+<main id="top" class="hero">
+  <div class="block">
+    <h1><span class="big">Websites</span> <span class="small"><span>for owner-run</span> <span>local businesses<span class="stop">.</span></span></span></h1>
+    <div class="aside">
+      <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+      <div class="actions">
+        <a class="button" href="#contact">Ask for a free check</a>
+        <a class="textlink" href="#prices">See example prices</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">Presswork Web Co. · Colorado</footer>
+
+</div>
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.querySelector('.theme');
+  function set(t) {
+    root.setAttribute('data-theme', t);
+    btn.querySelectorAll('[data-t]').forEach(function (s) {
+      s.setAttribute('aria-current', s.dataset.t === t ? 'true' : 'false');
+    });
+    btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+    try { localStorage.setItem('pw-theme', t); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('pw-theme'); } catch (e) {}
+  if (saved === 'dark' || saved === 'light') set(saved);
+  btn.addEventListener('click', function () {
+    set(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+})();
+</script>
+</body>
+</html>

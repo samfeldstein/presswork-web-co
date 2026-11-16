@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presswork: websites for owner-run local businesses</title>
+<!--
+  Round 10, hero only, designer 1: "Ledger proof." Presswork theme: the hero is set as a press proof (crop marks, registration targets, slug line, proofing red, pressed-in headline).
+  From r7 d3-b. The nav becomes a ruled ledger across the top: each link heads a column of a 12-column grid
+  with a short serif gloss, so the top space maps the grid the rest of the hero sits on.
+  Headline much bigger (Inter Tight 600), rule under it, lead and buttons hang from the same columns.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400..700&family=Source+Serif+4:opsz,wght@8..60,400..600&display=swap">
+<style>
+:root {
+  --paper: #f3f2ee;
+  --ink: #1d1c1a;
+  --grey: #6b6862;
+  --hair: #cfccc5;
+  --mark: #c4371d;
+  --gutter: 64px;
+  --col-gap: 24px;
+  --display: "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --text: "Source Serif 4", Georgia, serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid currentColor; outline-offset: 4px; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+/* Print marks: crop marks, registration targets, slug, all in proofing red */
+.crop { position: absolute; width: 24px; height: 24px; pointer-events: none; }
+.crop::before, .crop::after { content: ""; position: absolute; background: var(--mark); }
+.crop::before { width: 18px; height: 1px; }
+.crop::after { width: 1px; height: 18px; }
+.crop.tl { top: 0; left: 0; } .crop.tl::before { top: 24px; left: 0; } .crop.tl::after { left: 24px; top: 0; }
+.crop.tr { top: 0; right: 0; } .crop.tr::before { top: 24px; right: 0; } .crop.tr::after { right: 24px; top: 0; }
+.crop.bl { bottom: 0; left: 0; } .crop.bl::before { bottom: 24px; left: 0; } .crop.bl::after { left: 24px; bottom: 0; }
+.crop.br { bottom: 0; right: 0; } .crop.br::before { bottom: 24px; right: 0; } .crop.br::after { right: 24px; bottom: 0; }
+.reg {
+  position: absolute; width: 15px; height: 15px; pointer-events: none;
+  border: 1px solid var(--mark); border-radius: 50%;
+  background:
+    linear-gradient(var(--mark), var(--mark)) center / 1px 23px no-repeat,
+    linear-gradient(var(--mark), var(--mark)) center / 23px 1px no-repeat;
+  overflow: visible;
+}
+.reg::before {
+  content: ""; position: absolute; inset: -5px;
+  background:
+    linear-gradient(var(--mark), var(--mark)) center / 1px 100% no-repeat,
+    linear-gradient(var(--mark), var(--mark)) center / 100% 1px no-repeat;
+}
+.reg.left { left: 25px; top: 50%; }
+.reg.right { right: 25px; top: 50%; }
+.slug {
+  position: absolute; left: var(--gutter); right: var(--gutter); bottom: 14px;
+  display: flex; justify-content: space-between;
+  font-family: var(--display); font-size: .6875rem; font-weight: 500;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--mark);
+  font-variant-numeric: tabular-nums;
+}
+
+.page {
+  position: relative;
+  min-height: 100vh;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--col-gap);
+}
+
+/* Ledger: the masthead as a ruled index */
+.ledger {
+  padding-top: 30px;
+  align-items: start;
+}
+.wordmark-cell, .ledger nav li {
+  border-top: 1px solid var(--ink);
+  padding-top: 14px;
+  min-height: 122px;
+}
+.wordmark-cell { grid-column: 1 / span 4; }
+.wordmark {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.wordmark-cell small {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--text);
+  font-size: .9375rem;
+  line-height: 1.4;
+  color: var(--grey);
+  font-variation-settings: "opsz" 14;
+}
+.ledger nav { display: contents; }
+.ledger nav ul { display: contents; }
+.ledger nav li { grid-column: span 2; }
+.ledger nav a { display: block; }
+.ledger .num {
+  display: block;
+  font-family: var(--display);
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--mark);
+  margin-bottom: 10px;
+}
+.ledger .label {
+  display: block;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+}
+.ledger .gloss {
+  display: block;
+  margin-top: 6px;
+  max-width: 20ch;
+  font-size: .9375rem;
+  line-height: 1.4;
+  color: var(--grey);
+  font-variation-settings: "opsz" 14;
+}
+.ledger nav a:hover .label { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: .22em; }
+
+/* Headline */
+.hero {
+  align-self: end;
+  padding-top: 40px;
+}
+.hero h1 {
+  margin: 0 0 0 -0.055em;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 12.25rem;
+  line-height: .86;
+  letter-spacing: -0.048em;
+  font-feature-settings: "kern" 1, "ss02" 1;
+  color: #1a1917;
+  text-shadow: 0 1px 0 rgba(255,255,255,.7), 0 -1px 0 rgba(0,0,0,.08);
+}
+.hero h1 span { display: block; }
+.hero h1 .tight { letter-spacing: -0.052em; }
+
+/* Foot under the rule */
+.foot {
+  margin-top: 28px;
+  border-top: 1px solid var(--ink);
+  padding: 22px 0 48px;
+  align-items: start;
+}
+.foot .place {
+  grid-column: 1 / span 4;
+  font-family: var(--display);
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--grey);
+  padding-top: 8px;
+}
+.foot p {
+  grid-column: 5 / span 4;
+  margin: 0;
+  font-size: 1.375rem;
+  line-height: 1.42;
+  letter-spacing: -0.003em;
+  font-variation-settings: "opsz" 24;
+  text-wrap: pretty;
+}
+.actions {
+  grid-column: 9 / span 4;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  padding-top: 4px;
+  font-family: var(--display);
+}
+.button {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  padding: 18px 26px 19px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1.5px solid var(--ink);
+}
+.button:hover { background: transparent; color: var(--ink); }
+.textlink {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .26em;
+  margin-left: 2px;
+}
+.textlink:hover { text-decoration-thickness: 2px; }
+</style>
+</head>
+<body>
+<div class="page">
+<span class="crop tl" aria-hidden="true"></span><span class="crop tr" aria-hidden="true"></span>
+<span class="crop bl" aria-hidden="true"></span><span class="crop br" aria-hidden="true"></span>
+<span class="reg left" aria-hidden="true"></span><span class="reg right" aria-hidden="true"></span>
+<div class="slug" aria-hidden="true"><span>Presswork Web Co. · Colorado</span><span>Proof 1 · Sheet 1 of 1</span><span>Ink: black, proofing red</span></div>
+
+<header class="grid ledger">
+  <div class="wordmark-cell">
+    <a class="wordmark" href="#top">Presswork</a>
+    <small>Websites, built and looked after.<br>Colorado.</small>
+  </div>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#services"><span class="num">01</span><span class="label">Services</span><span class="gloss">Build, look after, and get found on Google.</span></a></li>
+      <li><a href="#prices"><span class="num">02</span><span class="label">Prices</span><span class="gloss">Example prices, before you ask.</span></a></li>
+      <li><a href="#start"><span class="num">03</span><span class="label">How it starts</span><span class="gloss">With a free check of what you have.</span></a></li>
+      <li><a href="#contact"><span class="num">04</span><span class="label">Contact</span><span class="gloss">Write to Sam directly.</span></a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top" class="hero" aria-labelledby="hero-title">
+  <h1 id="hero-title"><span>Websites for</span> <span class="tight">owner-run local</span> <span>businesses.</span></h1>
+</main>
+
+<footer class="grid foot">
+  <div class="place"></div>
+  <p>I’m Sam. I build and look after websites for small businesses in Colorado, and help people find them on Google.</p>
+  <div class="actions">
+    <a class="button" href="#contact">Ask for a free check</a>
+    <a class="textlink" href="#prices">See example prices</a>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
