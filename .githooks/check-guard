@@ -1,0 +1,95 @@
+#!/bin/sh
+# Called by pre-push with git's push lines on stdin:
+#   <local ref> <local sha> <remote ref> <remote sha>
+# The hook runs the checks from the branch being pushed, so a branch could
+# loosen the checks that judge it. This refuses a push that changes a check
+# file unless a commit that changes one has a line starting "Checks changed:"
+# that says why. Check files: check.mjs and sync.mjs at the root or in
+# scripts/, anything under test/ or .githooks/, and the extra paths in guarded-paths next to this script
+# (one extended regex per line, matched against repo-relative paths).
+# Known limits: git push --no-verify skips it; a branch that edits this
+# script is judged by its edited copy; commits already on any
+# remote-tracking branch count as reviewed; a force push over a remote commit
+# this clone has never fetched isn't compared; and the first push from a
+# clone with no remote-tracking branches at all isn't checked.
+zero=0000000000000000000000000000000000000000
+pattern='^(scripts/)?(check|sync)\.mjs$|^test/|^\.githooks/'
+list="$(dirname "$0")/guarded-paths"
+if [ -f "$list" ]; then
+  extra=$(sed 's/[[:space:]]*$//' "$list" | grep -v -e '^#' -e '^[[:space:]]*$' | paste -s -d '|' -)
+  [ -n "$extra" ] && pattern="$pattern|$extra"
+fi
+fail() { echo "pre-push: $1" >&2; exit 1; }
+printf 'x\n' | grep -E "$pattern" >/dev/null
+[ $? -le 1 ] || fail "a line in .githooks/guarded-paths is not a valid regex"
+g() { git -c core.quotePath=false -c log.showRoot=true "$@"; }
+# Prints the guarded paths a commit changes; exits 1 if git or grep fails.
+# (remerge shows what a merge's own resolution changed, even when it kept
+# one side; -z keeps odd names unquoted; NULs can't sit in a shell variable, so tr
+# runs in the pipe and a git failure leaves a marker line instead.)
+guarded() {
+  out=$({ g log -1 --format= --name-only -z --no-renames --diff-merges=remerge "$1" || printf '\0:git-failed:\0'; } | tr '\0' '\n')
+  case $out in *:git-failed:*) return 1 ;; esac
+  printf '%s\n' "$out" | grep -E "$pattern"
+  [ $? -le 1 ]
+}
+has_reason() { git log -1 --format=%B "$1" | grep -qE '^Checks changed: *[^[:space:]]'; }
+remotes=$(git for-each-ref --format=x refs/remotes | head -n 1)
+status=0
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ -n "$local_sha" ] || continue
+  [ "$local_sha" = "$zero" ] && continue
+  known=no
+  if [ "$remote_sha" != "$zero" ] && git cat-file -e "$remote_sha^{commit}" 2>/dev/null; then
+    known=yes
+    commits=$(g rev-list "$local_sha" --not "$remote_sha" --remotes) || fail "git rev-list failed for $local_ref"
+  elif [ -z "$remotes" ]; then
+    echo "pre-push: no remote-tracking branches yet, so the check-file guard is skipped for $local_ref." >&2
+    continue
+  else
+    commits=$(g rev-list "$local_sha" --not --remotes) || fail "git rev-list failed for $local_ref"
+  fi
+  changed=""
+  reason=no
+  for c in $commits; do
+    hits=$(guarded "$c") || fail "could not read the files of $c"
+    [ -n "$hits" ] || continue
+    changed="$changed
+$hits"
+    has_reason "$c" && reason=yes
+  done
+  # A force push can drop commits that changed check files without any new
+  # commit touching them. A dropped change counts only if the file now differs
+  # from the remote (a rebase that skips a commit already on main doesn't).
+  # Then any pushed commit's line counts, so an empty commit can carry it.
+  if [ "$known" = yes ] && ! git merge-base --is-ancestor "$remote_sha" "$local_sha"; then
+    dropped=$(g rev-list "$remote_sha" --not "$local_sha") || fail "git rev-list failed for $remote_sha"
+    differ=$({ g diff --name-only -z --no-renames "$remote_sha" "$local_sha" || printf '\0:git-failed:\0'; } | tr '\0' '\n')
+    case $differ in *:git-failed:*) fail "git diff failed for $local_ref" ;; esac
+    lost=""
+    for c in $dropped; do
+      hits=$(guarded "$c") || fail "could not read the files of $c"
+      hits=$(printf '%s\n' "$hits" | while IFS= read -r f; do
+        [ -n "$f" ] && printf '%s\n' "$differ" | grep -qxF -- "$f" && printf '%s\n' "$f"
+      done)
+      [ -n "$hits" ] && lost="$lost
+$hits"
+    done
+    if [ -n "$lost" ]; then
+      changed="$changed$lost"
+      for c in $commits; do
+        has_reason "$c" && reason=yes
+      done
+    fi
+  fi
+  [ -n "$changed" ] || continue
+  [ "$reason" = yes ] && continue
+  echo "pre-push: $local_ref changes check files, and no commit says why:" >&2
+  printf '%s\n' "$changed" | sed '/^$/d' | sort -u | sed 's/^/  /' >&2
+  echo "  Add a line \"Checks changed: <why>\" to a commit that changes them, in the" >&2
+  echo "  body above the trailer block (a blank line before Verified: and Co-Authored-By:)" >&2
+  echo "  (git commit --amend for the last one, or a reword in git rebase)." >&2
+  echo "  A force push that drops check changes can carry it in a new empty commit." >&2
+  status=1
+done
+exit $status

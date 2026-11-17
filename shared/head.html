@@ -20,11 +20,26 @@
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="{{site.themeColor}}">
+<meta name="theme-color" content="{{site.themeColor}}" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="{{site.themeColorLight}}" media="(prefers-color-scheme: light)">
 <link rel="preload" href="/fonts/noto-serif-latin-normal-trim.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/noto-serif-latin-italic-trim.woff2" as="font" type="font/woff2" crossorigin>
-<meta name="color-scheme" content="dark">
-<style>html{background:{{site.themeColor}};color-scheme:dark}</style>
+<meta name="color-scheme" content="dark light">
+<script>
+  (function () {
+    try {
+      var theme = localStorage.getItem("theme");
+      if (theme !== "light" && theme !== "dark") return;
+      document.documentElement.setAttribute("data-theme", theme);
+      var metas = document.querySelectorAll('meta[name="theme-color"]');
+      var color = metas[theme === "dark" ? 0 : 1].content;
+      metas.forEach(function (meta) {
+        meta.content = color;
+      });
+    } catch (e) {}
+  })();
+</script>
+<style>html{background:{{site.themeColor}};color-scheme:dark}html[data-theme=light]{background:{{site.themeColorLight}};color-scheme:light}@media (prefers-color-scheme:light){html:not([data-theme]){background:{{site.themeColorLight}};color-scheme:light}}</style>
 <link rel="stylesheet" href="/css/fonts.css">
 <link rel="stylesheet" href="/css/reset.css">
 <link rel="stylesheet" href="/css/tokens.css">

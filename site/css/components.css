@@ -214,6 +214,12 @@ a:is(:hover, :focus-visible) > .logo .dot {
     padding-block: var(--space-sm);
   }
 
+  .end {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
   .toggle {
     display: none;
     flex-direction: column;
@@ -700,5 +706,56 @@ a:is(:hover, :focus-visible) > .logo .dot {
     border-inline-end: 2px solid var(--color-accent);
     border-block-end: 2px solid var(--color-accent);
     transform: rotate(45deg);
+  }
+}
+
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--color-accent);
+  }
+
+  svg {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+  }
+
+  .sun {
+    display: none;
+  }
+}
+
+:root[data-theme="light"] {
+  .theme-toggle .sun {
+    display: block;
+  }
+
+  .theme-toggle .moon,
+  .dust,
+  .star {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    .theme-toggle .sun {
+      display: block;
+    }
+
+    .theme-toggle .moon,
+    .dust,
+    .star {
+      display: none;
+    }
   }
 }

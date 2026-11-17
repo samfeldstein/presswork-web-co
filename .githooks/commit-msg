@@ -1,0 +1,38 @@
+#!/bin/sh
+# Every commit message carries a line saying what checks ran before it, e.g.
+#   Verified: check, tests, axe
+#   Verified: none (docs only)
+# Put it with the other trailers at the end (next to Co-Authored-By).
+# Observe mode: MODE=warn only prints a warning. To make a missing line stop
+# the commit, change it to MODE=block. Skip once with git commit --no-verify.
+# Merges, fixup!/squash!/amend! commits, and CMS commits made on the host
+# (never seen by this hook) are exempt.
+# It also warns (never blocks) when the commit stages a check file that
+# .githooks/check-guard watches but the message has no "Checks changed:"
+# line, since pre-push would refuse it later.
+MODE=warn
+[ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null)" ] && exit 0
+cc=$(git config core.commentChar 2>/dev/null)
+case $cc in ""|auto) cc="#" ;; esac
+msg=$(sed '/^. -\{24\} >8 -\{24\}$/,$d' "$1" | awk -v c="$cc" 'index($0, c) != 1')
+first=$(printf '%s\n' "$msg" | sed -n '/[^[:space:]]/{p;q;}')
+case $first in
+  "fixup!"*|"squash!"*|"amend!"*) exit 0 ;;
+esac
+if ! printf '%s\n' "$msg" | grep -qE '^Checks changed: *[^[:space:]]'; then
+  pattern='^(scripts/)?(check|sync)\.mjs$|^test/|^\.githooks/'
+  list="$(dirname "$0")/guarded-paths"
+  if [ -f "$list" ]; then
+    extra=$(sed 's/[[:space:]]*$//' "$list" | grep -v -e '^#' -e '^[[:space:]]*$' | paste -s -d '|' -)
+    [ -n "$extra" ] && pattern="$pattern|$extra"
+  fi
+  staged=$(git -c core.quotePath=false diff --cached --name-only --no-renames 2>/dev/null | grep -E "$pattern" 2>/dev/null)
+  if [ -n "$staged" ]; then
+    echo "commit-msg: this commit changes check files with no \"Checks changed: <why>\" line; pre-push will refuse it:" >&2
+    printf '%s\n' "$staged" | sed 's/^/  /' >&2
+  fi
+fi
+printf '%s\n' "$msg" | grep -qE '^Verified: *[^[:space:]]' && exit 0
+echo "commit-msg: no \"Verified: <what ran>\" line (e.g. \"Verified: check, tests\" or \"Verified: none (docs only)\")." >&2
+[ "$MODE" = block ] && exit 1
+exit 0

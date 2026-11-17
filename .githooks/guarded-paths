@@ -1,0 +1,5 @@
+# Extra check files for .githooks/check-guard, beyond the built-in ones (any
+# check.mjs or sync.mjs, test/, and .githooks/): one extended regex per line,
+# matched against repo-relative paths. A push that changes one needs a
+# "Checks changed: <why>" line in a commit that changes it.
+^shared/facts\.json$
