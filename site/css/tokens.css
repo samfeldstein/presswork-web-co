@@ -7,14 +7,6 @@
   --ink-smoke: #3a3340;
   --ink-gold: #f5c451;
   --ink-peach: #f2a57e;
-  --ink-day-paper: #f6efe4;
-  --ink-day-paper-raised: #fbf7f0;
-  --ink-day-ink: #1a161e;
-  --ink-day-ink-soft: #4a4350;
-  --ink-day-ink-dim: #665e6b;
-  --ink-day-accent: #875a00;
-  --ink-day-stamp: #a4492a;
-  --ink-day-rule: #cbbfad;
 
   color-scheme: dark;
   --color-paper: var(--ink-night);
@@ -73,34 +65,6 @@
   --duration-slow: 1200ms;
   --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
   --ease-stamp: cubic-bezier(0.3, 1.4, 0.5, 1);
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-  --color-paper: var(--ink-day-paper);
-  --color-paper-raised: var(--ink-day-paper-raised);
-  --color-ink: var(--ink-day-ink);
-  --color-ink-soft: var(--ink-day-ink-soft);
-  --color-ink-dim: var(--ink-day-ink-dim);
-  --color-accent: var(--ink-day-accent);
-  --color-accent-contrast: var(--ink-day-paper-raised);
-  --color-stamp: var(--ink-day-stamp);
-  --color-rule: var(--ink-day-rule);
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme]) {
-    color-scheme: light;
-    --color-paper: var(--ink-day-paper);
-    --color-paper-raised: var(--ink-day-paper-raised);
-    --color-ink: var(--ink-day-ink);
-    --color-ink-soft: var(--ink-day-ink-soft);
-    --color-ink-dim: var(--ink-day-ink-dim);
-    --color-accent: var(--ink-day-accent);
-    --color-accent-contrast: var(--ink-day-paper-raised);
-    --color-stamp: var(--ink-day-stamp);
-    --color-rule: var(--ink-day-rule);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -3,7 +3,7 @@ const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
 const between = (min, max) => min + Math.random() * (max - min);
 
 const fly = () => {
-  if (!star || reduceMotion.matches || document.hidden || getComputedStyle(star).display === "none") return;
+  if (!star || reduceMotion.matches || document.hidden) return;
   const x = between(0.05, 0.6) * innerWidth;
   const y = between(0.05, 0.4) * innerHeight;
   const angle = between(15, 35);

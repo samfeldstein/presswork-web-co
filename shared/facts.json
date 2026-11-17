@@ -3,8 +3,7 @@
     "url": "https://presswork.dev",
     "title": "Presswork Web Co.",
     "description": "Fast, modern websites for small businesses, with flexible pricing: $800 for your first page, $300 for pages 2 to 5, and $150 for each page after.",
-    "themeColor": "#0f0d12",
-    "themeColorLight": "#f6efe4"
+    "themeColor": "#0f0d12"
   },
   "me": {
     "name": "Sam Feldstein",
@@ -50,18 +49,7 @@
     { "fg": "--color-accent", "bg": "--color-paper" },
     { "fg": "--color-accent", "bg": "--color-paper-raised" },
     { "fg": "--color-accent-contrast", "bg": "--color-accent" },
-    { "fg": "--color-stamp", "bg": "--color-paper" },
-    { "fg": "--ink-day-ink", "bg": "--ink-day-paper" },
-    { "fg": "--ink-day-ink", "bg": "--ink-day-paper-raised" },
-    { "fg": "--ink-day-ink-soft", "bg": "--ink-day-paper" },
-    { "fg": "--ink-day-ink-soft", "bg": "--ink-day-paper-raised" },
-    { "fg": "--ink-day-ink-dim", "bg": "--ink-day-paper" },
-    { "fg": "--ink-day-ink-dim", "bg": "--ink-day-paper-raised" },
-    { "fg": "--ink-day-accent", "bg": "--ink-day-paper" },
-    { "fg": "--ink-day-accent", "bg": "--ink-day-paper-raised" },
-    { "fg": "--ink-day-paper-raised", "bg": "--ink-day-accent" },
-    { "fg": "--ink-day-paper-raised", "bg": "--ink-day-ink" },
-    { "fg": "--ink-day-stamp", "bg": "--ink-day-paper" }
+    { "fg": "--color-stamp", "bg": "--color-paper" }
   ],
   "allowedHosts": [
     "presswork.dev",
