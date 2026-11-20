@@ -39,4 +39,9 @@ const send = async (mode) => {
     : `${mode}: FAILED ${response.status} ${where}`;
 };
 
-for (const mode of ["with JS", "without JS"]) console.log(await send(mode));
+// Exits 1 on a failed send, so the monthly run in dev/web/live-checks can tell.
+for (const mode of ["with JS", "without JS"]) {
+  const result = await send(mode);
+  console.log(result);
+  if (!/: sent \(/.test(result)) process.exitCode = 1;
+}
